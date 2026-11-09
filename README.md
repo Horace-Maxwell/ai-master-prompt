@@ -22,7 +22,7 @@
 ## ⚡ 30 秒上手
 
 ```bash
-git clone --recursive <这个仓库的地址> ai-master-prompt
+git clone --recursive https://github.com/Horace-Maxwell/ai-master-prompt.git
 cd ai-master-prompt
 ./setup.sh                 # 检查环境、拉取子模块、跑一次自检。只需要 python3，零依赖
 ./setup.sh --link-skills   # 可选：把自带 Skill 装进 ~/.claude/skills，以后在任何项目里都能用
@@ -175,7 +175,7 @@ python3 scripts/check_links.py    # 3. 可选：检查所有链接是否还活�
 
 **AI Master Prompt** is a curated, AI-readable reference library. Hand this folder to any coding agent (Claude Code, Codex, Cursor…). It starts at [`AGENTS.md`](AGENTS.md), follows a one-page routing table, and finds the right UI library, motion vocabulary, agent skill, MCP server, starter template or architecture reference, each with a ready-to-run install command.
 
-- **Quick start:** `git clone --recursive <repo> && cd <repo> && ./setup.sh`
+- **Quick start:** `git clone --recursive https://github.com/Horace-Maxwell/ai-master-prompt.git && cd ai-master-prompt && ./setup.sh`
 - **Search:** `python3 scripts/find.py <keywords>` (stdlib only)
 - **Paste-anywhere prompt:** [`MASTER_PROMPT.md`](MASTER_PROMPT.md)
 - **Add entries:** edit `data/resources/*.json`, then run `python3 scripts/build.py`
