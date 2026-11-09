@@ -61,16 +61,36 @@ def main() -> None:
     if a.json:
         print(json.dumps([h[1] for h in hits], ensure_ascii=False, indent=2))
         return
-    if not hits:
-        print("No match. Try fewer / broader keywords, or browse INDEX.md.")
-        return
     for _, r, cat in hits:
         star = "⭐" if r.get("star") else "  "
         print(f"{star} {r['name']}  —  {r['url']}")
         print(f"     [{cat.get('title', r['category'])}] {r['desc']}")
         if r.get("ai"):
             print(f"     AI: {r['ai']}")
-    print(f"\n{len(hits)} result(s).")
+
+    # Also search the hand-written vocabulary / recipes (effect names, styles)
+    vocab = [] if (a.module or a.category or not kws) else search_prompts(kws)
+    if vocab:
+        print("\n📖 词汇表 / 风格配方命中：")
+        for loc, line in vocab[:10]:
+            print(f"   {loc}  {line}")
+
+    if not hits and not vocab:
+        print("No match. Try fewer / broader keywords, or browse INDEX.md.")
+        return
+    print(f"\n{len(hits)} resource(s), {len(vocab)} vocabulary line(s).")
+
+
+def search_prompts(kws: list[str]) -> list[tuple[str, str]]:
+    out = []
+    for f in sorted((ROOT / "ui" / "prompts").glob("*.md")):
+        for i, line in enumerate(f.read_text("utf-8").splitlines(), 1):
+            if line.startswith(("|---", "> ")) or not line.strip():
+                continue
+            if all(k in line.lower() for k in kws):
+                text = line.strip().strip("|").replace(" | ", " · ").strip()
+                out.append((f"{f.relative_to(ROOT)}:{i}", text[:140]))
+    return out
 
 
 if __name__ == "__main__":
