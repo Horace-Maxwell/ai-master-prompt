@@ -16,10 +16,15 @@ permissions:
 
 jobs:
   data:
-    runs-on: ubuntu-latest
+    name: data (py ${{ matrix.python }})
+    runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
-        python: ["3.9", "3.x"]
+        include:
+          # 3.9 is the oldest supported version (macOS system Python); newer runners no longer ship it
+          - { os: ubuntu-24.04, python: "3.9" }
+          - { os: ubuntu-latest, python: "3.x" }
     steps:
       - uses: actions/checkout@v4
         with:
