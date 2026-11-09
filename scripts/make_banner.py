@@ -14,7 +14,7 @@ from __future__ import annotations
 from html import escape
 from pathlib import Path
 
-from _data import load_categories, load_resources
+from _data import countable, load_categories, load_meta, load_resources
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -63,8 +63,8 @@ def terminal(x0: int, y0: int) -> str:
         ("out", "⭐ Looseleaf      shadcn/ui, drawn by hand", INK, 2.4),
         ("out", "⭐ Sketchbook UI  notebook-style React kit", INK, 2.6),
         ("out", "   Wired Elements Rough.js web components", MUTED, 2.8),
-        ("cmd", "npx shadcn add @looseleaf/button", INK, 3.6),
-        ("ok", "✓ Added button.tsx — now it looks hand-drawn", MOSS, 5.4),
+        ("cmd", "npm i sketchbook-ui", INK, 3.6),
+        ("ok", "✓ added 1 package. Now it looks hand-drawn", MOSS, 5.0),
     ]
     y = 78
     for kind, s, color, t in lines:
@@ -130,7 +130,7 @@ def marquee(y: int) -> str:
 
 
 def build() -> str:
-    res = load_resources()
+    res = countable(load_resources())
     cats = load_categories()
     n_res, n_cat = len(res), len(cats)
     n_star = sum(1 for r in res if r.get("star"))
@@ -157,7 +157,7 @@ def build() -> str:
         f'<rect width="{W}" height="{H}" fill="url(#dots)" mask="url(#dotMask)"/>',
         '<ellipse cx="930" cy="230" rx="380" ry="260" fill="url(#glow)"/>',
         # left column: editorial headline
-        text(64, 92, f"{n_res} RESOURCES · {n_cat} CATEGORIES · VERIFIED 2026-11", 13, AMBER, MONO, 600,
+        text(64, 92, f"{n_res} RESOURCES · {n_cat} CATEGORIES · VERIFIED {load_meta()['verified'][:7]}", 13, AMBER, MONO, 600,
              'letter-spacing="2.2"'),
         text(60, 178, "AI Master", 86, INK, SERIF, 400, 'letter-spacing="-2"'),
         text(60, 268, "Prompt", 86, INK, SERIF, 400, 'font-style="italic" letter-spacing="-2"'),

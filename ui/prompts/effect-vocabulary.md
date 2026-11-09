@@ -2,7 +2,7 @@
 
 > 用途：把「我想要那种……的感觉」翻译成 AI 听得懂的专业名称。说出名称 + 一句描述 + 实现方式，AI 的还原度会高很多。
 > 想看实时演示：[motion-prompt 画廊](https://showheyohtaki.github.io/motion-prompt/)（192 个，可按编号引用）、[Motion Library](https://chengwq95.github.io/motion-library/)（510 个）、[aimotions](https://aimotions.art)（文字动效 195 种）。
-> 「推荐实现」一列是常见做法，不是唯一做法。
+> 「推荐实现」一列是常见做法，不是唯一做法。写成 `@命名空间/条目名` 的可以直接 `npx shadcn@latest add <它>` 安装（均已核实存在）；React Bits 的条目名必须带 `-TS-TW` 这类变体后缀。
 
 ## 滚动类（Scroll）
 
@@ -24,32 +24,32 @@
 | 名称 | 中文 | 看起来是什么样 | 推荐实现 |
 |---|---|---|---|
 | Typewriter | 打字机 | 文字一个个打出来，带闪烁光标 | React Bits / 自写 |
-| Text Scramble / Decrypt | 乱码解密 | 字母快速乱跳后定格成正确文字 | React Bits `DecryptedText` |
+| Text Scramble / Decrypt | 乱码解密 | 字母快速乱跳后定格成正确文字 | `@react-bits/DecryptedText-TS-TW` |
 | Split Text Stagger | 拆字错峰入场 | 每个字/词依次从下方滑入 | GSAP SplitText / Motion stagger |
 | Gradient Text / Animated Gradient | 渐变文字 / 流动渐变 | 文字填充渐变色并缓慢流动 | `background-clip: text` |
-| Shimmer / Shine Text | 扫光文字 | 一道高光从左到右扫过文字 | Magic UI `AnimatedShinyText` |
-| Text Rotate / Flip Words | 轮换词 | 标题中的一个词循环切换 | Aceternity `FlipWords` |
+| Shimmer / Shine Text | 扫光文字 | 一道高光从左到右扫过文字 | `@magicui/animated-shiny-text` |
+| Text Rotate / Flip Words | 轮换词 | 标题中的一个词循环切换 | `@aceternity/flip-words` |
 | Blur In | 模糊入场 | 文字从模糊到清晰出现 | Motion `filter: blur` |
 | Glitch Text | 故障文字 | RGB 分离、抖动、错位 | CSS 伪元素 + clip-path |
-| Number Ticker / Counter | 数字滚动 | 数字从 0 滚动到目标值 | Magic UI `NumberTicker` |
+| Number Ticker / Counter | 数字滚动 | 数字从 0 滚动到目标值 | `@magicui/number-ticker` |
 | Variable Font Hover | 可变字体悬停 | 鼠标靠近时字重/宽度变化 | 可变字体 + `font-variation-settings` |
-| Marquee | 跑马灯 | 文字或 Logo 无限横向滚动 | Magic UI `Marquee` |
+| Marquee | 跑马灯 | 文字或 Logo 无限横向滚动 | `@magicui/marquee` |
 
 ## 悬停与微交互（Hover / Micro-interaction）
 
 | 名称 | 中文 | 看起来是什么样 | 推荐实现 |
 |---|---|---|---|
-| Magnetic Button | 磁吸按钮 | 鼠标靠近时按钮被「吸」过去 | Motion + 鼠标位置 |
-| 3D Tilt Card | 3D 倾斜卡片 | 卡片跟随鼠标倾斜，有透视感 | Aceternity `3D Card` |
-| Spotlight / Glow Follow | 聚光灯跟随 | 光斑跟着鼠标在卡片上移动 | Aceternity `Spotlight` / radial-gradient |
-| Border Beam | 边框流光 | 一道光沿卡片边框绕圈 | Magic UI `BorderBeam` |
+| Magnetic Button | 磁吸按钮 | 鼠标靠近时按钮被「吸」过去 | `@react-bits/Magnet-TS-TW`；或自写：Motion `useSpring` 跟随指针位置，离开时回弹 |
+| 3D Tilt Card | 3D 倾斜卡片 | 卡片跟随鼠标倾斜，有透视感 | `@aceternity/3d-card` |
+| Spotlight / Glow Follow | 聚光灯跟随 | 光斑跟着鼠标在卡片上移动 | `@aceternity/spotlight` / radial-gradient |
+| Border Beam | 边框流光 | 一道光沿卡片边框绕圈 | `@magicui/border-beam` |
 | Ripple | 涟漪 | 点击处扩散出波纹 | CSS / Magic UI |
 | Hover Underline (from center) | 中心展开下划线 | 下划线从中间向两边展开 | Hover.css |
 | Shine Sweep | 扫光 | 悬停时一道斜光扫过按钮 | CSS 伪元素 |
 | Spring Press | 弹簧按压 | 按下缩小、松开回弹 | Motion `whileTap` |
-| Dock Magnification | Dock 放大 | 像 macOS Dock，鼠标附近图标放大 | Magic UI `Dock` |
+| Dock Magnification | Dock 放大 | 像 macOS Dock，鼠标附近图标放大 | `@magicui/dock` |
 | Skeleton Shimmer | 骨架屏扫光 | 加载占位块上有光带扫过 | shadcn `Skeleton` |
-| Confetti | 撒花 | 成功时彩纸爆开 | Magic UI `Confetti` |
+| Confetti | 撒花 | 成功时彩纸爆开 | `@magicui/confetti` |
 
 ## 布局与转场（Layout / Transition）
 
@@ -59,7 +59,7 @@
 | View Transition | 视图过渡 | 页面切换时元素平滑变形 | View Transitions API |
 | Page Transition (curtain/wipe) | 幕布转场 | 色块扫过屏幕后切到新页面 | Motion `AnimatePresence` / Barba |
 | Staggered Grid | 网格错峰 | 网格项依次入场 | Motion stagger |
-| Bento Grid | 便当网格 | 大小不一的卡片拼成的网格（苹果发布会风） | Magic UI `BentoGrid` |
+| Bento Grid | 便当网格 | 大小不一的卡片拼成的网格（苹果发布会风） | `@magicui/bento-grid` |
 | Accordion / Disclosure | 手风琴 | 点击展开收起（注意组件名有多种叫法） | shadcn `Accordion` |
 | Morphing Dialog | 变形弹窗 | 按钮直接变形成弹窗 | Motion Primitives |
 | Expandable Card | 可展开卡片 | 卡片展开占满屏幕 | Aceternity |
@@ -70,18 +70,18 @@
 
 | 名称 | 中文 | 看起来是什么样 | 推荐实现 |
 |---|---|---|---|
-| Aurora | 极光背景 | 柔和流动的彩色光带 | Aceternity / React Bits `Aurora` |
+| Aurora | 极光背景 | 柔和流动的彩色光带 | `@aceternity/aurora-background` / `@react-bits/Aurora-TS-TW` |
 | Mesh Gradient | 网格渐变 | 多色柔和渐变缓慢流动 | Paper Shaders / ShaderGradient |
 | Grain / Noise Overlay | 颗粒噪点 | 整体覆盖胶片颗粒质感 | SVG feTurbulence / Paper Shaders |
-| Dot / Grid Pattern | 点阵 / 网格背景 | 细点或细线网格，常带渐隐遮罩 | Magic UI `DotPattern` |
+| Dot / Grid Pattern | 点阵 / 网格背景 | 细点或细线网格，常带渐隐遮罩 | `@magicui/dot-pattern` |
 | Particles / Starfield | 粒子 / 星空 | 漂浮粒子，可随鼠标互动 | tsParticles / React Bits |
-| Beams / Light Rays | 光束 | 从某点射出的光线 | Aceternity `Background Beams` |
-| Meteors | 流星 | 斜向划过的流星线 | Magic UI `Meteors` |
-| Globe | 地球 | 可旋转的 3D 地球（带连线/光点） | Magic UI `Globe` / cobe |
+| Beams / Light Rays | 光束 | 从某点射出的光线 | `@aceternity/background-beams` |
+| Meteors | 流星 | 斜向划过的流星线 | `@magicui/meteors` |
+| Globe | 地球 | 可旋转的 3D 地球（带连线/光点） | `@magicui/globe` / cobe |
 | Liquid / Metaball / Gooey | 液态 / 融球 | 元素像液体一样拉伸、融合、滴落 | SVG goo filter / goopUI（Vue） |
-| Fluid Simulation | 流体模拟 | 鼠标拖动产生烟雾般流体 | WebGL fluid / React Bits `SplashCursor` |
-| Glassmorphism | 玻璃拟态 | 半透明毛玻璃面板 | `backdrop-filter: blur` |
-| Liquid Glass | 液态玻璃 | 苹果 iOS 26 风，带折射和高光的玻璃 | glasscn / liquid-glass-react |
+| Fluid Simulation | 流体模拟 | 鼠标拖动产生烟雾般流体 | WebGL fluid / `@react-bits/SplashCursor-TS-TW` |
+| Glassmorphism | 玻璃拟态 | 半透明毛玻璃面板 | Web：`backdrop-filter: blur`；React Native：`expo-blur` |
+| Liquid Glass | 液态玻璃 | 苹果 iOS 26 风，带折射和高光的玻璃 | Web：glasscn / liquid-glass-react；React Native：`expo-glass-effect` |
 
 ## 光标（Cursor）
 

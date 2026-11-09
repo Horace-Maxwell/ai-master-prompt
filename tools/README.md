@@ -26,8 +26,11 @@ uv run uvicorn api.main:app --port 8080 --reload            # WebUI
 
 > ⚠ **合规**：README 声明仅供学习参考，**禁止商用**，使用者自负责任。只采集公开数据，控制频率，遵守平台条款和当地法律（如《个人信息保护法》）。另有付费版 MediaCrawlerPro。
 
-## 本机已装、可直接调用的相关 Skill
+## 相关工具
 
-- **agent-reach**：搜索/阅读 Twitter、Reddit、YouTube、B站、小红书、抖音、微博、公众号等 17 个平台
-- **scrapling**：带反爬绕过的网页抓取
-- **agent-browser**：给 Agent 用的浏览器自动化 CLI
+| 工具 | 用途 | 安装 |
+|---|---|---|
+| [Agent Reach](https://github.com/Panniantong/Agent-Reach) | 让 Agent 搜索/阅读 Twitter、Reddit、YouTube、B站、小红书、抖音、微博、公众号等 17 个平台 | 把仓库 README 里的 install.md 链接交给 Agent。⚠ PyPI 上同名的 `agent-reach` 不是本项目 |
+| [Scrapling](https://github.com/D4Vinci/Scrapling) | 带反爬绕过的网页抓取与爬虫框架 | `pip install scrapling` |
+| [agent-browser](https://github.com/vercel-labs/agent-browser) | 给 Agent 用的浏览器自动化 CLI | `npx skills add vercel-labs/agent-browser` |
+| [Playwright MCP](https://github.com/microsoft/playwright-mcp) | 微软官方浏览器自动化 MCP | `claude mcp add playwright -- npx @playwright/mcp@latest` |

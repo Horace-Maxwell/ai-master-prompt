@@ -13,11 +13,11 @@ die()  { printf "%s✗%s %s\n" "$RED" "$OFF" "$1"; exit 1; }
 
 printf "\n%sAI Master Prompt%s %s· setup%s\n\n" "$AMBER" "$OFF" "$DIM" "$OFF"
 
-# 1. Python 3.8+
+# 1. Python 3.9+
 PY="$(command -v python3 || command -v python || true)"
-[ -n "$PY" ] || die "需要 Python 3.8+（https://www.python.org/downloads/）"
-"$PY" -c 'import sys; sys.exit(0 if sys.version_info >= (3, 8) else 1)' \
-  || die "Python 版本太低：$("$PY" --version 2>&1)，需要 3.8+"
+[ -n "$PY" ] || die "需要 Python 3.9+（https://www.python.org/downloads/）"
+"$PY" -c 'import sys; sys.exit(0 if sys.version_info >= (3, 9) else 1)' \
+  || die "Python 版本太低：$("$PY" --version 2>&1)，需要 3.9+"
 ok "Python: $("$PY" --version 2>&1)"
 
 # 2. Bundled skill submodule (works for git clones and ZIP downloads)
@@ -34,8 +34,10 @@ else
 fi
 
 # 3. Self-test: data validates, search works
-"$PY" scripts/build.py --check >/dev/null && ok "数据校验通过：$("$PY" scripts/build.py --check | sed 's/^OK: //')"
-"$PY" scripts/find.py 手绘 --limit 1 >/dev/null && ok "搜索正常（python3 scripts/find.py <关键词>）"
+CHECK="$("$PY" scripts/build.py --check)" || die "数据校验失败，见上面的错误"
+ok "数据校验通过：${CHECK#OK: }"
+"$PY" scripts/find.py 手绘 --limit 1 >/dev/null || die "搜索脚本运行失败"
+ok "搜索正常（python3 scripts/find.py <关键词>）"
 
 # 4. Optional: install bundled skills globally for Claude Code
 if [ "${1:-}" = "--link-skills" ]; then
@@ -52,7 +54,7 @@ if [ "${1:-}" = "--link-skills" ]; then
   }
   link "$ROOT/ui" "ui-master"
   link "$ROOT/lieflat-less-ai-tone" "lieflat-less-ai-tone"
-  printf "  %s其他 Agent（Codex / Cursor …）：把 %s/ui 复制或链接到它的 skills 目录即可%s\n" "$DIM" "$ROOT" "$OFF"
+  printf "  %s其他 Agent（Codex / Cursor …）：运行 npx skills add Horace-Maxwell/ai-master-prompt%s\n" "$DIM" "$OFF"
 fi
 
 cat <<EOF

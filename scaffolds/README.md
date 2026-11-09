@@ -4,7 +4,7 @@
 |---|---|
 | [01-starters.md](01-starters.md) | 全栈 Web、移动/桌面、后端 API 的 Starter 与创建命令 |
 | [02-ai-agents.md](02-ai-agents.md) | AI 应用模板、Agent 框架、MCP Server 开发 SDK |
-| [03-architecture.md](03-architecture.md) | 系统设计、架构模式、C4、ADR、SRE |
+| [03-architecture.md](03-architecture.md) | 系统设计、架构模式、画图工具（Mermaid / D2 / Excalidraw）、C4、ADR、SRE |
 | [04-awesome-lists.md](04-awesome-lists.md) | 巨型 awesome 列表、Prompt 合集、系统提示词合集 |
 
 ## 快速选型
@@ -14,7 +14,7 @@
 | 一般 React 全栈网站 | Next.js + shadcn | `npx create-next-app@latest` → `npx shadcn@latest init` |
 | 纯前端 SPA / 小工具 | Vite | `npm create vite@latest` |
 | 内容站 / 博客 / 文档 | Astro（文档用 Starlight） | `npm create astro@latest` |
-| 正经 SaaS（认证+支付+后台） | next-forge 或 Open SaaS | `npx next-forge@latest init` / `wasp new` |
+| 正经 SaaS（认证+支付+后台） | next-forge 或 Open SaaS | `npx next-forge@latest init` / `npm i -g @wasp.sh/wasp-cli && wasp new -t saas` |
 | 后台管理 / CRUD | Refine | `npm create refine-app@latest` |
 | Vue 全栈 | Nuxt | `npm create nuxt@latest` |
 | 移动 App | Expo | `npx create-expo-app@latest` |
@@ -24,9 +24,13 @@
 | 企业级 Node API | NestJS | `npx @nestjs/cli new my-api` |
 | AI 聊天应用 | Vercel Chatbot 模板（AI SDK） | `git clone https://github.com/vercel/chatbot` |
 | TS Agent | Mastra / Claude Agent SDK | `npm create mastra@latest` |
-| Python Agent | Pydantic AI / LangGraph / OpenAI Agents SDK | `pip install pydantic-ai` |
+| Python 单 Agent / 结构化输出 | Pydantic AI | `pip install pydantic-ai` |
+| Python 多 Agent / 复杂流程 | LangGraph（有状态图、人在环中）；轻量分流用 OpenAI Agents SDK（handoff） | `pip install -U langgraph` / `pip install openai-agents` |
+| 多 Agent 客服（带前端面板） | OpenAI Customer Service Agents Demo（Python 后端 + Next.js 面板） | `git clone https://github.com/openai/openai-cs-agents-demo` |
+| Python Agent 接 React 前端 | AG-UI 协议（CopilotKit 是参考前端）；面板组件 affectUI / AI Elements | 见 [ui/catalog/07](../ui/catalog/07-ai-product-ui.md) |
+| 看每步调用和成本 | Langfuse / Arize Phoenix（数据）+ affectUI（界面） | `pip install langfuse` |
 | 无代码 AI 工作流 | Dify / n8n | `npx n8n` |
-| MCP Server | FastMCP（Python）/ 官方 TS SDK | `pip install fastmcp` |
+| MCP Server | FastMCP（Python）/ 官方 TS SDK v2 | `pip install fastmcp` / `npm install @modelcontextprotocol/server` |
 
 ## 已失效 / 不推荐（2026-11 核实）
 

@@ -1,6 +1,6 @@
 # 风格配方：风格 → 用什么库 → 怎么跟 AI 说
 
-> 每个配方写了：适合什么场景、关键视觉特征（直接放进 Prompt）、推荐的库和安装命令、要避免什么。
+> 每个配方写了：适合什么场景、关键视觉特征（直接放进 Prompt）、推荐的库、要避免什么。有现成组件库的风格给了安装命令；纯靠设计 token 实现的风格（杂志、极简、柔和拟物）没有专门的库，用 shadcn 基础组件 + 自定义 token。
 > 更多风格（80 种）：UI UX Pro Max Skill；要照着某个知名品牌做：[awesome-design-md](https://github.com/VoltAgent/awesome-design-md) 里找对应的 DESIGN.md。
 
 ## 1. 手绘笔记本 / Sketch
@@ -8,16 +8,16 @@
 - **适合**：教育、个人博客、创意工具、轻松可爱的产品、原型演示
 - **视觉特征**：纸张纹理背景（横线或方格），抖动的钢笔描边，胶带和贴纸装饰，手写体标题（Caveat、Kalam、Patrick Hand），略微旋转的卡片，黄色荧光笔高亮
 - **库**：
-  - React + shadcn 项目：**Looseleaf**（123 组件，直接替换 shadcn，不改 JSX）
+  - React + shadcn 项目：**Looseleaf**（123 组件，直接替换 shadcn，不改 JSX）：`npx shadcn@latest add https://kevintngo.github.io/looseleaf/r/button.json`（把 `button` 换成要的组件）
   - 轻量 React：**Sketchbook UI**（`npm i sketchbook-ui`）
-  - 任意框架：Wired Elements；标注用 RoughNotation；底层 Rough.js
+  - 任意框架：Wired Elements（`npm install wired-elements`）；标注用 RoughNotation（`npm install rough-notation`）；底层 Rough.js（`npm install roughjs`）
 - **避免**：手绘元素铺满全屏导致可读性差；正文也用手写体
 
 ## 2. 新粗野主义 / Neo-brutalism
 
 - **适合**：开发者工具、创意工作室、年轻化 SaaS、作品集
 - **视觉特征**：粗黑描边（2–4px），硬阴影（`4px 4px 0 #000`，无模糊），高饱和撞色（亮黄、品红、青），无圆角或小圆角，粗体无衬线字体，按钮按下时阴影消失、位移
-- **库**：`npx shadcn add @neobrutalism/<item>`（neobrutalism.dev）或 `@retroui`（neobrutalism.com）
+- **库**：`npx shadcn@latest add @neobrutalism/button`（neobrutalism.dev；其他条目先 `npx shadcn@latest list @neobrutalism`）或 `@retroui`（neobrutalism.com）
 - **避免**：颜色超过 4 种；加渐变
 
 ## 3. 复古像素 / 8-bit / 老系统
@@ -36,7 +36,8 @@
 
 - **适合**：音乐/天气/系统类应用、苹果生态风格产品、Hero 展示
 - **视觉特征**：半透明面板 + 背景模糊（`backdrop-filter: blur(20px)`），细白色描边，柔和高光；液态玻璃要加折射和边缘高光。背景必须足够丰富（渐变或图片），否则玻璃效果看不出来
-- **库**：`@glasscn`（Apple 液态玻璃）、`@glassyui`（含 RN 版）、liquid-glass-react、css.glass 生成器；移动端 ExpoKit
+- **库（Web）**：`@glasscn`（Apple 液态玻璃）、`@glassyui`、liquid-glass-react、css.glass 生成器
+- **库（React Native）**：`npx expo install expo-glass-effect`（原生液态玻璃）、`npx expo install expo-blur`（毛玻璃）、ExpoKit、`@glassyui-native`
 - **避免**：所有元素都玻璃化；文字对比度不足
 
 ## 6. 暗色科技 / 「Linear 风」

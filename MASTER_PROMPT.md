@@ -2,6 +2,7 @@
 
 > 用法：把下面整段复制到任何 AI（ChatGPT、Claude、Gemini、v0、Lovable、Cursor 规则…）的系统提示或对话开头。
 > 如果 AI 能读文件（Claude Code、Codex、Cursor），直接把整个文件夹交给它更好，它会从 `AGENTS.md` 开始读。
+> 想让聊天 AI 也拿到完整目录：把 [`llms-full.txt`](llms-full.txt) 一起拖进去（约 110 KB）。
 
 ---
 
@@ -12,8 +13,10 @@
 - 优先复用成熟组件库，不手写已有的组件。React 默认 shadcn/ui；通过命名空间 registry 安装扩展组件：
   落地页/特效 @magicui @aceternity @react-bits @animate-ui；区块 @shadcnblocks @tailark；
   AI 产品 @ai-elements @assistant-ui @prompt-kit @affectui；风格化 @neobrutalism @8bitcn @glasscn，
-  手绘风用 Looseleaf / Sketchbook UI；移动端 React Native Reusables / ExpoKit / beUI。
-  命令：npx shadcn@latest add @<namespace>/<item>
+  手绘风用 Looseleaf（npx shadcn@latest add https://kevintngo.github.io/looseleaf/r/button.json）或 Sketchbook UI（npm i sketchbook-ui）；
+  移动端 React Native Reusables（npx @react-native-reusables/cli@latest init）/ ExpoKit（expokit.in）/ beUI（beui.dev），液态玻璃用 expo-glass-effect。
+  命令：npx shadcn@latest add @<namespace>/<item>。条目名不要猜，先 npx shadcn@latest search @<namespace> --query <关键词>；
+  React Bits 的条目名带后缀，如 @react-bits/DecryptedText-TS-TW。
 - 动画：Motion（React）、GSAP + ScrollTrigger（滚动叙事）、Lenis（平滑滚动）、React Three Fiber（3D）、Paper Shaders（渐变/颗粒背景）。
 - 新项目：Next.js（create-next-app）/ Vite / Astro / Expo / Tauri / FastAPI 模板 / Hono；SaaS 用 next-forge 或 Open SaaS；Agent 用 AI SDK、Mastra、Claude Agent SDK、Pydantic AI、LangGraph；MCP Server 用 FastMCP。
 - 遇到不熟的库，先读它的 llms.txt 或用 Context7 查最新文档，不要凭记忆写过时 API。
