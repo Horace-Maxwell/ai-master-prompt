@@ -1,0 +1,37 @@
+[
+  {"id": "ui-aggregators", "module": "ui", "file": "ui/catalog/01-aggregators.md", "file_title": "UI 组件聚合站 / 目录 / Awesome 列表", "title": "聚合站与目录（先从这里找）", "intro": "把成百上千个组件库收在一起的网站和列表。找不到合适组件时先搜这里。"},
+  {"id": "ui-core", "module": "ui", "file": "ui/catalog/02-component-libraries.md", "file_title": "基础组件库", "title": "基础 / 无头组件库", "intro": "做产品的底座：可访问性、表单、弹层、表格。默认首选 shadcn/ui + Radix/Base UI。"},
+  {"id": "ui-animated", "module": "ui", "file": "ui/catalog/03-animated-components.md", "file_title": "动画 / 稀有特效组件库", "title": "动画与稀有特效组件", "intro": "落地页、Hero、文字动效、背景特效。多数支持 `npx shadcn add` 一键装入。"},
+  {"id": "ui-stylized", "module": "ui", "file": "ui/catalog/04-stylized-themes.md", "file_title": "风格化主题组件库", "title": "风格化主题（手绘 / 复古 / 像素 / 新粗野 / 玻璃）", "intro": "想要一眼有记忆点的视觉风格时用。"},
+  {"id": "ui-mobile", "module": "ui", "file": "ui/catalog/05-mobile.md", "file_title": "移动端 / React Native 组件库", "title": "移动端 / React Native", "intro": "Expo / React Native 项目用。"},
+  {"id": "ui-effects", "module": "ui", "file": "ui/catalog/06-effects-3d-shaders.md", "file_title": "物理 / 液体 / 3D / Shader 特效", "title": "物理、液体、3D 与 Shader", "intro": "滴落、融合、流体、WebGL 背景、3D 场景。"},
+  {"id": "ui-ai-product", "module": "ui", "file": "ui/catalog/07-ai-product-ui.md", "file_title": "AI 产品专用 UI 组件", "title": "AI 产品 UI（聊天 / Agent / 可观测性）", "intro": "做 Chatbot、Copilot、Agent 面板、工具调用可视化时用。"},
+  {"id": "ui-animation-engines", "module": "ui", "file": "ui/catalog/08-animation-engines.md", "file_title": "动画引擎与底层库", "title": "动画引擎 / 滚动 / 3D 底层库", "intro": "组件库背后的引擎。自己写动效时选这里。"},
+  {"id": "ui-vocabulary", "module": "ui", "file": "ui/catalog/09-design-vocabulary.md", "file_title": "效果词汇表与 Prompt 库（教你怎么跟 AI 描述）", "title": "动效 / 特效词汇与可复制 Prompt", "intro": "不知道一个效果叫什么？在这些画廊里点开演示，复制它的专业名称和 Prompt。"},
+  {"id": "ui-design-skills", "module": "ui", "file": "ui/catalog/09-design-vocabulary.md", "title": "设计风格 / 审美类 Skill 与 DESIGN.md", "intro": "让 Agent 有审美、去 AI 味；或直接套用知名网站的设计系统（DESIGN.md）。"},
+  {"id": "ui-prompt-guides", "module": "ui", "file": "ui/catalog/09-design-vocabulary.md", "title": "官方 Prompt 指南（v0 / Lovable / Bolt / Stitch / Claude）", "intro": ""},
+  {"id": "ui-camera-photo", "module": "ui", "file": "ui/catalog/09-design-vocabulary.md", "title": "镜头 / 摄影 / 灯光词汇（图像与视频生成）", "intro": ""},
+  {"id": "ui-inspiration", "module": "ui", "file": "ui/catalog/10-inspiration.md", "file_title": "设计灵感画廊", "title": "灵感画廊（带 MCP 的优先）", "intro": "找参考图、截图给 AI 看。Mobbin / Refero / Lazyweb 有 MCP，Agent 可直接检索。"},
+  {"id": "ui-assets", "module": "ui", "file": "ui/catalog/11-assets.md", "file_title": "图标 / 字体 / 配色 / 主题", "title": "图标、字体、配色、主题生成", "intro": ""},
+  {"id": "ui-mcp", "module": "ui", "file": "ui/catalog/12-mcp-registries-llms.md", "file_title": "UI 相关 MCP / shadcn Registry / llms.txt", "title": "UI 相关 MCP 服务器", "intro": "装上之后 Agent 能直接搜索、安装组件。"},
+  {"id": "ui-registries", "module": "ui", "file": "ui/catalog/12-mcp-registries-llms.md", "title": "shadcn 命名空间 Registry", "intro": "在 components.json 里配置后可 `npx shadcn add @命名空间/组件名`。见 ui/README.md 的用法说明。"},
+  {"id": "ui-llms-txt", "module": "ui", "file": "ui/catalog/12-mcp-registries-llms.md", "title": "llms.txt（喂给 AI 的官方文档）", "intro": "让 Agent 读最新官方文档，避免用过时 API。"},
+
+  {"id": "skills-directories", "module": "skills", "file": "skills/catalog.md", "file_title": "Agent Skills 目录", "title": "Skill 目录站与 Awesome 列表", "intro": "安装格式统一为 `npx skills add <owner/repo>`（可加 `--skill <名称>` 只装其中一个）。"},
+  {"id": "skills-top", "module": "skills", "file": "skills/catalog.md", "title": "全球累计安装量 Top（skills.sh All Time，2026-11-09 实时数据）", "intro": "数据来源 skills.sh 排行榜。安装量不等于独立用户数。"},
+  {"id": "skills-engineering", "module": "skills", "file": "skills/catalog.md", "title": "工程 / 工作流类 Skill", "intro": ""},
+  {"id": "skills-ui", "module": "skills", "file": "skills/catalog.md", "title": "前端 / 设计 / 动效类 Skill", "intro": "完整清单另见 ui/catalog/09-design-vocabulary.md。"},
+  {"id": "skills-media", "module": "skills", "file": "skills/catalog.md", "title": "视频 / 多媒体类 Skill", "intro": ""},
+  {"id": "skills-local", "module": "skills", "file": "skills/catalog.md", "title": "本文件夹自带的 Skill", "intro": "已经在本文件夹里，无需安装。"},
+
+  {"id": "tools-crawl", "module": "tools", "file": "tools/catalog.md", "file_title": "开源工具", "title": "数据采集 / 爬虫", "intro": "注意：遵守平台条款与当地法律，只采集公开数据，多数项目禁止商用。"},
+  {"id": "tools-browser", "module": "tools", "file": "tools/catalog.md", "title": "浏览器自动化（给 Agent 用）", "intro": ""},
+
+  {"id": "scaffold-web", "module": "scaffolds", "file": "scaffolds/01-starters.md", "file_title": "脚手架 / Starter 模板", "title": "全栈 Web Starter", "intro": ""},
+  {"id": "scaffold-mobile", "module": "scaffolds", "file": "scaffolds/01-starters.md", "title": "移动端 / 桌面端 Starter", "intro": ""},
+  {"id": "scaffold-backend", "module": "scaffolds", "file": "scaffolds/01-starters.md", "title": "后端 / API Starter", "intro": ""},
+  {"id": "scaffold-ai", "module": "scaffolds", "file": "scaffolds/02-ai-agents.md", "file_title": "AI 应用 Starter 与 Agent 框架", "title": "AI 应用 Starter 与 Agent 框架", "intro": ""},
+  {"id": "scaffold-mcp", "module": "scaffolds", "file": "scaffolds/02-ai-agents.md", "title": "MCP Server 开发模板", "intro": ""},
+  {"id": "scaffold-arch", "module": "scaffolds", "file": "scaffolds/03-architecture.md", "file_title": "架构与系统设计参考", "title": "架构 / 系统设计参考", "intro": ""},
+  {"id": "meta-lists", "module": "scaffolds", "file": "scaffolds/04-awesome-lists.md", "file_title": "元列表（Awesome Lists）", "title": "Awesome 元列表 / Prompt 合集", "intro": "这些列表本身就是巨型索引；本文件夹找不到时去这里。"}
+]
