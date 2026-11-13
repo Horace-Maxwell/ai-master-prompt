@@ -10,6 +10,8 @@
   only shown when there are few direct matches.
 - The hand-written effect vocabulary and style recipes (ui/prompts/*.md) are
   searched too, so effect names like 磁吸 / parallax are found.
+- The full official shadcn registry index (data/registries.json, 500+ namespaces)
+  is searched as well and shown after the curated results.
 
 Usage:
   python3 scripts/find.py 手绘
@@ -17,6 +19,8 @@ Usage:
   python3 scripts/find.py mcp --module ui
   python3 scripts/find.py --category ui-animated
   python3 scripts/find.py shadcn --json
+  python3 scripts/find.py --category stack-services --group 认证
+  python3 scripts/find.py 数据库 --stars     # only ⭐ picks
   python3 scripts/find.py --list            # list modules and categories
 (Windows: use `python` or `py -3` instead of `python3`.)
 """
@@ -82,7 +86,7 @@ def score_keyword(kw: str, alts: set[str], fields: dict[str, str]) -> tuple[int,
 def fields_of(r: dict, cat: dict) -> dict[str, str]:
     return {
         "name": r.get("name", "").lower(),
-        "tags": " ".join(r.get("tags", []) + [r.get("price", "")]).lower(),
+        "tags": " ".join(r.get("tags", []) + [r.get("price", ""), r.get("group", "")]).lower(),
         "cat": f"{r.get('category', '')} {cat.get('title', '')}".lower(),
         "stack": " ".join(r.get("stack", [])).lower(),
         "ai": r.get("ai", "").lower(),
@@ -90,11 +94,15 @@ def fields_of(r: dict, cat: dict) -> dict[str, str]:
     }
 
 
-def search_resources(kws, aliases, res, cats, module, category):
+def search_resources(kws, aliases, res, cats, module, category, group=None, stars=False):
     scored = []
     for r in res:
         if r.get("alias_of"):
             continue  # cross-listed copy of another entry
+        if stars and not r.get("star"):
+            continue
+        if group and group.lower() not in r.get("group", "").lower():
+            continue
         cat = cats.get(r["category"], {})
         if module and cat.get("module") != module:
             continue
@@ -134,6 +142,24 @@ def search_prompts(kws: list[str], aliases: dict[str, set[str]], need: int | Non
     return [(loc, text) for _, loc, text in out]
 
 
+def search_registries(kws: list[str], aliases: dict[str, set[str]], res: list[dict]) -> list[dict]:
+    """Namespaces in the official shadcn index that the curated catalog does not already cover."""
+    path = DATA / "registries.json"
+    if not path.exists() or not kws:
+        return []
+    covered = set()
+    for r in res:
+        covered.update(re.findall(r"(@[a-z0-9][a-z0-9-]*)/", r.get("ai", "")))
+    hits = []
+    for x in json.loads(path.read_text("utf-8"))["registries"]:
+        if x["name"] in covered or x.get("hidden"):
+            continue
+        text = f"{x['name']} {x.get('desc', '')}".lower()
+        if all(matches(k, aliases.get(k, ()), text) for k in kws):
+            hits.append(x)
+    return hits  # already sorted by official ranking
+
+
 def bigrams(kws: list[str]) -> list[str]:
     """字母乱跳 -> 字母, 母乱, 乱跳. Fallback for natural Chinese phrasing."""
     out = []
@@ -148,7 +174,8 @@ def bigrams(kws: list[str]) -> list[str]:
 def print_entry(r: dict, cat: dict) -> None:
     star = "⭐" if r.get("star") else "  "
     print(f"{star} {r['name']}  —  {r['url']}")
-    print(f"     [{cat.get('title', r['category'])}] {r['desc']}")
+    where = cat.get("title", r["category"]) + (f" › {r['group']}" if r.get("group") else "")
+    print(f"     [{where}] {r['desc']}")
     if r.get("ai"):
         label = "$" if is_command(r["ai"]) else "AI:"
         print(f"     {label} {r['ai']}")
@@ -159,6 +186,8 @@ def main() -> None:
     ap.add_argument("keywords", nargs="*")
     ap.add_argument("--module", help="ui | skills | tools | scaffolds")
     ap.add_argument("--category", help="category id (see --list)")
+    ap.add_argument("--group", help="sub-group inside a category (substring match, e.g. 认证)")
+    ap.add_argument("--stars", action="store_true", help="only ⭐ picks")
     ap.add_argument("--json", action="store_true", help="machine-readable output")
     ap.add_argument("--limit", type=int, default=20)
     ap.add_argument("--list", action="store_true", help="list modules and categories, then exit")
@@ -180,13 +209,13 @@ def main() -> None:
         return
 
     kws = [w for k in a.keywords for w in k.lower().split()]  # "glass mobile" == glass mobile
-    if not kws and not (a.module or a.category):
+    if not kws and not (a.module or a.category or a.group or a.stars):
         ap.print_help()
         return
 
     aliases = load_aliases()
-    full, partial = search_resources(kws, aliases, res, cats, a.module, a.category)
-    vocab = [] if (a.module or a.category or not kws) else search_prompts(kws, aliases)
+    full, partial = search_resources(kws, aliases, res, cats, a.module, a.category, a.group, a.stars)
+    vocab = [] if (a.module or a.category or a.group or a.stars or not kws) else search_prompts(kws, aliases)
 
     note = ""
     if not full and partial:
@@ -194,7 +223,7 @@ def main() -> None:
     if not full and not partial and not vocab:
         loose = bigrams(kws)
         if loose != kws:  # natural Chinese phrasing: retry on two-character pieces
-            f2, p2 = search_resources(loose, aliases, res, cats, a.module, a.category)
+            f2, p2 = search_resources(loose, aliases, res, cats, a.module, a.category, a.group, a.stars)
             partial = f2 or p2
             vocab = search_prompts(loose, aliases, need=max(1, len(loose) // 2))
             if partial or vocab:
@@ -207,7 +236,8 @@ def main() -> None:
         print(json.dumps(clean, ensure_ascii=False, indent=2))
         return
 
-    if not shown and not vocab:
+    regs = [] if (a.category or a.group or a.stars or a.module not in (None, "ui") or a.json) else search_registries(kws, aliases, res)
+    if not shown and not vocab and not regs:
         words = set()
         for r in res:
             words.update(w for w in re.split(r"[^a-z0-9.+-]+", r["name"].lower()) if len(w) > 3)
@@ -227,6 +257,13 @@ def main() -> None:
         print("\n📖 词汇表 / 风格配方命中：")
         for loc, line in vocab[:8]:
             print(f"   {loc}  {line}")
+
+    if regs:
+        print(f"\n📦 shadcn 官方索引里还有 {len(regs)} 个相关 registry（未精选，说明为作者原文）：")
+        for x in regs[:6]:
+            print(f"   {x['name']:<22} {x.get('items') or '?':>5} 项  {x.get('desc', '')[:90]}")
+        print("   安装：npx shadcn@latest list <命名空间>  →  npx shadcn@latest add <命名空间>/<条目>"
+              + ("；全部见 ui/catalog/18-shadcn-registries.md" if len(regs) > 6 else ""))
 
     total = len(full or partial)
     more = f"（共 {total} 条，只显示前 {len(shown)} 条，加 --limit {total} 看全部）" if total > len(shown) else ""

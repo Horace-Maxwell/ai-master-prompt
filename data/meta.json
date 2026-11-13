@@ -1,4 +1,9 @@
 {
   "repo": "Horace-Maxwell/ai-master-prompt",
-  "verified": "2026-11-09"
+  "verified": "2026-11-09",
+  "extra_namespaces": [
+    "@fulldev",
+    "@looseleaf",
+    "@rare-ui"
+  ]
 }

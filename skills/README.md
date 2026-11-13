@@ -1,6 +1,6 @@
 # Agent Skills
 
-Skill 是一个带 `SKILL.md` 的文件夹，教 Agent 按特定流程做某件事。Claude Code、Codex、Cursor 等都支持。完整清单见 [catalog.md](catalog.md)。
+Skill 是一个带 `SKILL.md` 的文件夹，教 Agent 按特定流程做某件事。Claude Code、Codex、Cursor 等都支持。完整清单见 [catalog.md](catalog.md)（排行榜 + 工程 / 前端 / 视频 / 其他领域 + 厂商官方 Skill）。规则文件、CLAUDE.md / AGENTS.md 范例、子 Agent 集合、规格驱动工作流和 Prompt 指南在 [02-rules-prompts.md](02-rules-prompts.md)。
 
 ## 怎么装
 

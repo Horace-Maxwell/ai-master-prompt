@@ -7,7 +7,11 @@ on:
   workflow_dispatch:
     inputs:
       links:
-        description: "Also check that every resource URL still responds"
+        description: "Also check that every resource URL still responds (several minutes)"
+        type: boolean
+        default: false
+      commands:
+        description: "Also check that packages/repos named in install commands exist"
         type: boolean
         default: false
 
@@ -47,6 +51,8 @@ jobs:
           python3 scripts/find.py 手绘 | grep -q Looseleaf
           python3 scripts/find.py glass mobile | grep -q ExpoKit
           python3 scripts/find.py 磁吸 | grep -q "Magnetic Button"
+          python3 scripts/find.py 认证 --stars | grep -q "Better Auth"
+          python3 scripts/find.py 小程序 | grep -q "Taro"
 
   links:
     if: github.event_name == 'workflow_dispatch' && inputs.links
@@ -57,3 +63,13 @@ jobs:
         with:
           python-version: "3.x"
       - run: python3 scripts/check_links.py
+
+  commands:
+    if: github.event_name == 'workflow_dispatch' && inputs.commands
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - run: python3 scripts/check_commands.py

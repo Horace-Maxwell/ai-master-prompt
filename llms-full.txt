@@ -1,6 +1,7 @@
-# AI Master Prompt（完整版，单文件）
+# AI Master Prompt（单文件版）
 
-> 384 条资源，32 个分类。本文件由 scripts/build.py 自动合并生成，把它整个交给任何 AI 即可。文件之间用 `===== FILE: 路径 =====` 分隔。
+> 全部手写指南 + 204 个 ⭐ 精选（全库共 2528 条）。本文件由 scripts/build.py 自动合并生成，把它整个交给任何 AI 即可。
+> 完整目录太大，没有并入：需要更多候选时抓取 https://raw.githubusercontent.com/Horace-Maxwell/ai-master-prompt/main/llms.txt 里列出的分类文件。文件之间用 `===== FILE: 路径 =====` 分隔。
 
 ===== FILE: AGENTS.md =====
 
@@ -8,20 +9,26 @@
 
 > 给 AI 看的入口文件。Codex、Cursor 等会自动读取 `AGENTS.md`；Claude Code 通过 `CLAUDE.md`、Gemini CLI 通过 `GEMINI.md` 转到这里。
 > 如果你是被用户「丢进这个文件夹」的 AI：先读完本页（约 2 分钟），再按下面的路由表只打开需要的文件，不要整库通读。
-> 不能读本地文件但能联网：抓取 `llms.txt`（索引）或 `llms-full.txt`（全部内容合成的单个文件）。
+> 不能读本地文件但能联网：抓取 `llms.txt`（索引）或 `llms-full.txt`（手写指南 + 全部 ⭐ 精选合成的单个文件，约 100 KB）。
 
 ## 这个文件夹是什么
 
-用户的个人「万能参考库」。里面收录了经过核实的（2026-11-09）：
+用户的个人「万能参考库」（数据核实于 2026-11-09）：
 
-- **UI 组件库、特效、动效词汇、设计风格 Skill、灵感站、图标字体配色**：`ui/`
-- **Agent Skills**（skills.sh 排行榜 + 分类精选 + 自带 Skill）：`skills/`
-- **开源工具**（爬虫、浏览器自动化）：`tools/`
-- **脚手架 / Starter、Agent 框架、MCP 模板、架构参考、Awesome 元列表**：`scaffolds/`
+- **UI**：各框架组件库（React / Vue / Svelte / 原生 / 国内生态）、功能型组件、特效、动效词汇、设计系统、模板、灵感站、图标字体配色素材：`ui/`
+- **Agent Skills、规则与 Prompt 库**：`skills/`
+- **工具**：MCP 目录与常用 MCP 服务器、AI 编码工具、爬虫与浏览器自动化：`tools/`
+- **搭项目用的**：脚手架、Agent 框架、服务与基础设施、AI 基础设施、常用库、架构参考、Awesome 元列表：`scaffolds/`
+
+规模：约 2500 条资源，另含 shadcn 官方索引的全部 548 个 registry。**不要通读**，按下面的方法找。
 
 所有条目都存在 `data/resources/*.json`（唯一数据源）。`*/catalog*.md`、`INDEX.md`、`llms*.txt` 是由脚本生成的。
 
 ## 最快的找法
+
+**想要默认选择**：直接读 [PICKS.md](PICKS.md)，全库 200 多个 ⭐ 首选都在这一页。
+
+**想找具体的东西**：搜索。
 
 ```bash
 python3 scripts/find.py <关键词...>          # 多个关键词取交集；中英文同义词互通（玻璃 = glass）
@@ -30,13 +37,16 @@ python3 scripts/find.py 玻璃 react native     # 没有同时命中时，会给
 python3 scripts/find.py mcp --module ui       # 只在某个模块里找：ui | skills | tools | scaffolds
 python3 scripts/find.py 磁吸                  # 动效名称也能搜（来自词汇表）
 python3 scripts/find.py shadcn --json         # 输出 JSON
+python3 scripts/find.py 数据库 --stars        # 只看 ⭐ 首选
+python3 scripts/find.py --category stack-services --group 认证   # 看某分类下某一组的全部条目
 python3 scripts/find.py --list                # 列出全部分类 id 和对应文件
 ```
 
 - 默认显示前 20 条，按相关度排序，⭐ 优先；`--limit N` 调整。
 - 脚本在任何目录下都能运行。从别的项目引用本库时用绝对路径，**路径里有空格要加引号**：`python3 "/path/to/AI Master Prompt/scripts/find.py" 手绘`。
 - Windows 把 `python3` 换成 `python` 或 `py -3`。只需要 Python 3.9+，没有第三方依赖。
-- 不想跑脚本：打开 [INDEX.md](INDEX.md) 按分类浏览，或直接 grep `ui/catalog/*.md`。
+- 搜索结果末尾的「📦 shadcn 官方索引」是未精选的 registry，说明是作者原文，装之前自己看一眼。
+- 不想跑脚本：打开 [INDEX.md](INDEX.md) 按分类浏览。**目录文件有的很大**（服务、素材、功能型组件各有上百条），不要整个读：先 grep 文件里的 `### 小标题`，只读需要的那一组。
 
 ## 路由表：用户想要 X → 打开 Y
 
@@ -48,14 +58,26 @@ python3 scripts/find.py --list                # 列出全部分类 id 和对应�
 | 指定视觉风格（手绘、复古、玻璃、粗野、终端…） | [ui/prompts/style-recipes.md](ui/prompts/style-recipes.md) | [ui/catalog/04-stylized-themes.md](ui/catalog/04-stylized-themes.md) |
 | 想要某个动效/特效，但说不出名字 | [ui/prompts/effect-vocabulary.md](ui/prompts/effect-vocabulary.md) | [ui/catalog/09-design-vocabulary.md](ui/catalog/09-design-vocabulary.md)（motion-prompt 等画廊） |
 | 落地页 / Hero / 炫酷动画组件（未指定风格） | [ui/catalog/03-animated-components.md](ui/catalog/03-animated-components.md) | [ui/catalog/06-effects-3d-shaders.md](ui/catalog/06-effects-3d-shaders.md) |
-| 移动端 / React Native / Expo | [ui/catalog/05-mobile.md](ui/catalog/05-mobile.md) | [scaffolds/01-starters.md](scaffolds/01-starters.md) |
+| 移动端 / React Native / Expo / Flutter / SwiftUI / Compose | [ui/catalog/05-mobile.md](ui/catalog/05-mobile.md) | [scaffolds/01-starters.md](scaffolds/01-starters.md) |
+| Vue / Svelte / Angular / 纯 HTML+CSS 项目的组件库 | [ui/catalog/13-other-frameworks.md](ui/catalog/13-other-frameworks.md) | |
+| 国内项目：Ant Design / Element Plus / 中后台 / 小程序 / uni-app / 中文字体 | [ui/catalog/14-china-ecosystem.md](ui/catalog/14-china-ecosystem.md) | |
+| 要一个具体功能的组件（图表、表格、富文本编辑器、日历、拖拽、流程图、地图、上传…） | [ui/catalog/16-functional-components.md](ui/catalog/16-functional-components.md) | `find.py <功能名>` |
+| 对齐某个平台规范（Material、Apple HIG、Fluent…） | [ui/catalog/15-design-systems.md](ui/catalog/15-design-systems.md) | |
+| 要现成模板 / 整页区块 / Figma UI Kit | [ui/catalog/17-templates-blocks.md](ui/catalog/17-templates-blocks.md) | |
+| 某个 shadcn registry 有没有、怎么装 | [ui/catalog/18-shadcn-registries.md](ui/catalog/18-shadcn-registries.md)（548 个，先 grep） | |
 | AI 产品界面（聊天、Agent 面板、trace、成本） | [ui/catalog/07-ai-product-ui.md](ui/catalog/07-ai-product-ui.md) | [scaffolds/02-ai-agents.md](scaffolds/02-ai-agents.md) |
 | 给 Agent 装 UI 相关 MCP / 查最新文档 | [ui/catalog/12-mcp-registries-llms.md](ui/catalog/12-mcp-registries-llms.md) | |
-| 图标、字体、配色、主题 / 找参考截图 | [ui/catalog/11-assets.md](ui/catalog/11-assets.md) | [ui/catalog/10-inspiration.md](ui/catalog/10-inspiration.md) |
+| 图标、字体、配色、主题、插画、3D、样机、背景、音效 / 找参考截图 | [ui/catalog/11-assets.md](ui/catalog/11-assets.md) | [ui/catalog/10-inspiration.md](ui/catalog/10-inspiration.md) |
 | 新建项目、选技术栈、要脚手架 | [scaffolds/README.md](scaffolds/README.md) | [scaffolds/01-starters.md](scaffolds/01-starters.md) |
 | 做 Agent / 多 Agent / RAG / Chatbot / MCP Server | [scaffolds/README.md](scaffolds/README.md) | [scaffolds/02-ai-agents.md](scaffolds/02-ai-agents.md) |
+| 选认证 / 数据库 / 支付 / 邮件 / 部署 / 文档站 / CMS | [PICKS.md](PICKS.md) | [scaffolds/05-services.md](scaffolds/05-services.md) |
+| AI 应用的模型网关 / 向量库 / 评测 / 沙箱 / 语音 / 国内模型平台 | [PICKS.md](PICKS.md) | [scaffolds/06-ai-infra.md](scaffolds/06-ai-infra.md) |
+| 状态管理 / 请求 / 校验 / 测试 / 工具链 / Python 常用库选哪个 | [scaffolds/07-common-libs.md](scaffolds/07-common-libs.md) | |
 | 系统设计、架构决策、画架构图 | [scaffolds/03-architecture.md](scaffolds/03-architecture.md) | |
 | 想装 Skill / 问「有没有能做 X 的 Skill」 | [skills/README.md](skills/README.md) | [skills/catalog.md](skills/catalog.md) |
+| 要规则文件、CLAUDE.md / AGENTS.md 范例、子 Agent、规格驱动流程、Prompt 写法 | [skills/02-rules-prompts.md](skills/02-rules-prompts.md) | |
+| 某个服务有没有 MCP、怎么装（GitHub、Supabase、Notion、Sentry、高德…） | [tools/02-mcp.md](tools/02-mcp.md) | `find.py mcp <服务名>` |
+| 「有什么 AI 工具能做 X」（编码 Agent、AI IDE、建站生成器） | [tools/03-ai-builders.md](tools/03-ai-builders.md) | |
 | 采集小红书/抖音/B站等公开数据、浏览器自动化 | [tools/README.md](tools/README.md) | [tools/catalog.md](tools/catalog.md) |
 | 中文文章去 AI 味 | [lieflat-less-ai-tone/SKILL.md](lieflat-less-ai-tone/SKILL.md) | 按该 Skill 的流程执行（目录为空就先运行 `./setup.sh`） |
 | 本库没有的东西 | [scaffolds/04-awesome-lists.md](scaffolds/04-awesome-lists.md) | 巨型 awesome 列表、skills.sh 搜索 |
@@ -63,12 +85,12 @@ python3 scripts/find.py --list                # 列出全部分类 id 和对应�
 
 ## 使用规则
 
-1. **先用库里的，再上网搜。** 本库条目已核实可用；只有找不到或需要更新时才搜索网络。
+1. **先用库里的，再上网搜。** 库里条目的链接和安装包都自动检查过；只有找不到或需要更新时才搜索网络。
 2. **⭐ 表示同类首选。** 没有特殊要求时优先推荐 ⭐ 条目；模块 README 里的「快速选型」表和 ⭐ 一致。
 3. **不是每条都有安装命令。** 目录里「AI 接入」一列是代码块的可以直接运行；是普通文字的（如 `llms.txt: <链接>`、「copy prompt」）是接入方式说明。带 `<item>`、`<component>` 的是占位符，先用 `npx shadcn@latest search @命名空间 --query 关键词` 查到真实条目名再装。
 4. **安装前告诉用户。** 运行 `npx skills add`、`claude mcp add`、`npx shadcn@latest add` 这类会改动用户项目或配置的命令之前，先说明要装什么。价格是「付费」或「免费+付费」的要提醒。
 5. **注意许可证与合规。** 条目描述里带 ⚠ 的要转告用户（如 Rare UI 需署名、goopUI 仅 Vue 且未发布、MediaCrawler 禁止商用）。
-6. **数据会过时。** 星数、安装量、价格是 2026-11-09 的快照。用户关心时用 `python3 scripts/check_links.py` 检查链接，或上网核实。
+6. **数据会过时，核实程度也不一样。** 星数、安装量、价格是 2026-11-09 的快照。⭐ 条目和最早的 380 条逐条对照过官方文档；批量收录的条目由调研时核对，并经脚本检查链接存在、命令里的包和仓库存在，但没有人逐条试装。装之前看一眼官方文档；用户关心时运行 `python3 scripts/check_links.py` 和 `python3 scripts/check_commands.py`。
 7. **想给库加东西：** 改 `data/resources/*.json` → 运行 `python3 scripts/build.py`。不要手改生成的文件。格式见 [CONTRIBUTING.md](CONTRIBUTING.md)。
 
 ## 不是 Claude Code？命令这样换
@@ -93,16 +115,17 @@ AGENTS.md            ← 你在这里（AI 入口）
 CLAUDE.md / GEMINI.md← 指向本文件
 README.md            ← 给人看的说明
 MASTER_PROMPT.md     ← 可直接粘贴进任何 AI 的总提示词
+PICKS.md             ← 全部 ⭐ 首选，一页看完（自动生成）
 INDEX.md             ← 全部分类索引（自动生成）
-llms.txt             ← 给联网 AI 的索引（原始链接）；llms-full.txt 是全部内容的单文件版
+llms.txt             ← 给联网 AI 的索引（原始链接）；llms-full.txt 是手写指南 + ⭐ 精选的单文件版
 setup.sh             ← 一键检查环境 / 拉子模块 / 安装 Skill（--link-skills）；可选，不跑也能用
-ui/                  ← SKILL.md + README.md + prompts/（3 份手写指南）+ catalog/（12 个文件）
-skills/              ← README.md + catalog.md
-tools/               ← README.md + catalog.md
-scaffolds/           ← README.md + 4 个分类文件
+ui/                  ← SKILL.md + README.md + prompts/（3 份手写指南）+ catalog/（18 个文件）
+skills/              ← README.md + catalog.md + 02-rules-prompts.md
+tools/               ← README.md + catalog.md + 02-mcp.md + 03-ai-builders.md
+scaffolds/           ← README.md + 7 个分类文件
 lieflat-less-ai-tone/← 子模块 Skill：中文去 AI 味（若为空，运行 ./setup.sh）
-data/                ← resources/*.json（唯一数据源）+ categories.json + aliases.json + meta.json
-scripts/             ← find.py 搜索 / build.py 校验与生成 / check_links.py 查死链
+data/                ← resources/*.json（唯一数据源）+ registries.json（shadcn 索引快照）+ categories / aliases / meta
+scripts/             ← find.py 搜索 / build.py 校验与生成 / check_links.py 查死链 / check_commands.py 查安装命令 / import_batch.py 批量导入 / sync_registries.py 刷新 shadcn 索引
 assets/              ← README 头图（自动生成）
 ```
 
@@ -193,13 +216,19 @@ AI 做的 UI 难看，通常不是因为能力不够，而是因为 ① 没用�
 | 仪表盘 / 后台 | shadcn + Tremor 或 shadcn charts | Kibo UI 补高级组件 |
 | AI 聊天 / Agent 产品 | shadcn + AI Elements 或 assistant-ui | affectUI 做 Agent 可观测性面板；数据来自 Langfuse / Phoenix；Python 后端用 AG-UI 协议接前端 |
 | React Native / Expo | `npx create-expo-app@latest` + React Native Reusables 或 ExpoKit | 液态玻璃用 `expo-glass-effect`，毛玻璃用 `expo-blur`；beUI 做动画 |
-| Vue / Nuxt | Nuxt UI 或 shadcn-vue | Inspira UI 做特效；goopUI（液体效果，pre-alpha） |
+| Vue / Nuxt | Nuxt UI 或 shadcn-vue | Inspira UI 做特效；goopUI（液体效果，pre-alpha）；更多见 [catalog/13](catalog/13-other-frameworks.md) |
+| Svelte / Angular / Solid / Web Components | 见 [catalog/13](catalog/13-other-frameworks.md) | |
+| 国内项目 / 中后台 / 小程序 | Ant Design、Element Plus、TDesign、Vant、Taro、uni-app | 见 [catalog/14](catalog/14-china-ecosystem.md)，图表用 ECharts / AntV |
+| Flutter / SwiftUI / Compose | 见 [catalog/05](catalog/05-mobile.md) 的「原生与跨端」 | |
 | 纯 HTML / 无框架 | daisyUI 或 Tailwind + 原生 CSS | Animate.css、Hover.css、GSAP |
 
 完整候选清单：
 
 - 组件库：[catalog/02 基础](catalog/02-component-libraries.md)、[03 动画](catalog/03-animated-components.md)、[04 风格化](catalog/04-stylized-themes.md)、[05 移动端](catalog/05-mobile.md)、[06 特效/3D](catalog/06-effects-3d-shaders.md)、[07 AI 产品](catalog/07-ai-product-ui.md)
-- 找不到时去聚合站：[catalog/01](catalog/01-aggregators.md)（21st.dev、shadcn 官方目录、registry.directory）
+- 要某个具体功能（图表、表格、富文本编辑器、日历、拖拽、流程图、地图、上传、播放器）：[catalog/16](catalog/16-functional-components.md)，每个子类有一个 ⭐ 默认选择，不要自己造
+- 模板与整页区块：[catalog/17](catalog/17-templates-blocks.md)；对齐平台规范：[catalog/15 大厂设计系统](catalog/15-design-systems.md)
+- 插画、3D、样机、背景生成器等素材：[catalog/11](catalog/11-assets.md)
+- 还找不到：[catalog/18](catalog/18-shadcn-registries.md) 是 shadcn 官方索引的全部 548 个 registry（文件很大，用 grep 搜关键词）；再不行去聚合站 [catalog/01](catalog/01-aggregators.md)
 
 ### 3. 安装组件：shadcn 命名空间用法
 
@@ -545,7 +574,7 @@ npx skills add anthropics/skills --skill frontend-design       # 审美基线，
 
 # Agent Skills
 
-Skill 是一个带 `SKILL.md` 的文件夹，教 Agent 按特定流程做某件事。Claude Code、Codex、Cursor 等都支持。完整清单见 [catalog.md](catalog.md)。
+Skill 是一个带 `SKILL.md` 的文件夹，教 Agent 按特定流程做某件事。Claude Code、Codex、Cursor 等都支持。完整清单见 [catalog.md](catalog.md)（排行榜 + 工程 / 前端 / 视频 / 其他领域 + 厂商官方 Skill）。规则文件、CLAUDE.md / AGENTS.md 范例、子 Agent 集合、规格驱动工作流和 Prompt 指南在 [02-rules-prompts.md](02-rules-prompts.md)。
 
 ## 怎么装
 
@@ -590,7 +619,13 @@ npx skills add https://github.com/<owner>/<repo>  # 直接用 GitHub URL 也可�
 
 # 开源工具
 
-完整清单见 [catalog.md](catalog.md)。
+| 文件 | 内容 |
+|---|---|
+| [catalog.md](catalog.md) | 数据采集、浏览器自动化 |
+| [02-mcp.md](02-mcp.md) | MCP 目录站；120 多个常用 MCP 服务器（GitHub、数据库、搜索、Notion、Sentry、云厂商、高德 / 飞书等国内服务），带安装命令 |
+| [03-ai-builders.md](03-ai-builders.md) | AI 编码 Agent、AI IDE、应用生成器、云端 Agent、国内工具 |
+
+找某个服务的 MCP：`python3 scripts/find.py mcp <服务名>`。UI 相关的 MCP 在 [ui/catalog/12](../ui/catalog/12-mcp-registries-llms.md)。
 
 ## MediaCrawler：中文社交平台数据采集
 
@@ -635,6 +670,11 @@ uv run uvicorn api.main:app --port 8080 --reload            # WebUI
 | [02-ai-agents.md](02-ai-agents.md) | AI 应用模板、Agent 框架、MCP Server 开发 SDK |
 | [03-architecture.md](03-architecture.md) | 系统设计、架构模式、画图工具（Mermaid / D2 / Excalidraw）、C4、ADR、SRE |
 | [04-awesome-lists.md](04-awesome-lists.md) | 巨型 awesome 列表、Prompt 合集、系统提示词合集 |
+| [05-services.md](05-services.md) | 认证、数据库与 ORM、支付、邮件、存储、部署、队列、实时、搜索、监控、国际化、国内可用替代；文档站与 CMS |
+| [06-ai-infra.md](06-ai-infra.md) | 模型网关、官方 SDK、本地模型、向量库、文档解析、记忆、评测、沙箱、语音、图像视频生成、国内模型平台 |
+| [07-common-libs.md](07-common-libs.md) | 状态管理、数据请求、校验、测试、构建工具链、CLI、Python 常用库 |
+
+05–07 每个文件都有上百条，按 `### 小标题` 分组。只想要默认选择就看仓库根目录的 [PICKS.md](../PICKS.md)。
 
 ## 快速选型
 
@@ -668,764 +708,351 @@ uv run uvicorn api.main:app --port 8080 --reload            # WebUI
 - `mckaywrigley/chatbot-ui`（2024-08 后停更）、`vercel/nextjs-subscription-payments`（已归档）
 - create-t3-app 仍可用，但 2025-12 后更新放缓
 
-===== FILE: ui/catalog/01-aggregators.md =====
-
-# UI 组件聚合站 / 目录 / Awesome 列表
-
-> 本文件由 `scripts/build.py` 从 `data/resources/*.json` 自动生成，请勿手改；要增删条目请改 JSON 后重新运行脚本。⭐ = 同类首选。
-
-<a id="ui-aggregators"></a>
-
-## 聚合站与目录（先从这里找）
-
-把成百上千个组件库收在一起的网站和列表。找不到合适组件时先搜这里。
-
-| 名称 | 是什么 / 什么时候用 | 技术栈 | AI 接入（安装命令 / MCP / Skill） | 价格 |
-|---|---|---|---|---|
-| ⭐ [21st.dev](https://21st.dev) | 最大的社区组件目录：12000+ React/Tailwind 组件、库、模板；含 424 个 shadcn registry 的目录和 AI 生成 | React, Tailwind | `npx @21st-dev/cli@latest init --client claude` | 免费+付费 |
-| ⭐ [awesome-shadcn-ui](https://github.com/birobirobiro/awesome-shadcn-ui) | shadcn 生态主力 awesome 列表（20.8k★，每日更新） |  |  | 免费 |
-| ⭐ [registry.directory](https://registry.directory) | 公开 shadcn registry 浏览器，可预览代码、复制安装命令；对 Agent 极友好（items.json、/api/markdown、OpenAPI、llms.txt） | shadcn | llms.txt: https://registry.directory/llms.txt / items.json | 免费 |
-| ⭐ [shadcn 官方 Registry Directory](https://ui.shadcn.com/docs/directory) | 官方社区 registry 清单（JSON 索引 548 个），CLI 和 MCP 原生支持 | React | `npx shadcn@latest search @<ns>` | 免费 |
-| [ai-frontend-design-bookmarks（中文）](https://github.com/yehyakin/ai-frontend-design-bookmarks) | 中文社区整理的前端设计 Skill、Prompt、组件库、动效、素材合集（小而精） |  |  | 免费 |
-| [AllShadcn](https://allshadcn.com) | 528 个 shadcn 资源（模板/组件/区块/工具），可按免费/付费筛选 |  | llms.txt: https://allshadcn.com/llms.txt | 免费 |
-| [awesome-ai-tools-for-ui](https://github.com/maxbogo/awesome-ai-tools-for-ui) | 与本文件夹目标最接近的现成列表（66 个 AI UI 工具：Skill、MCP、应用），但覆盖面小 |  |  | 免费 |
-| [awesome-design-systems](https://github.com/alexpate/awesome-design-systems) | 各大公司设计系统清单 |  |  | 免费 |
-| [awesome-generative-ui](https://github.com/narrowin/awesome-generative-ui) | AI 生成式 UI 资源（assistant-ui、Tambo、AI SDK…） |  |  | 免费 |
-| [awesome-react-components](https://github.com/brillout/awesome-react-components) | 经典 React 组件/库精选列表 |  |  | 免费 |
-| [awesome-tailwindcss](https://github.com/aniftyco/awesome-tailwindcss) | Tailwind 插件、UI kit、工具 |  |  | 免费 |
-| [awesome-ui-component-library](https://github.com/anubhavsrivastava/awesome-ui-component-library) | 按框架分类的组件库清单 |  |  | 免费 |
-| [jln themes](https://ui.jln.dev) | 10000+ shadcn 主题 |  |  | 免费 |
-| [React Native Directory](https://reactnative.directory) | 可按 Expo 支持筛选的 RN 库目录 | React Native |  | 免费 |
-| [shadcn.io（非官方）](https://www.shadcn.io) | React/Vue/Svelte/Solid 组件 + 6000+ 区块 + 500 个品牌 DESIGN.md；/awesome 有 500+ 精选 |  | llms.txt: https://www.shadcn.io/llms.txt<br>MCP（Pro） | 免费+付费 |
-| [shadcnregistry.com](https://shadcnregistry.com) | 跨社区 registry 搜索并从源安装 |  |  | 免费 |
-| [Storybook Showcase](https://storybook.js.org/showcase) | 公开 Storybook 与设计系统画廊 |  |  | 免费 |
-| [TailAwesome](https://www.tailawesome.com) | Tailwind 模板与 UI kit 目录 |  |  | 免费 |
-| [UI Vault](https://ui.xiaowei.fun) | 136 个开源 UI 库精选目录，分类含 Motion & 3D、AI UI、Agent Skills、图表 |  |  | 免费 |
-| [Uiverse](https://uiverse.io) | 3500+ 社区 MIT UI 元素（按钮、加载、卡片、表单），复制 CSS 或 Tailwind | HTML, CSS, Tailwind |  | 免费 |
-
-===== FILE: ui/catalog/02-component-libraries.md =====
-
-# 基础组件库
-
-> 本文件由 `scripts/build.py` 从 `data/resources/*.json` 自动生成，请勿手改；要增删条目请改 JSON 后重新运行脚本。⭐ = 同类首选。
-
-<a id="ui-core"></a>
-
-## 基础 / 无头组件库
-
-做产品的底座：可访问性、表单、弹层、表格。默认首选 shadcn/ui + Radix/Base UI。
-
-| 名称 | 是什么 / 什么时候用 | 技术栈 | AI 接入（安装命令 / MCP / Skill） | 价格 |
-|---|---|---|---|---|
-| ⭐ [Base UI](https://base-ui.com) | MUI 团队的无头组件，shadcn 新底座选项之一 | React | llms.txt: https://base-ui.com/llms.txt | 免费 |
-| ⭐ [shadcn/ui](https://ui.shadcn.com) | 复制进项目的组件（代码归你），AI 生态事实标准；registry + MCP + Skill 齐全 | React, Tailwind | `npx shadcn@latest init`<br>`npx shadcn@latest add <component>` | 免费 |
-| [Ark UI / Park UI](https://ark-ui.com) | 跨框架无头组件（React/Vue/Solid/Svelte） |  | llms.txt: https://ark-ui.com/llms.txt | 免费 |
-| [Chakra UI](https://chakra-ui.com) | 可组合的 React 组件 v3 | React | `claude mcp add chakra-ui -- npx -y @chakra-ui/react-mcp`<br>llms.txt: https://chakra-ui.com/llms.txt | 免费 |
-| [coss ui（原 Origin UI）](https://coss.com/ui) | Cal.com 团队，基于 Base UI 的大型应用 UI 集 | React, Tailwind | `npx shadcn@latest add @coss/<item>` | 免费 |
-| [daisyUI](https://daisyui.com) | Tailwind 插件式组件类名，框架无关 | Tailwind | llms.txt: https://daisyui.com/llms.txt | 免费 |
-| [Flowbite](https://flowbite.com) | Tailwind 组件（多框架） |  | `npx -y flowbite-mcp`（需 FIGMA_ACCESS_TOKEN） | 免费+付费 |
-| [HeroUI](https://www.heroui.com) | 美观的 React 组件库（原 NextUI），v3 | React, Tailwind | `claude mcp add heroui-react -- npx -y @heroui/react-mcp@latest`<br>llms.txt: https://www.heroui.com/llms.txt | 免费 |
-| [Kibo UI](https://www.kibo-ui.com) | shadcn 缺的高级组件（看板、甘特、代码块…） | React, Tailwind | `npx shadcn@latest add @kibo-ui/<item>` | 免费 |
-| [Mantine](https://mantine.dev) | 全功能 React 组件 + hooks | React | `claude mcp add mantine -- npx -y @mantine/mcp-server`<br>llms.txt: https://mantine.dev/llms.txt | 免费 |
-| [MUI](https://mui.com) | Material Design 组件 + MUI X 数据表格/图表 | React | `claude mcp add mui -- npx -y @mui/mcp`<br>llms.txt: https://mui.com/material-ui/llms.txt | 免费+付费 |
-| [Nuxt UI](https://ui.nuxt.com) | Vue/Nuxt 官方组件库 | Vue | MCP 配置见 https://ui.nuxt.com/docs/getting-started/ai/mcp | 免费 |
-| [Radix UI](https://www.radix-ui.com) | 无样式可访问原语（shadcn 默认底座）；无 llms.txt，用 Context7 | React |  | 免费 |
-| [ReUI](https://reui.io) | shadcn 扩展组件，带 MCP 与 Skill | React, Tailwind | `npx shadcn@latest add @reui/<item>` | 免费 |
-| [shadcn-svelte](https://www.shadcn-svelte.com) | shadcn 的 Svelte 移植 | Svelte | `npx shadcn-svelte@latest init` | 免费 |
-| [shadcn-vue](https://www.shadcn-vue.com) | shadcn 的 Vue 移植 | Vue | `npx shadcn-vue@latest init` | 免费 |
-| [shadcn/studio](https://shadcnstudio.com) | 组件、区块、主题生成器 | React, Tailwind | `npx shadcn@latest add @shadcn-studio/<item>` | 免费+付费 |
-| [shadcnblocks](https://www.shadcnblocks.com) | 5000+ 页面区块 | React, Tailwind | `npx shadcn@latest add @shadcnblocks/<item>` | 免费+付费 |
-| [Tailark](https://tailark.com) | 营销页区块 | React, Tailwind | `npx shadcn@latest add @tailark/<item>` | 免费 |
-| [Tremor](https://tremor.so) | 仪表盘与图表组件 | React, Tailwind | `npm install @tremor/react` | 免费 |
-| [Untitled UI React](https://www.untitledui.com) | 大型商业设计系统的 React 版，带 MCP |  | MCP / llms.txt: https://www.untitledui.com/llms.txt | 免费+付费 |
-
-===== FILE: ui/catalog/03-animated-components.md =====
-
-# 动画 / 稀有特效组件库
-
-> 本文件由 `scripts/build.py` 从 `data/resources/*.json` 自动生成，请勿手改；要增删条目请改 JSON 后重新运行脚本。⭐ = 同类首选。
-
-<a id="ui-animated"></a>
-
-## 动画与稀有特效组件
-
-落地页、Hero、文字动效、背景特效。多数支持 `npx shadcn add` 一键装入。
-
-| 名称 | 是什么 / 什么时候用 | 技术栈 | AI 接入（安装命令 / MCP / Skill） | 价格 |
-|---|---|---|---|---|
-| ⭐ [Aceternity UI](https://ui.aceternity.com) | 200+ 酷炫暗色 Hero/落地页特效（Spotlight、Beams、3D Card）+ 区块模板 | React, Tailwind, Motion | `npx shadcn@latest add @aceternity/<item>` | 免费+付费 |
-| ⭐ [Animate UI](https://animate-ui.com) | 给 Radix/Base UI/React Aria 加动画的原语：换个 import，shadcn 组件就会动 | React, Motion | `npx shadcn@latest add @animate-ui/<item>`<br>`npm install @animate-ui/react motion && npx @animate-ui/cli@latest animate all`（v2：给现有 shadcn 组件批量加动画） | 免费 |
-| ⭐ [Magic UI](https://magicui.design) | 150+ 落地页动画组件与特效（Marquee、Globe、Bento…） | React, Tailwind, Motion | `npx shadcn@latest add @magicui/<item>` | 免费+付费 |
-| ⭐ [React Bits](https://reactbits.dev) | 超大创意库：动画文字、背景、组件（1274 条目，51.6k★） | React | `npx shadcn@latest add @react-bits/<Component>-TS-TW`（条目名必须带变体后缀：TS 或 JS + TW 或 CSS，例如 DecryptedText-TS-TW） | 免费+付费 |
-| [Animata](https://animata.design) | 手工打磨的动画 React 组件 |  | llms.txt: https://animata.design/llms.txt | 免费 |
-| [Cult UI](https://www.cult-ui.com) | 动画 shadcn 组件、区块、完整模板 | React, Tailwind | `npx shadcn@latest add @cult-ui/<item>` | 免费+付费 |
-| [Eldora UI](https://www.eldoraui.site) | 动画落地页组件与模板 | React, Tailwind | `npx shadcn@latest add @eldoraui/<item>` | 免费+付费 |
-| [Fancy Components](https://www.fancycomponents.dev) | 「有趣又怪」的动画组件 |  | llms.txt: https://www.fancycomponents.dev/llms.txt | 免费 |
-| [HextaUI](https://hextaui.com) | shadcn 组件与区块，近期转向 AI 聊天 UI | React, Tailwind | `npx shadcn@latest add @hextaui/<item>` | 免费+付费 |
-| [Hover.dev](https://www.hover.dev) | 重交互的动画组件与模板 |  |  | 免费+付费 |
-| [Inspira UI](https://inspira-ui.com) | Aceternity/Magic 风格特效的 Vue 移植 | Vue, Nuxt | llms.txt: https://inspira-ui.com/llms.txt | 免费 |
-| [Kokonut UI](https://kokonutui.com) | 「一条命令或一句 Prompt」装入的开源组件 | React, Tailwind | `npx shadcn@latest add @kokonutui/<item>` | 免费+付费 |
-| [Motion Primitives](https://motion-primitives.com) | 开源动画界面原语 | React, Tailwind | `npx shadcn@latest add @motion-primitives/<item>` | 免费+付费 |
-| [Rare UI](https://www.rareui.com) | 「稀有」Motion 动画组件（Fluid Orb、Gravity Letters、Liquid Glass、径向滑块），尊重 reduced-motion。⚠ 许可证 MIT + Commons Clause + 必须署名链接；与 rareui.in 不是同一项目 | Next.js, Tailwind, Motion | `npx shadcn@latest add swamimalode07/rare-ui/<component>`（例如 swamimalode07/rare-ui/fluid-orb） | 免费 |
-| [RareUI（rareui.in，另一项目）](https://rareui.in) | 100+ 动画组件，自有 CLI | React, Tailwind, Motion | `npx rareui add liquid-metal` | 免费 |
-| [Skiper UI](https://skiper-ui.com) | 「不常见」的 shadcn 组件 | React, Tailwind | `npx shadcn@latest add @skiper-ui/<item>` | 免费+付费 |
-| [SmoothUI](https://smoothui.dev) | shadcn 动画组件 | React, Tailwind | `npx shadcn@latest add @smoothui/<item>` | 免费 |
-| [SyntaxUI](https://syntaxui.com) | 免费 React/Tailwind/Framer 组件 |  |  | 免费 |
-| [UI Layouts](https://www.ui-layouts.com) | 100+ 动画组件与布局 | React, Tailwind | `npx shadcn@latest add @ui-layouts/<item>` | 免费 |
-| [uibrik](https://uibrik.com) | 「给 AI Agent 的 UI kit」：279 个动画组件，Agent 通过 MCP 搜索 |  | `claude mcp add --transport http uibrik https://uibrik.com/mcp` | 免费+付费 |
-| [Watermelon UI](https://ui.watermelon.sh) | 组件、区块、仪表盘；免 key 公共 MCP |  | MCP https://mcp.watermelon.sh/mcp | 免费 |
+===== FILE: PICKS.md =====
 
-===== FILE: ui/catalog/04-stylized-themes.md =====
+# ⭐ 精选速查（自动生成）
 
-# 风格化主题组件库
+> 全库 2528 条里的 204 个同类首选，一页看完。没有特殊要求时直接从这里选；要更多候选，点分类标题进完整目录，或运行 `python3 scripts/find.py <关键词>`。
+> 本文件由 `scripts/build.py` 生成，请勿手改。
 
-> 本文件由 `scripts/build.py` 从 `data/resources/*.json` 自动生成，请勿手改；要增删条目请改 JSON 后重新运行脚本。⭐ = 同类首选。
+## ui/
 
-<a id="ui-stylized"></a>
-
-## 风格化主题（手绘 / 复古 / 像素 / 新粗野 / 玻璃）
-
-想要一眼有记忆点的视觉风格时用。
-
-| 名称 | 是什么 / 什么时候用 | 技术栈 | AI 接入（安装命令 / MCP / Skill） | 价格 |
-|---|---|---|---|---|
-| ⭐ [Looseleaf](https://kevintngo.github.io/looseleaf/) | 「手绘版 shadcn/ui」：123 个可访问组件，纸张纹理 + 钢笔墨线 + 胶带贴纸印章；保留 shadcn 的 props 和 data-slot，直接替换不改 JSX | React, Tailwind v4, Radix | `npx shadcn@latest add https://kevintngo.github.io/looseleaf/r/button.json`<br>或在 components.json 的 registries 里加 @looseleaf 后用 @looseleaf/button（写法见 ui/SKILL.md 第 3 步） | 免费 |
-| ⭐ [Neobrutalism components](https://www.neobrutalism.dev) | 新粗野主义 shadcn 组件 | React, Tailwind | `npx shadcn@latest add https://neobrutalism.dev/r/<item>.json`（官方文档写法，例如 button.json）<br>或 `npx shadcn@latest add @neobrutalism/<item>` | 免费 |
-| ⭐ [Sketchbook UI](https://sarthakrawat-1.github.io/sketchbook-ui/) | 手绘笔记本风：20 个带抖动 SVG 边框和纸张纹理的组件，零运行时依赖，<70KB | React, TS | `npm i sketchbook-ui` | 免费 |
-| [8bitcn](https://www.8bitcn.com) | 8-bit 复古 shadcn 组件、区块、游戏 UI | React, Tailwind | `npx shadcn@latest add @8bitcn/<item>` | 免费 |
-| [98.css / XP.css / 7.css](https://jdan.github.io/98.css/) | 还原 Windows 98/XP/7 界面（XP: botoxparty.github.io/XP.css，7: khang-nd.github.io/7.css） | CSS |  | 免费 |
-| [augmented-ui](https://augmented-ui.com) | 纯 CSS 赛博朋克切角边框 | CSS |  | 免费 |
-| [css.glass](https://css.glass) | 玻璃拟态 CSS 生成器 |  |  | 免费 |
-| [DoodleCSS](https://chr15m.github.io/DoodleCSS/) | 手绘风 CSS 主题 | CSS |  | 免费 |
-| [GameKit UI](https://www.gamekitui.com) | 可直接嵌入的主题化小游戏（贪吃蛇、2048、扫雷） | React, Tailwind | `npx shadcn@latest add @gamekitui/<item>` | 免费 |
-| [glasscn](https://glasscn-components.vercel.app) | Apple 风「液态玻璃」shadcn 组件 | React, Tailwind | `npx shadcn@latest add @glasscn/<item>` | 免费 |
-| [Glassy UI](https://glassyui.com) | 38 个玻璃拟态组件，含 React Native/Expo 版 | React, Tailwind, React Native | `npx shadcn@latest add @glassyui/<item>`<br>`npx shadcn@latest add @glassyui-native/<item>`（React Native 版） | 免费 |
-| [liquid-glass-react](https://github.com/rdev/liquid-glass-react) | React 版 Apple Liquid Glass 效果 | React |  | 免费 |
-| [NeoBrutalism（原 RetroUI）](https://neobrutalism.com) | 复古/粗野风组件、区块、模板、主题（注意与 neobrutalism.dev 区分） | React, Tailwind | `npx shadcn@latest add @retroui/<item>` | 免费+付费 |
-| [NES.css](https://nostalgic-css.github.io/NES.css/) | 红白机风 CSS 框架 | CSS |  | 免费 |
-| [Pixelact UI](https://www.pixelactui.com) | 像素风 shadcn 组件 | React, Tailwind | `npx shadcn@latest add @pixelact-ui/<item>` | 免费 |
-| [React95](https://react95.io) | Windows 95 风 React 组件 | React |  | 免费 |
-| [Rough.js](https://roughjs.com) | 手绘风 canvas/SVG 图形库，多数草图 UI 的底层 |  | `npm install roughjs` | 免费 |
-| [RoughNotation](https://roughnotation.com) | 手绘动画标注（下划线、圈出、高亮） |  | `npm install rough-notation` | 免费 |
-| [Terminal CSS](https://terminalcss.xyz) | 终端风 CSS 框架 | CSS |  | 免费 |
-| [WebTUI](https://webtui.ironclad.sh) | 把终端 TUI 美学带进浏览器的模块化 CSS | CSS |  | 免费 |
-| [Wired Elements](https://wiredjs.com) | 基于 Rough.js 的草图风 Web Components，任意框架可用 | Web Components | `npm install wired-elements` | 免费 |
-
-===== FILE: ui/catalog/05-mobile.md =====
-
-# 移动端 / React Native 组件库
-
-> 本文件由 `scripts/build.py` 从 `data/resources/*.json` 自动生成，请勿手改；要增删条目请改 JSON 后重新运行脚本。⭐ = 同类首选。
-
-<a id="ui-mobile"></a>
-
-## 移动端 / React Native
-
-Expo / React Native 项目用。
-
-| 名称 | 是什么 / 什么时候用 | 技术栈 | AI 接入（安装命令 / MCP / Skill） | 价格 |
-|---|---|---|---|---|
-| ⭐ [beUI](https://beui.dev) | 同时覆盖 Web 和 React Native 的动画组件（Motion/Tailwind/Reanimated），带 MCP 和 Skill | React, React Native | `npx shadcn@latest add @beui/<item>`<br>`npx beui-native add <item>`（React Native）<br>`claude mcp add --transport http beui https://mcp.beui.dev/mcp`<br>`npx skills add starc007/ui-components --skill beui` | 免费 |
-| ⭐ [expo-glass-effect](https://docs.expo.dev/versions/latest/sdk/glass-effect/) | Expo 官方液态玻璃视图（iOS 26 Liquid Glass 原生效果）。React Native 里要真·液态玻璃用它 | React Native, Expo | `npx expo install expo-glass-effect` | 免费 |
-| ⭐ [ExpoKit](https://expokit.in) | Expo 复制粘贴组件库：73 组件（340+ 变体）、12 屏、44 图表、液态玻璃与 3D 效果；iOS/Android/Web/Expo Go | React Native, Expo | `npx @expokit/cli@latest init`<br>`npx @expokit/cli@latest add <component>`<br>`npx @expokit/cli@latest mcp init --client claude` | 免费+付费 |
-| ⭐ [React Native Reusables](https://reactnativereusables.com) | shadcn/ui 的标准 RN 移植（NativeWind / Uniwind） | React Native | `npx @react-native-reusables/cli@latest init`<br>`npx @react-native-reusables/cli@latest add button` | 免费 |
-| [expo-blur](https://docs.expo.dev/versions/latest/sdk/blur-view/) | Expo 官方毛玻璃模糊视图（BlurView），跨 iOS/Android 的玻璃拟态基础 | React Native, Expo | `npx expo install expo-blur` | 免费 |
-| [gluestack-ui](https://gluestack.io) | 通用 React + RN 复制组件（NativeBase 继任者），带 MCP | React, React Native | MCP / llms.txt: https://gluestack.io/llms.txt | 免费 |
-| [HeroUI Native](https://heroui.com/en/docs/native/getting-started) | HeroUI v3 的 React Native 版 | React Native |  | 免费 |
-| [NativewindUI](https://nativewindui.com) | 原生 iOS/Android 手感的组件与页面 | React Native | llms.txt: https://nativewindui.com/llms.txt | 免费+付费 |
-| [React Native Paper](https://reactnativepaper.com) | RN 的 Material Design | React Native |  | 免费 |
-| [Reacticx](https://www.reacticx.com) | 60+ 动画组件（Reanimated、Skia） | React Native |  | 免费 |
-| [Tamagui](https://tamagui.dev) | 类型安全的跨端样式与 UI + 优化编译器 | React, React Native | llms.txt: https://tamagui.dev/llms.txt | 免费 |
-| [Uniwind](https://uniwind.dev) | RN 的 Tailwind 样式引擎 | React Native |  | 免费 |
-
-===== FILE: ui/catalog/06-effects-3d-shaders.md =====
-
-# 物理 / 液体 / 3D / Shader 特效
-
-> 本文件由 `scripts/build.py` 从 `data/resources/*.json` 自动生成，请勿手改；要增删条目请改 JSON 后重新运行脚本。⭐ = 同类首选。
-
-<a id="ui-effects"></a>
-
-## 物理、液体、3D 与 Shader
-
-滴落、融合、流体、WebGL 背景、3D 场景。
-
-| 名称 | 是什么 / 什么时候用 | 技术栈 | AI 接入（安装命令 / MCP / Skill） | 价格 |
-|---|---|---|---|---|
-| ⭐ [goopUI](https://goop.timmcmasters.work/docs/components) | 「会滴落的组件」：带小型物理引擎的黏液版 shadcn 目录（滴落、拉伸、融合），subtle/playful/wild 预设。⚠ 仅 Vue 3/Nuxt，pre-alpha，未发布 npm | Vue, Nuxt, Tailwind v4 |  | 免费 |
-| ⭐ [Paper Shaders](https://shaders.paper.design) | 零依赖高性能 canvas shader（网格渐变、颗粒…） | React, GLSL | llms.txt: https://shaders.paper.design/llms.txt | 免费 |
-| [drei](https://drei.docs.pmnd.rs) | R3F 常用辅助组件 | React |  | 免费 |
-| [Matter.js](https://brm.io/matter-js/) | 2D 刚体物理（掉落、碰撞的 UI 元素） |  |  | 免费 |
-| [ShaderGradient](https://shadergradient.co) | 动态 3D 渐变（React/Framer/Figma） | React |  | 免费 |
-| [shaderscn](https://www.shaderscn.com) | 基于 Paper Shaders 的 shadcn shader 区块与背景 | React, Tailwind | `npx shadcn@latest add @shaderscn/<item>` | 免费 |
-| [Spline](https://spline.design) | 浏览器 3D 设计工具，导出可嵌入的 React 场景 |  | `npm i @splinetool/react-spline` | 免费+付费 |
-| [threecn](https://threecn.dev) | 跟随 shadcn 主题的 R3F 3D 场景 | React, Tailwind | `npx shadcn@latest add @threecn/<item>` | 免费+付费 |
-| [Unicorn Studio](https://unicorn.studio) | 无代码 WebGL 交互图形，导出嵌入 |  |  | 免费+付费 |
-| [Vanta.js](https://www.vantajs.com) | 动态 3D 网站背景 |  |  | 免费 |
-
-===== FILE: ui/catalog/07-ai-product-ui.md =====
-
-# AI 产品专用 UI 组件
-
-> 本文件由 `scripts/build.py` 从 `data/resources/*.json` 自动生成，请勿手改；要增删条目请改 JSON 后重新运行脚本。⭐ = 同类首选。
-
-<a id="ui-ai-product"></a>
-
-## AI 产品 UI（聊天 / Agent / 可观测性）
-
-做 Chatbot、Copilot、Agent 面板、工具调用可视化时用。
-
-| 名称 | 是什么 / 什么时候用 | 技术栈 | AI 接入（安装命令 / MCP / Skill） | 价格 |
-|---|---|---|---|---|
-| ⭐ [affectUI](https://www.affectui.com) | 「给 AI 产品的 Agent-ready React UI」：173 个条目，Agent 可观测性做得很深（检查点、审批闸门、Agent 图、上下文窗口地图、成本与 trace 瀑布、权限页）；每个是零依赖单文件 .tsx | React | `npx shadcn@latest add @affectui/<item>`<br>MCP https://www.affectui.com/api/mcp | 免费+付费 |
-| ⭐ [AI Elements（Vercel）](https://elements.ai-sdk.dev) | 基于 shadcn 的 AI 原生组件（消息、工具调用、推理过程…） | React, AI SDK | `npx shadcn@latest add @ai-elements/<item>` | 免费 |
-| ⭐ [assistant-ui](https://www.assistant-ui.com) | AI 聊天 React 组件 + runtime：流式、工具、持久化；兼容 AI SDK/LangGraph/Mastra | React | `npx assistant-ui@latest create` | 免费+付费 |
-| [A2UI](https://a2ui.org) | Agent 驱动 UI 的流式协议 |  |  | 免费 |
-| [AG-UI 协议](https://docs.ag-ui.com) | Agent 后端 ↔ 前端的流式事件协议：让 Python（LangGraph、Pydantic AI、CrewAI…）Agent 把消息、工具调用、状态推给 React 界面。CopilotKit 是它的参考前端 |  |  | 免费 |
-| [agentcn](https://www.agentcn.run) | 「生产级 Agent」shadcn registry | React, Tailwind | `npx shadcn@latest add @agentcn/<item>` | 免费 |
-| [Arize Phoenix](https://phoenix.arize.com) | 开源 Agent tracing 与评测（基于 OpenTelemetry），本地一条命令起面板 | Python | `pip install arize-phoenix` | 免费+付费 |
-| [CopilotKit](https://www.copilotkit.ai) | 应用内 Agent 与生成式 UI 前端栈（AG-UI 协议） | React, Angular | `npx copilotkit@latest create` | 免费+付费 |
-| [ElevenLabs UI](https://ui.elevenlabs.io) | 语音/音频 UI 组件 | React, Tailwind | `npx shadcn@latest add @elevenlabs-ui/<item>` | 免费 |
-| [json-render](https://json-render.dev) | 限制在你定义的组件内的生成式 UI 框架 |  |  | 免费 |
-| [Langfuse](https://langfuse.com) | 开源 LLM 可观测性后端：记录每步调用、工具、token 与成本，可自托管。前端面板（如 affectUI）的数据来源 | Python, TS | `pip install langfuse` | 免费+付费 |
-| [LiveKit Agents UI](https://livekit.com/products/agents-ui) | 语音 Agent 界面 shadcn 组件 | React, Tailwind | `npx shadcn@latest add @agents-ui/<item>` | 免费 |
-| [MCP-UI](https://mcpui.dev) | 给 MCP 工具返回交互式 UI |  |  | 免费 |
-| [prompt-kit](https://www.prompt-kit.com) | AI 界面积木 | React, Tailwind | `npx shadcn@latest add @prompt-kit/<item>` | 免费 |
-| [shadcn-chatbot-kit](https://shadcn-chatbot-kit.vercel.app) | 基于 shadcn 的聊天机器人组件 |  |  | 免费 |
-| [simple-ai](https://www.simple-ai.dev) | AI 组件与 Agent 示例 | React, Tailwind | `npx shadcn@latest add @simple-ai/<item>` | 免费 |
-| [Tambo](https://tambo.co) | AI 选择并流式渲染 React 组件的生成式 UI SDK | React |  | 免费+付费 |
-
-===== FILE: ui/catalog/08-animation-engines.md =====
-
-# 动画引擎与底层库
-
-> 本文件由 `scripts/build.py` 从 `data/resources/*.json` 自动生成，请勿手改；要增删条目请改 JSON 后重新运行脚本。⭐ = 同类首选。
-
-<a id="ui-animation-engines"></a>
-
-## 动画引擎 / 滚动 / 3D 底层库
-
-组件库背后的引擎。自己写动效时选这里。
-
-| 名称 | 是什么 / 什么时候用 | 技术栈 | AI 接入（安装命令 / MCP / Skill） | 价格 |
-|---|---|---|---|---|
-| ⭐ [GSAP](https://gsap.com) | 时间轴与滚动动画（ScrollTrigger）。2025-04-30 起完全免费（含 SplitText、MorphSVG） | JS | `npx skills add https://github.com/greensock/gsap-skills` | 免费 |
-| ⭐ [Lenis](https://lenis.dev) | 平滑滚动，高级感网站标配 |  | llms.txt: https://lenis.dev/llms.txt | 免费 |
-| ⭐ [Motion（原 Framer Motion）](https://motion.dev) | React/JS/Vue 动画首选。布局动画、手势、滚动 | React, JS, Vue | `npx motion-ai` | 免费+付费 |
-| ⭐ [Three.js](https://threejs.org) | WebGL/WebGPU 3D |  | `npx skills add cloudai-x/threejs-skills` | 免费 |
-| [Anime.js](https://animejs.com) | 轻量 JS 动画引擎（v4），无 llms.txt，用 Context7 | JS |  | 免费 |
-| [AutoAnimate](https://auto-animate.formkit.com) | 零配置列表/布局过渡，一行代码 | React, Vue, Svelte |  | 免费 |
-| [Barba.js](https://barba.js.org) | 多页面网站的页面转场 |  |  | 免费 |
-| [Lottie](https://lottie.airbnb.tech/) | AE 导出的 JSON 矢量动画 |  | LottieFiles MCP | 免费 |
-| [OGL](https://github.com/oframe/ogl) | 极简 WebGL 库（React Bits 很多背景特效基于它） |  |  | 免费 |
-| [React Spring](https://www.react-spring.dev) | 弹簧物理动画 | React |  | 免费 |
-| [React Three Fiber / drei](https://r3f.docs.pmnd.rs) | three.js 的 React 渲染器 + 常用辅助组件 | React | pmndrs MCP | 免费 |
-| [Remotion](https://www.remotion.dev) | 用 React 写视频 |  | `npx skills add remotion-dev/skills` | 免费+付费 |
-| [Rive](https://rive.app) | 带状态机的交互动画 |  | llms.txt: https://rive.app/llms.txt | 免费+付费 |
-| [Theatre.js](https://www.theatrejs.com) | 可视化时间轴编辑器（已基本停更，2024-08 后无提交） |  |  | 免费 |
-
-===== FILE: ui/catalog/09-design-vocabulary.md =====
-
-# 效果词汇表与 Prompt 库（教你怎么跟 AI 描述）
-
-> 本文件由 `scripts/build.py` 从 `data/resources/*.json` 自动生成，请勿手改；要增删条目请改 JSON 后重新运行脚本。⭐ = 同类首选。
-
-<a id="ui-vocabulary"></a>
-
-## 动效 / 特效词汇与可复制 Prompt
-
-不知道一个效果叫什么？在这些画廊里点开演示，复制它的专业名称和 Prompt。
-
-| 名称 | 是什么 / 什么时候用 | AI 接入（安装命令 / MCP / Skill） | 价格 |
-|---|---|---|---|
-| ⭐ [Emil Kowalski skills](https://github.com/emilkowalski/skills) | 含 animation-vocabulary（教 AI 用正确的动效术语）、animate、choreograph、apple-design、review-animations；作者是 Sonner/Vaul 作者 | `npx skills add emilkowalski/skills` | 免费 |
-| ⭐ [motion-prompt](https://github.com/showheyohtaki/motion-prompt) | 192 个带专业名称的效果（8 包×24：动态图形、镜头运动与转场、UI 组件名、落地页/网页特效、摄影风格灯光），每个都有实时演示 + Copy Prompt；可按编号引用（#012）。画廊：showheyohtaki.github.io/motion-prompt | `npx skills add showheyohtaki/motion-prompt` | 免费 |
-| [aimotions.art](https://aimotions.art) | 195 种命名文字动画风格（故障、材质 3D、光效 shader…），可复制 Prompt | copy prompt | 免费 |
-| [Animate.css](https://animate.style) | CSS 入场/出场动画的「标准命名」来源 |  | 免费 |
-| [Animista](https://animista.net) | CSS 动画预设及其标准名称（slide-in-blurred、flip-scale…），可在线调参 |  | 免费 |
-| [CSSFX](https://cssfx.netlify.app) | 命名 CSS 效果，点击复制代码 |  | 免费 |
-| [cubic-bezier.com](https://cubic-bezier.com) | 贝塞尔缓动曲线编辑器 |  | 免费 |
-| [design-motion-principles](https://github.com/kylezantos/design-motion-principles) | 设计或审查「有目的」的动效 | `npx skills add kylezantos/design-motion-principles` | 免费 |
-| [Easings.net](https://easings.net) | 缓动曲线标准名称（easeOutExpo…）对照图 |  | 免费 |
-| [Hover.css](https://ianlunn.github.io/Hover/) | 命名 hover 效果（grow、sweep、underline-from-center…） |  | 免费 |
-| [LottieFiles motion-design-skill](https://github.com/LottieFiles/motion-design-skill) | 时长、缓动、编排、迪士尼动画原则 | `npx skills add LottieFiles/motion-design-skill` | 免费 |
-| [Motion Effects 325](https://sueun-dev.github.io/motion-effects/) | 325 个 Canvas/WebGL/three.js 效果，5 秒视频演示 + 英/韩 Prompt（新项目） | copy prompt | 免费 |
-| [Motion Library（510 效果）](https://chengwq95.github.io/motion-library/) | 510 个网页效果（文字/按钮/卡片/导航…），可搜索筛选，有 React/Vue 版本，每个可复制 Prompt（新项目，星数少） | copy prompt | 免费 |
-| [motion-prompt 动态画廊](https://showheyohtaki.github.io/motion-prompt/) | motion-prompt 的在线画廊，所有效果可实时播放，点 Copy Prompt 直接复制给 AI | copy prompt | 免费 |
-| [NN/g UI Elements Glossary](https://www.nngroup.com/articles/ui-elements-glossary/) | 权威 UI 元素术语表 |  | 免费 |
-| [SheCodes: Animations for AI Coders](https://books.shecodes.io/animations) | 入门级 hover/入场/循环动效术语表（Wiggle、Shimmer、Typing Dots），带 Prompt | copy prompt | 免费 |
-| [Superdesign Prompt Library](https://superdesign.dev/library) | 社区设计 Prompt，按风格和页面区块分类（如 GSAP 横向画廊） | Use this prompt / llms.txt: https://superdesign.dev/llms.txt | 免费 |
-| [The Component Gallery](https://component.gallery) | 90+ 设计系统里同一组件的标准叫法（Accordion/Disclosure/Collapse…），用来查组件到底叫什么 |  | 免费 |
-| [TypeUI UI Animations](https://typeui.sh/ui-animations) | 约 281 个命名 UI 微交互（Spring slide、Dot ripple…） | copy prompt / TypeUI MCP | 免费+付费 |
-| [UI-Patterns](https://ui-patterns.com) | 命名 UX 模式库 |  | 免费 |
-| [userinterface.wiki](https://userinterface.wiki) | 「更好界面的活手册」，带演示，站内提供 Skill |  | 免费 |
-
-<a id="ui-design-skills"></a>
-
-## 设计风格 / 审美类 Skill 与 DESIGN.md
-
-让 Agent 有审美、去 AI 味；或直接套用知名网站的设计系统（DESIGN.md）。
-
-| 名称 | 是什么 / 什么时候用 | AI 接入（安装命令 / MCP / Skill） | 价格 |
-|---|---|---|---|
-| ⭐ [Anthropic frontend-design](https://github.com/anthropics/skills/tree/main/skills/frontend-design) | Anthropic 官方「去 AI 味」前端审美 Skill，避免千篇一律的紫色渐变 + Inter 字体 | `npx skills add anthropics/skills --skill frontend-design` | 免费 |
-| ⭐ [awesome-design-md](https://github.com/VoltAgent/awesome-design-md) | 从 Claude、Stripe、Linear、Vercel 等名站提取的 DESIGN.md，丢进项目根目录即可让 AI 照着这个风格做（126k★） | drop-in DESIGN.md | 免费 |
-| ⭐ [Impeccable](https://impeccable.style) | 「给编码 Agent 的设计词汇」：polish/bolder/critique/audit 等命令 + AI-slop 检测器（107k★） | `npx impeccable install` | 免费 |
-| ⭐ [Taste Skill](https://github.com/Leonxlnx/taste-skill) | 艺术指导、参考图、浏览器自检，避免通用 AI 外观（112k★） | `npx skills add https://github.com/Leonxlnx/taste-skill --skill "design-taste-frontend"` | 免费 |
-| ⭐ [UI UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | 可检索的设计数据库：80 种 UI 风格、192 种产品类型、192 套配色、74 组字体搭配 + UX 规则，自动生成设计系统（147k★） | `/plugin marketplace add nextlevelbuilder/ui-ux-pro-max-skill`<br>`/plugin install ui-ux-pro-max@ui-ux-pro-max-skill`<br>或 `npm i -g ui-ux-pro-max-cli && uipro init --ai claude` | 免费 |
-| [awesome-claude-design](https://github.com/VoltAgent/awesome-claude-design) | 68 个为 Claude Design 调过的 DESIGN.md 灵感 |  | 免费 |
-| [awesome-design-skills](https://github.com/bergside/awesome-design-skills) | 67 个 DESIGN.md / SKILL.md 风格文件，带 pull CLI |  | 免费 |
-| [daisyUI UI design prompts](https://trends.daisyui.com/ui-design-prompts/) | 命名风格 Prompt，做出有辨识度的界面 | copy prompt | 免费 |
-| [DESIGN.md 规范（Google Labs）](https://github.com/google-labs-code/design.md) | 向 Agent 描述视觉识别的官方格式规范，附 lint 工具 | `npx @google/design.md lint DESIGN.md` | 免费 |
-| [DesignPrompts](https://designprompts.dev) | 落地页风格构建器，选好风格后复制 Prompt 给 Agent；含词汇表 + JSON Schema | copy prompt / llms.txt: https://designprompts.dev/llms.txt | 免费+付费 |
-| [getdesign.md](https://getdesign.md) | awesome-design-md 的网站版，550+ DESIGN.md 目录 | copy DESIGN.md | 免费+付费 |
-| [interface-design](https://github.com/Dammyjay93/interface-design) | 跨会话保持 UI 决策一致性 | `npx skills add https://github.com/dammyjay93/interface-design --skill interface-design` | 免费 |
-| [make-interfaces-feel-better](https://github.com/jakubkrehel/make-interfaces-feel-better) | 界面打磨与微交互 Skill | `npx skills add jakubkrehel/make-interfaces-feel-better` | 免费 |
-| [MengTo Skills](https://github.com/MengTo/Skills) | 视频→超级 Prompt、HTML→交互 Prompt、14 种 SVG 插画风格、3D Skill |  | 免费 |
-| [PostHog: Engineer's guide to vibe design](https://newsletter.posthog.com/p/an-engineers-guide-to-vibe-design) | 工程师视角的 vibe design 提示指南，带示例 Prompt |  | 免费 |
-| [Refero Styles](https://styles.refero.design) | 2000+ 真实产品的 AI 可读设计系统，每个带 DESIGN.md | Refero MCP | 免费+付费 |
-| [TypeUI](https://typeui.sh) | 设计 Skill 注册表、UI Prompt、布局指导 | TypeUI MCP<br>`npx typeui.sh pull <slug>` | 免费+付费 |
-| [UI Skills](https://www.ui-skills.com) | 设计工程师 Skill 注册表（含 motion 分类） | `npx ui-skills get baseline-ui`<br>MCP https://www.ui-skills.com/mcp | 免费 |
-| [Vercel Web Interface Guidelines](https://vercel.com/design/guidelines) | 界面质量规则；也作为 web-design-guidelines Skill 发布 | `npx skills add vercel-labs/agent-skills --skill web-design-guidelines` | 免费 |
-
-<a id="ui-prompt-guides"></a>
-
-## 官方 Prompt 指南（v0 / Lovable / Bolt / Stitch / Claude）
-
-| 名称 | 是什么 / 什么时候用 | AI 接入（安装命令 / MCP / Skill） | 价格 |
-|---|---|---|---|
-| ⭐ [Claude Cookbook: Prompting for frontend aesthetics](https://github.com/anthropics/claude-cookbooks/blob/main/coding/prompting_for_frontend_aesthetics.ipynb) | 排版、主题、动效的 Prompt 模块，可直接拼进系统提示 |  | 免费 |
-| [Anthropic: Improving frontend design through Skills](https://claude.com/resources/articles/improving-frontend-design-through-skills) | frontend-design Skill 背后的思路与提示方法 |  | 免费 |
-| [Bolt: Prompting effectively](https://support.bolt.new/prompting/prompting-effectively) | Bolt 官方提示最佳实践 |  | 免费 |
-| [Google Stitch Prompt Guide](https://stitch.withgoogle.com/docs/learn/prompting/) | Stitch 官方 UI 生成提示指南 |  | 免费 |
-| [Lovable Prompting Handbook](https://docs.lovable.dev/prompting/prompting-one) | Lovable 官方提示手册 |  | 免费 |
-| [Stitch Skills（Google Labs）](https://github.com/google-labs-code/stitch-skills) | Stitch MCP 配套的 design-md、shadcn-ui 等 Skill | `npx skills add google-labs-code/stitch-skills` | 免费 |
-| [v0 text-prompting docs](https://v0.app/docs/text-prompting) | v0 官方提示指南 |  | 免费 |
-
-<a id="ui-camera-photo"></a>
-
-## 镜头 / 摄影 / 灯光词汇（图像与视频生成）
-
-| 名称 | 是什么 / 什么时候用 | AI 接入（安装命令 / MCP / Skill） | 价格 |
-|---|---|---|---|
-| ⭐ [Google Veo 视频提示指南](https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/video/video-gen-prompt-guide) | 官方镜头运动、景别、镜头焦段、风格术语 |  | 免费 |
-| [Atlabs: 27 种电影级布光](https://www.atlabs.ai/blog/27-cinematic-lighting-looks-ai-prompts-guide) | 命名布光风格 + 可复制修饰词 | copy prompt | 免费 |
-| [FilmGrab](https://film-grab.com) | 电影截图参考库（找画面风格） |  | 免费 |
-| [Midlibrary](https://midlibrary.io) | Midjourney 风格库：艺术家、流派、技法、胶片质感 |  | 免费+付费 |
-| [Promptomania](https://promptomania.com) | 可视化图像 Prompt 构建器，含风格与镜头术语 |  | 免费 |
-| [Runway AI camera prompts](https://runway.com/resources/ai-camera-prompts) | 镜头术语（pan vs truck、pedestal…） |  | 免费 |
-| [StudioBinder 镜头运动大全](https://www.studiobinder.com/blog/different-types-of-camera-movements-in-film/) | 电影镜头运动/景别标准词汇，带示例 |  | 免费 |
-
-===== FILE: ui/catalog/10-inspiration.md =====
-
-# 设计灵感画廊
-
-> 本文件由 `scripts/build.py` 从 `data/resources/*.json` 自动生成，请勿手改；要增删条目请改 JSON 后重新运行脚本。⭐ = 同类首选。
-
-<a id="ui-inspiration"></a>
-
-## 灵感画廊（带 MCP 的优先）
-
-找参考图、截图给 AI 看。Mobbin / Refero / Lazyweb 有 MCP，Agent 可直接检索（都需要账号，Mobbin 和 Refero 要付费套餐）。
-
-| 名称 | 是什么 / 什么时候用 | AI 接入（安装命令 / MCP / Skill） | 价格 |
-|---|---|---|---|
-| ⭐ [Mobbin](https://mobbin.com) | 60 万+ 真实 App/Web 截图、流程、页面区块 | `claude mcp add --transport http mobbin https://api.mobbin.com/mcp` | 付费 |
-| ⭐ [Refero](https://refero.design) | 12.5 万+ Web/iOS 截图、8000+ 流程；配套 refero_skill 做「先调研再设计」 | `claude mcp add --transport http refero https://api.refero.design/mcp` | 付费 |
-| [Awwwards](https://www.awwwards.com) | 获奖网站；有 llms.txt 和只读 OpenAPI | llms.txt: https://www.awwwards.com/llms.txt | 免费 |
-| [Cosmos](https://www.cosmos.so) | 视觉情绪板与灵感发现 |  | 免费 |
-| [Curated Design](https://www.curated.design) | 精选网页设计 |  | 免费 |
-| [Dark Design](https://dark.design) | 暗色模式网站合集 |  | 免费 |
-| [Footer Design](https://www.footer.design) | 页脚模式 |  | 免费 |
-| [Httpster](https://httpster.net) | 网页设计画廊 |  | 免费 |
-| [Land-book](https://land-book.com) | 每日精选落地页，可按区块/颜色浏览 | llms.txt: https://land-book.com/llms.txt | 免费+付费 |
-| [Landingfolio](https://www.landingfolio.com) | 落地页与组件 |  | 免费+付费 |
-| [Lapa Ninja](https://www.lapa.ninja) | 落地页画廊 |  | 免费 |
-| [Lazyweb](https://design.lazyweb.com) | 28 万+ 真实 App/营销页截图与流程，2 万+ 移动端 A/B 测试；MCP 需注册账号（OAuth 登录），免费账号只能拿到部分结果 | `claude mcp add --transport http lazyweb https://www.lazyweb.com/mcp`（首次连接要 OAuth 登录） | 免费+付费 |
-| [Minimal Gallery](https://minimal.gallery) | 极简风网站 |  | 免费 |
-| [Navbar Gallery](https://www.navbar.gallery) | 导航栏模式 |  | 免费 |
-| [One Page Love](https://onepagelove.com) | 单页网站与模板 |  | 免费 |
-| [Page Flows](https://pageflows.com) | 真实用户流程录屏（注册、引导、支付…） |  | 付费 |
-| [SaaS Landing Page](https://saaslandingpage.com) | SaaS 落地页，按区块分类 |  | 免费 |
-| [SaaSFrame](https://www.saasframe.io) | SaaS UI 与邮件示例 |  | 免费+付费 |
-| [UIland](https://uiland.design) | 移动端 UI 截图 |  | 免费+付费 |
-
-===== FILE: ui/catalog/11-assets.md =====
-
-# 图标 / 字体 / 配色 / 主题
-
-> 本文件由 `scripts/build.py` 从 `data/resources/*.json` 自动生成，请勿手改；要增删条目请改 JSON 后重新运行脚本。⭐ = 同类首选。
-
-<a id="ui-assets"></a>
-
-## 图标、字体、配色、主题生成
-
-| 名称 | 是什么 / 什么时候用 | 技术栈 | AI 接入（安装命令 / MCP / Skill） | 价格 |
-|---|---|---|---|---|
-| ⭐ [Fontshare](https://www.fontshare.com) | 免费高质量字体（Clash、General Sans、Satoshi…），比 Inter 更有个性 |  |  | 免费 |
-| ⭐ [Iconify](https://iconify.design) | 200+ 图标集、20 万+ 图标；公开免 key API |  | `claude mcp add iconify -- npx -y iconify-mcp-server@latest`（社区） | 免费 |
-| ⭐ [Lucide](https://lucide.dev) | shadcn 和多数 AI 工具的默认图标集 |  | llms.txt: https://lucide.dev/llms.txt<br>`npx lucide-mcp`（社区） | 免费 |
-| ⭐ [Realtime Colors](https://www.realtimecolors.com) | 在真实页面上预览配色和字体，导出 CSS/Tailwind |  |  | 免费 |
-| ⭐ [tweakcn](https://tweakcn.com) | shadcn/Tailwind 可视化主题编辑器，有预设和 AI 主题生成，导出后一行命令装入 |  | `npx shadcn@latest add https://tweakcn.com/r/themes/<preset>.json`（预设主题，例如 amber-minimal） | 免费 |
-| [Coolors](https://coolors.co) | 配色生成器 |  |  | 免费+付费 |
-| [Fontjoy](https://fontjoy.com) | AI 生成字体搭配 |  |  | 免费 |
-| [Fontpair](https://www.fontpair.co) | Google Fonts 搭配 |  |  | 免费 |
-| [Google Fonts](https://fonts.google.com) | 字体目录 + Developer API |  | `uvx google-fonts-mcp`（社区） | 免费 |
-| [Happy Hues](https://www.happyhues.co) | 在真实页面语境里展示的配色 |  |  | 免费 |
-| [Heroicons](https://heroicons.com) | Tailwind 官方图标 |  |  | 免费 |
-| [Huemint](https://huemint.com) | AI 生成配色 |  |  | 免费 |
-| [lucide-animated](https://lucide-animated.com) | 468 个带动画的 Lucide 图标 | React, Tailwind | `npx shadcn@latest add @lucide-animated/<icon>` | 免费 |
-| [Phosphor Icons](https://phosphoricons.com) | 6 种字重的图标家族 |  |  | 免费 |
-| [Radix Colors](https://www.radix-ui.com/colors) | 可访问性友好的色阶系统 |  |  | 免费 |
-| [Simple Icons](https://simpleicons.org) | 品牌图标 |  |  | 免费 |
-| [SVGL](https://svgl.app) | 品牌 Logo SVG，有公开 API | React, Tailwind | `npx shadcn@latest add @svgl/<logo>` | 免费 |
-| [Typewolf](https://www.typewolf.com) | 字体搭配与真实用例 |  |  | 免费 |
-| [UI Colors](https://uicolors.app) | 生成 Tailwind 50–950 色阶 |  |  | 免费+付费 |
-
-===== FILE: ui/catalog/12-mcp-registries-llms.md =====
-
-# UI 相关 MCP / shadcn Registry / llms.txt
-
-> 本文件由 `scripts/build.py` 从 `data/resources/*.json` 自动生成，请勿手改；要增删条目请改 JSON 后重新运行脚本。⭐ = 同类首选。
-
-<a id="ui-mcp"></a>
-
-## UI 相关 MCP 服务器
-
-装上之后 Agent 能直接搜索、安装组件。
-
-| 名称 | 是什么 / 什么时候用 | AI 接入（安装命令 / MCP / Skill） | 价格 |
-|---|---|---|---|
-| ⭐ [21st MCP（原 Magic MCP）](https://21st.dev/mcp) | 搜索并获取 21st.dev 上万个组件；AI 生成需付费。旧 Magic API key 已重置 | `npx @21st-dev/cli@latest init --client claude` | 免费+付费 |
-| ⭐ [Context7](https://context7.com) | 几乎任何库的最新文档（Tailwind、Radix 这类没有 llms.txt/MCP 的库靠它兜底） | `claude mcp add context7 -- npx -y @upstash/context7-mcp`<br>`npx ctx7 setup --claude`（官方新的一键配置） | 免费 |
-| ⭐ [Figma MCP（官方）](https://developers.figma.com/docs/figma-mcp-server/remote-server-installation) | 读取设计稿上下文、变量、截图、Code Connect，也能写回 Figma | `claude mcp add --transport http figma https://mcp.figma.com/mcp` | 免费+付费 |
-| ⭐ [Motion AI Kit](https://motion.dev/docs/ai-kit) | Motion 官方 /motion Skill + 文档 MCP（免费）；Motion+ 版加示例和性能诊断 | `npx motion-ai` | 免费+付费 |
-| ⭐ [shadcn MCP（官方）](https://ui.shadcn.com/docs/mcp) | 在任何已配置的 registry（含 @命名空间）里浏览、搜索、安装组件。装这一个就能接入几百个组件库 | `npx shadcn@latest mcp init --client claude` | 免费 |
-| [Chakra UI MCP](https://chakra-ui.com/docs/get-started/ai/mcp-server) | Chakra v3 组件、props、示例 | `claude mcp add chakra-ui -- npx -y @chakra-ui/react-mcp` | 免费 |
-| [Chrome DevTools MCP](https://github.com/ChromeDevTools/chrome-devtools-mcp) | 让 Agent 打开浏览器看自己做出来的 UI、查 console、测性能 | `claude mcp add chrome-devtools -- npx chrome-devtools-mcp@latest` | 免费 |
-| [daisyUI Blueprint](https://daisyui.com/blueprint/) | 设计方向 + daisyUI 语法 MCP（$22/月或 $600 终身） |  | 付费 |
-| [Flowbite MCP](https://flowbite.com/docs/getting-started/mcp/) | Figma → Flowbite/Tailwind 组件 | `npx -y flowbite-mcp`（需 FIGMA_ACCESS_TOKEN） | 免费 |
-| [Framelink Figma MCP（社区）](https://github.com/GLips/Figma-Context-MCP) | 为 Agent 精简过的 Figma 数据 | `npx -y figma-developer-mcp --figma-api-key=KEY --stdio` | 免费 |
-| [HeroUI MCP](https://heroui.com/docs/react/getting-started/mcp-server) | HeroUI React v3 与 Native 文档 | `claude mcp add heroui-react -- npx -y @heroui/react-mcp@latest` | 免费 |
-| [LottieFiles MCP](https://docs.lottiefiles.com/en/platform/mcp) | 搜索和管理 Lottie 动画 | `claude mcp add --transport http lottiefiles https://mcp.lottiefiles.com/mcp` | 免费+付费 |
-| [Magic UI MCP](https://magicui.design/docs/mcp) | 搜索并安装 Magic UI 组件 | `npx @magicuidesign/cli@latest install claude` | 免费 |
-| [Mantine MCP](https://mantine.dev/guides/llms/) | Mantine 文档 | `claude mcp add mantine -- npx -y @mantine/mcp-server` | 免费 |
-| [MUI MCP](https://mui.com/material-ui/getting-started/mcp/) | Material UI 与 MUI X 文档 | `claude mcp add mui -- npx -y @mui/mcp` | 免费 |
-| [Nuxt UI MCP](https://ui.nuxt.com/docs/getting-started/ai/mcp) | Nuxt UI（Vue）文档 |  | 免费 |
-| [Playwright MCP](https://github.com/microsoft/playwright-mcp) | 浏览器自动化，Agent 自测 UI | `claude mcp add playwright -- npx @playwright/mcp@latest` | 免费 |
-| [pmndrs docs MCP（R3F / drei）](https://docs.pmnd.rs) | React Three Fiber 及 pmndrs 生态文档 | `claude mcp add --transport http pmndrs https://docs.pmnd.rs/api/mcp` | 免费 |
-| [Storybook MCP](https://storybook.js.org/docs/ai/mcp/overview) | 把你自己项目的组件清单和 stories 暴露给 Agent，可写和测 stories（预览版） | `npx storybook add @storybook/addon-mcp` | 免费 |
-
-<a id="ui-registries"></a>
-
-## shadcn 命名空间 Registry
-
-官方索引收录的命名空间无需配置，直接 `npx shadcn@latest add @命名空间/条目名`；未收录的要先在 components.json 里登记。完整用法见 ui/SKILL.md 第 3 步。
-
-| 名称 | 是什么 / 什么时候用 | 技术栈 | AI 接入（安装命令 / MCP / Skill） | 价格 |
-|---|---|---|---|---|
-| ⭐ [registry.directory](https://registry.directory) | 跨 registry 的发现层，约 2.4 万个条目，提供 items.json / openapi.json | React, Tailwind | `npx shadcn@latest add @registrydirectory/<item>` | 免费 |
-| ⭐ [shadcn 官方 Registry 索引](https://ui.shadcn.com/docs/directory) | 548 个命名空间，带健康分和条目数；机器可读版 ui.shadcn.com/r/registries.json。已收录的命名空间无需配置即可 npx shadcn add @ns/item |  | `npx shadcn@latest search @<ns> --query "<关键词>"` | 免费 |
-
-<a id="ui-llms-txt"></a>
-
-## llms.txt（喂给 AI 的官方文档）
-
-让 Agent 读最新官方文档，避免用过时 API。
-
-| 名称 | 是什么 / 什么时候用 | 价格 |
-|---|---|---|
-| [21st.dev llms.txt](https://21st.dev/llms.txt) | 21st.dev 组件目录 | 免费 |
-| [Aceternity UI llms.txt](https://ui.aceternity.com/llms.txt) | 每个组件附带 npx shadcn add @aceternity/... 命令 | 免费 |
-| [Base UI llms.txt](https://base-ui.com/llms.txt) | Radix 没有 llms.txt，Base UI 有 | 免费 |
-| [Chakra UI llms.txt](https://chakra-ui.com/llms.txt) | 另有 components/charts/styling/theming 分卷 | 免费 |
-| [daisyUI llms.txt](https://daisyui.com/llms.txt) | 80KB 完整用法 | 免费 |
-| [GSAP llms.txt](https://gsap.com/llms.txt) | 另有 llms-full.txt | 免费 |
-| [HeroUI llms.txt](https://www.heroui.com/llms.txt) | 另有 llms-full.txt | 免费 |
-| [Lenis llms.txt](https://lenis.dev/llms.txt) | Lenis 平滑滚动文档 | 免费 |
-| [LottieFiles llms.txt](https://lottiefiles.com/llms.txt) | LottieFiles 平台文档 | 免费 |
-| [Magic UI llms.txt](https://magicui.design/llms.txt) | Magic UI 全部组件文档 | 免费 |
-| [Mantine llms.txt](https://mantine.dev/llms.txt) | 另有 llms-full.txt | 免费 |
-| [Motion llms.txt](https://motion.dev/llms.txt) | 另有 llms-full.txt（842KB） | 免费 |
-| [MUI llms.txt](https://mui.com/material-ui/llms.txt) | MUI X 在 mui.com/x/llms.txt | 免费 |
-| [React Bits llms.txt](https://reactbits.dev/llms.txt) | React Bits 全部组件文档 | 免费 |
-| [React Three Fiber llms.txt](https://r3f.docs.pmnd.rs/llms.txt) | R3F 官方文档 | 免费 |
-| [Rive llms.txt](https://rive.app/docs/llms.txt) | 另有 llms-full.txt | 免费 |
-| [shadcn/ui llms.txt](https://ui.shadcn.com/llms.txt) | shadcn 官方文档（AI 版） | 免费 |
-| [Three.js llms.txt](https://threejs.org/docs/llms.txt) | 另有 llms-full.txt | 免费 |
-
-===== FILE: skills/catalog.md =====
-
-# Agent Skills 目录
-
-> 本文件由 `scripts/build.py` 从 `data/resources/*.json` 自动生成，请勿手改；要增删条目请改 JSON 后重新运行脚本。⭐ = 同类首选。
-
-<a id="skills-directories"></a>
-
-## Skill 目录站与 Awesome 列表
-
-安装格式统一为 `npx skills add <owner/repo>`（可加 `--skill <名称>` 只装其中一个）。
-
-| 名称 | 是什么 / 什么时候用 | AI 接入（安装命令 / MCP / Skill） | 价格 |
-|---|---|---|---|
-| ⭐ [skills.sh](https://skills.sh) | Agent Skills 事实标准目录与排行榜；搜索 API：skills.sh/api/search?q=关键词 | `npx skills add <owner/repo>` | 免费 |
-| [awesome-frontend-skills](https://github.com/finfin/awesome-frontend-skills) | 按框架/UI 库/动画/视频分类的前端 Skill |  | 免费 |
-| [ComposioHQ awesome-claude-skills](https://github.com/ComposioHQ/awesome-claude-skills) | Claude Skill 精选列表（79k★） |  | 免费 |
-| [travisvn awesome-claude-skills](https://github.com/travisvn/awesome-claude-skills) | Claude Skill 精选列表（15.8k★） |  | 免费 |
-| [vercel-labs/skills（skills CLI）](https://github.com/vercel-labs/skills) | npx skills 命令本体，支持 Claude Code / Codex / Cursor 等多种 Agent | `npx skills add <owner/repo> [--skill <name>]` | 免费 |
-| [VoltAgent awesome-agent-skills](https://github.com/VoltAgent/awesome-agent-skills) | 1000+ 精选 Skill（37k★） |  | 免费 |
-
-<a id="skills-top"></a>
-
-## 全球累计安装量 Top（skills.sh All Time，2026-11-09 实时数据）
-
-数据来源 skills.sh All Time 排行榜（2026-11-09 抓取），按名次排列。安装量不等于独立用户数。
-
-| 名称 | 是什么 / 什么时候用 | AI 接入（安装命令 / MCP / Skill） | 价格 |
-|---|---|---|---|
-| ⭐ [find-skills](https://github.com/vercel-labs/skills) | #1（约 430 万次安装）让 AI 自己去找需要的 Skill。建议第一个装 | `npx skills add vercel-labs/skills --skill find-skills` | 免费 |
-| ⭐ [grill-me](https://github.com/mattpocock/skills) | #2（约 150 万）不停追问，把需求彻底问清楚 | `npx skills add mattpocock/skills --skill grill-me` | 免费 |
-| [hyperframes 系列](https://github.com/heygen-com/hyperframes) | #3/#4（各约 150 万）HeyGen 出品，HTML→视频，含 cli、media-use、animation、registry 等子 Skill | `npx skills add heygen-com/hyperframes` | 免费 |
-| ⭐ [agent-browser](https://github.com/vercel-labs/agent-browser) | #5（约 140 万）让 AI 自己打开、点击、操作网页 | `npx skills add vercel-labs/agent-browser` | 免费 |
-| [design-mobile-apps](https://www.skills.sh/designed-by-ai/skills/design-mobile-apps) | #7（约 130 万）移动 App 设计 Skill（designed-by-ai/skills） | `npx skills add designed-by-ai/skills --skill design-mobile-apps` | 免费 |
-| [grill-with-docs](https://github.com/mattpocock/skills) | #9（约 130 万）拿着文档追问，专门找方案漏洞 | `npx skills add mattpocock/skills --skill grill-with-docs` | 免费 |
-| [improve-codebase-architecture](https://github.com/mattpocock/skills) | #10（约 120 万）帮 AI 检查并重构代码架构 | `npx skills add mattpocock/skills --skill improve-codebase-architecture` | 免费 |
-| [tdd](https://github.com/mattpocock/skills) | #12（约 120 万）让 AI 按测试驱动流程写代码 | `npx skills add mattpocock/skills --skill tdd` | 免费 |
-| ⭐ [setup-matt-pocock-skills](https://github.com/mattpocock/skills) | #13（约 110 万）一键配好 Matt Pocock 整套 Skills 工作流（grill/tdd/handoff/triage/prototype…）。装完后在 Agent 里运行 /setup-matt-pocock-skills | `npx skills add mattpocock/skills --skill setup-matt-pocock-skills` | 免费 |
-| [handoff](https://github.com/mattpocock/skills) | #14（约 110 万）换一个 AI / 新会话也能从当前进度接着干 | `npx skills add mattpocock/skills --skill handoff` | 免费 |
-| ⭐ [frontend-design](https://github.com/anthropics/skills/tree/main/skills/frontend-design) | #15（约 110 万）Anthropic 官方「去 AI 味」前端 Skill | `npx skills add anthropics/skills --skill frontend-design` | 免费 |
-| [ui-taste](https://www.skills.sh/site/uizze.sh/ui-taste) | #16（约 110 万）UI 审美 Skill，来自 uizze.sh（不是 GitHub 仓库） | `npx skills add https://uizze.sh/` | 免费 |
-| [prototype](https://github.com/mattpocock/skills) | #18（约 110 万）快速原型 | `npx skills add mattpocock/skills --skill prototype` | 免费 |
-| [triage](https://github.com/mattpocock/skills) | #19（约 110 万）自动整理 Issue，判断下一步怎么处理 | `npx skills add mattpocock/skills --skill triage` | 免费 |
-| [diagnosing-bugs](https://github.com/mattpocock/skills) | #30（约 91 万）系统化定位 Bug | `npx skills add mattpocock/skills --skill diagnosing-bugs` | 免费 |
-
-<a id="skills-engineering"></a>
-
-## 工程 / 工作流类 Skill
-
-| 名称 | 是什么 / 什么时候用 | AI 接入（安装命令 / MCP / Skill） | 价格 |
-|---|---|---|---|
-| ⭐ [vercel-labs/agent-skills](https://github.com/vercel-labs/agent-skills) | react-best-practices、web-design-guidelines、composition-patterns、react-view-transitions | `npx skills add vercel-labs/agent-skills` | 免费 |
-| [anthropics/skills](https://github.com/anthropics/skills) | Anthropic 官方 Skill 仓库（docx/pdf/pptx/xlsx/frontend-design/skill-creator…） | `npx skills add anthropics/skills` | 免费 |
-| [shadcn skill（官方）](https://ui.shadcn.com/docs/skills) | 通过 shadcn info --json 读取项目并强制 shadcn 写法；含 migrate-radix-to-base | `npx skills add shadcn/ui` | 免费 |
-
-<a id="skills-ui"></a>
-
-## 前端 / 设计 / 动效类 Skill
-
-完整清单另见 ui/catalog/09-design-vocabulary.md。
-
-| 名称 | 是什么 / 什么时候用 | AI 接入（安装命令 / MCP / Skill） | 价格 |
-|---|---|---|---|
-| [GSAP skills（官方）](https://github.com/greensock/gsap-skills) | gsap-core、scrolltrigger、timeline、react、performance… | `npx skills add https://github.com/greensock/gsap-skills` | 免费 |
-| [Mobbin skills](https://github.com/mobbin/skills) | 配合 Mobbin MCP 的设计调研 Skill |  | 免费 |
-| [Refero design skill](https://github.com/referodesign/refero_skill) | 先用 Refero MCP 调研真实产品再设计 | `npx skills add https://github.com/referodesign/refero_skill --skill refero-design` | 免费 |
-| [Three.js skills](https://github.com/CloudAI-X/threejs-skills) | 基础、动画、shader、材质、几何、交互 | `npx skills add cloudai-x/threejs-skills` | 免费 |
-
-<a id="skills-media"></a>
-
-## 视频 / 多媒体类 Skill
-
-| 名称 | 是什么 / 什么时候用 | AI 接入（安装命令 / MCP / Skill） | 价格 |
-|---|---|---|---|
-| [101-skills/superpowers](https://www.skills.sh/101-skills/superpowers) | ai-video-generation 等（Top 30 中占 4 席） |  | 免费 |
-| [Remotion skills（官方）](https://github.com/remotion-dev/skills) | remotion-best-practices（78 万安装）、render、captions | `npx skills add remotion-dev/skills` | 免费 |
-
-<a id="skills-local"></a>
-
-## 本文件夹自带的 Skill
-
-已经在本文件夹里，无需安装。
-
-| 名称 | 是什么 / 什么时候用 | AI 接入（安装命令 / MCP / Skill） | 价格 |
-|---|---|---|---|
-| [lieflat-less-ai-tone（本地）](../lieflat-less-ai-tone/SKILL.md) | 中文去 AI 味：脚本检测 + 语义判读 + 改写 + 前后对比报告。路径：./lieflat-less-ai-tone/SKILL.md。⚠ CC BY-NC 4.0，禁止商用 | 直接读 lieflat-less-ai-tone/SKILL.md | 免费 |
-| [ui-master（本地）](../ui/SKILL.md) | 本文件夹的 UI 路由 Skill：按需求选组件库、风格、动效词汇和 MCP。路径：./ui/SKILL.md | 直接读 ui/SKILL.md | 免费 |
-
-===== FILE: tools/catalog.md =====
-
-# 开源工具
-
-> 本文件由 `scripts/build.py` 从 `data/resources/*.json` 自动生成，请勿手改；要增删条目请改 JSON 后重新运行脚本。⭐ = 同类首选。
-
-<a id="tools-crawl"></a>
-
-## 数据采集 / 爬虫
-
-⚠ 遵守平台条款与当地法律，只采集公开数据；多数项目禁止商用。
-
-| 名称 | 是什么 / 什么时候用 | 技术栈 | AI 接入（安装命令 / MCP / Skill） | 价格 |
-|---|---|---|---|---|
-| ⭐ [MediaCrawler](https://github.com/NanmiCoder/MediaCrawler) | 小红书/抖音/快手/B站/微博/贴吧/知乎 的帖子、视频、评论（含二级评论）采集；Playwright 复用登录态免逆向；存 CSV/JSON/Excel/SQLite/MySQL；带 WebUI（约 70k★）。⚠ 仅供学习，禁止商用 | Python, Playwright | `git clone https://github.com/NanmiCoder/MediaCrawler && cd MediaCrawler && uv sync`<br>`uv run main.py --platform xhs --lt qrcode --type search` | 开源 |
-| [Agent Reach](https://github.com/Panniantong/Agent-Reach) | 让 Agent 搜索/阅读 Twitter、Reddit、YouTube、B站、小红书、抖音、微博、公众号等 17 个平台。安装：把仓库 README 里的 install.md 链接交给 Agent（⚠ PyPI 上同名的 agent-reach 包不是本项目） |  |  | 开源 |
-| [Scrapling](https://github.com/D4Vinci/Scrapling) | 自适应网页抓取，支持隐身浏览器与反爬绕过、爬虫框架 | Python | `pip install scrapling` | 开源 |
-
-<a id="tools-browser"></a>
-
-## 浏览器自动化（给 Agent 用）
-
-| 名称 | 是什么 / 什么时候用 | AI 接入（安装命令 / MCP / Skill） | 价格 |
-|---|---|---|---|
-| ⭐ [agent-browser](https://github.com/vercel-labs/agent-browser) | 给 AI Agent 用的浏览器自动化 CLI（也是 Top 5 Skill） | `npm install -g agent-browser && agent-browser install`<br>`npx skills add vercel-labs/agent-browser`（给 Agent 的 Skill，需先装 CLI） | 开源 |
-| [Playwright MCP](https://github.com/microsoft/playwright-mcp) | 微软官方浏览器自动化 MCP | `claude mcp add playwright -- npx @playwright/mcp@latest` | 开源 |
-
-===== FILE: scaffolds/01-starters.md =====
-
-# 脚手架 / Starter 模板
-
-> 本文件由 `scripts/build.py` 从 `data/resources/*.json` 自动生成，请勿手改；要增删条目请改 JSON 后重新运行脚本。⭐ = 同类首选。
-
-<a id="scaffold-web"></a>
-
-## 全栈 Web Starter
-
-| 名称 | 是什么 / 什么时候用 | 技术栈 | AI 接入（安装命令 / MCP / Skill） | 价格 |
-|---|---|---|---|---|
-| ⭐ [create-next-app](https://nextjs.org/docs/app/getting-started/installation) | 官方 Next.js 脚手架（v16），React 全栈默认选择 | Next.js, React | `npx create-next-app@latest` | 开源 |
-| ⭐ [create-vite](https://vite.dev/guide/) | 轻量 SPA/库脚手架（React/Vue/Svelte/Solid…），不需要 SSR 时选 | Vite | `npm create vite@latest` | 开源 |
-| ⭐ [next-forge（Vercel）](https://www.next-forge.com) | 生产级 Turborepo SaaS 单仓：认证、支付、数据库、邮件、可观测性。认真做多应用 SaaS 时选 | Next.js, Turborepo | `npx next-forge@latest init` | 开源 |
-| ⭐ [Open SaaS](https://opensaas.sh) | 免费全功能 SaaS 模板：Stripe/Polar/Lemon Squeezy 支付、后台、文档、AI demo | Wasp | `npm i -g @wasp.sh/wasp-cli && wasp new -t saas` | 开源 |
-| ⭐ [shadcn/ui init + Blocks](https://ui.shadcn.com/blocks) | 初始化项目时直接带上 shadcn（next/vite/start/react-router/astro）；/create 是可视化构建器；Blocks 是可复制的整页区块 | React, Tailwind | `npx shadcn@latest init -t next` | 开源 |
-| [Astro](https://astro.build/themes/) | 内容优先站点（营销、文档、博客），Islands 架构；Starlight 是文档站 starter | Astro | `npm create astro@latest` | 开源 |
-| [BoxyHQ SaaS Starter Kit](https://github.com/boxyhq/saas-starter-kit) | 企业 SaaS 功能：SSO/SAML、审计日志、团队 | Next.js |  | 开源 |
-| [create-t3-app](https://create.t3.gg) | Next.js + tRPC + Prisma/Drizzle + NextAuth + Tailwind 全类型安全（注意：2025-12 后更新放缓） | Next.js, tRPC | `npm create t3-app@latest` | 开源 |
-| [ixartz Next.js Boilerplate](https://github.com/ixartz/Next-js-Boilerplate) | 开箱即用 Next.js（Clerk、Drizzle、测试、i18n）；SaaS 版加多租户 | Next.js | `git clone --depth=1 https://github.com/ixartz/Next-js-Boilerplate` | 开源 |
-| [Next.js SaaS Starter](https://github.com/nextjs/saas-starter) | 官方极简 SaaS：Next.js + Postgres + Stripe + shadcn/ui | Next.js, Stripe | `git clone https://github.com/nextjs/saas-starter` | 开源 |
-| [Nuxt](https://nuxt.com/templates) | Vue 全栈 + 模板画廊 | Vue | `npm create nuxt@latest` | 开源 |
-| [Nx](https://nx.dev/docs/getting-started/intro) | 企业级单仓工具，带各框架生成器 |  | `npx create-nx-workspace@latest` | 开源 |
-| [Payload CMS](https://payloadcms.com/docs/getting-started/installation) | 装在 Next.js 里的 Headless CMS / 应用框架，内容型应用和后台 | Next.js | `npx create-payload-app@latest` | 开源 |
-| [React Router v7（原 Remix）](https://reactrouter.com/start/framework/installation) | Remix 的继任者：SSR、loaders、actions，基于 Vite | React | `npx create-react-router@latest` | 开源 |
-| [Refine](https://refine.dev) | CRUD / 后台管理 / 内部工具专用 React 框架 | React | `npm create refine-app@latest` | 开源 |
-| [Supabase Next.js Starter](https://supabase.com/docs/guides/getting-started/quickstarts/nextjs) | Postgres + 认证 + 存储后端，cookie SSR 认证 | Next.js, Supabase | `npx create-next-app -e with-supabase` | 免费+付费 |
-| [SvelteKit（sv）](https://svelte.dev/docs/cli/sv-create) | Svelte 全栈；sv CLI 可一键加 Tailwind/Drizzle/auth | Svelte | `npx sv create my-app` | 开源 |
-| [TanStack Start](https://tanstack.com/start/latest) | 基于 TanStack Router 的全栈 React：类型安全路由 + server functions + Vite。Next.js 替代品 | React, Vite | `npx @tanstack/cli@latest create` | 开源 |
-| [Turborepo](https://turborepo.dev/docs/getting-started/installation) | JS/TS 单仓构建系统 |  | `npx create-turbo@latest` | 开源 |
-| [Vercel Templates](https://vercel.com/templates) | 可一键部署的模板画廊（AI、电商、SaaS、博客），跨框架 |  | `npx create-next-app -e <example>` | 免费 |
-| [Wasp](https://wasp.sh) | 声明式全栈（React + Node + Prisma），内置认证、任务、邮件 | React, Node | `npm i -g @wasp.sh/wasp-cli@latest && wasp new` | 开源 |
-
-<a id="scaffold-mobile"></a>
-
-## 移动端 / 桌面端 Starter
-
-| 名称 | 是什么 / 什么时候用 | 技术栈 | AI 接入（安装命令 / MCP / Skill） | 价格 |
-|---|---|---|---|---|
-| ⭐ [create-expo-app](https://docs.expo.dev/more/create-expo/) | 官方 React Native + Expo（Expo Router），RN 默认选择 | React Native, Expo | `npx create-expo-app@latest` | 开源 |
-| ⭐ [create-tauri-app](https://v2.tauri.app/start/create-project/) | Tauri 2：Rust 后端的轻量桌面/移动应用，前端任意 | Rust, Web | `npm create tauri-app@latest` | 开源 |
-| [Electron Forge](https://www.electronforge.io) | Electron 官方打包、发布与模板 | Electron | `npx create-electron-app@latest my-app --template=vite-typescript` | 开源 |
-| [electron-vite](https://electron-vite.org) | 基于 Vite 的 Electron 构建工具，带 React/Vue/Svelte 模板 | Electron, Vite | `npm create @quick-start/electron@latest` | 开源 |
-| [Ignite（Infinite Red）](https://docs.infinite.red/ignite-cli/) | 久经考验的 RN/Expo 模板 + 代码生成器 | React Native | `npx ignite-cli@latest new MyApp` | 开源 |
-| [Obytes RN Template](https://starter.obytes.com) | Expo + TS + Tailwind（Nativewind）+ React Query + Zustand，面向生产 | React Native | `npx create-obytes-app@latest MyApp` | 开源 |
-
-<a id="scaffold-backend"></a>
-
-## 后端 / API Starter
-
-| 名称 | 是什么 / 什么时候用 | 技术栈 | AI 接入（安装命令 / MCP / Skill） | 价格 |
-|---|---|---|---|---|
-| ⭐ [Full Stack FastAPI Template](https://github.com/fastapi/full-stack-fastapi-template) | FastAPI + SQLModel + Postgres + React/Vite + Docker Compose + JWT，Python 全栈 | Python, FastAPI | `git clone https://github.com/fastapi/full-stack-fastapi-template` | 开源 |
-| ⭐ [Hono](https://hono.dev/docs/getting-started/basic) | 超轻量 Web 标准 API 框架（Cloudflare Workers/Bun/Deno/Node/Vercel） | TS | `npm create hono@latest` | 开源 |
-| [Encore](https://encore.dev) | Go/TS 后端框架，在代码里声明基础设施（DB、pub/sub、cron） | Go, TS | `brew install encoredev/tap/encore && encore app create` | 开源 |
-| [Go Blueprint](https://go-blueprint.dev) | Go 项目脚手架：选框架（Gin/Fiber/Echo/chi）、DB、Docker、HTMX/React | Go | `go install github.com/melkeydev/go-blueprint@latest && go-blueprint create` | 开源 |
-| [golang-standards/project-layout](https://github.com/golang-standards/project-layout) | 广泛使用的 Go 目录结构参考（非官方标准） | Go |  | 开源 |
-| [NestJS](https://docs.nestjs.com/first-steps) | 结构化 Node/TS 后端（依赖注入、模块），企业级 API | TS, Node | `npx @nestjs/cli new my-api` | 开源 |
-
-===== FILE: scaffolds/02-ai-agents.md =====
-
-# AI 应用 Starter 与 Agent 框架
-
-> 本文件由 `scripts/build.py` 从 `data/resources/*.json` 自动生成，请勿手改；要增删条目请改 JSON 后重新运行脚本。⭐ = 同类首选。
-
-<a id="scaffold-ai"></a>
-
-## AI 应用 Starter 与 Agent 框架
-
-| 名称 | 是什么 / 什么时候用 | 技术栈 | AI 接入（安装命令 / MCP / Skill） | 价格 |
-|---|---|---|---|---|
-| ⭐ [Claude Agent SDK](https://code.claude.com/docs/en/agent-sdk/overview) | 驱动 Claude Code 的 Agent 循环：工具、子 Agent、hooks、MCP | TS, Python | `npm i @anthropic-ai/claude-agent-sdk`<br>`pip install claude-agent-sdk` | 开源 |
-| ⭐ [Dify](https://github.com/langgenius/dify) | 可自托管的可视化 LLM 应用 / Agent 工作流 / RAG 构建平台（161k★） |  | `git clone https://github.com/langgenius/dify && cd dify/docker && cp .env.example .env`<br>docker compose up -d（先把 .env 里的 DIFY_AGENT_LOCAL_SANDBOX_AUTH_TOKEN 设成 openssl rand -hex 32 的输出） | 开源 |
-| ⭐ [LangGraph](https://langchain-ai.github.io/langgraph/) | 持久化、有状态的图式 Agent，支持人在环中。Python 多 Agent / 复杂控制流首选 | Python, TS | `pip install -U langgraph` | 开源 |
-| ⭐ [Mastra](https://mastra.ai/docs) | TS Agent 框架：Agent、workflow、RAG、记忆、评测、本地 playground | TS | `npm create mastra@latest` | 开源 |
-| ⭐ [n8n](https://docs.n8n.io/deploy/host-n8n/install-options/install-with-npm) | 工作流自动化，内置 AI Agent 节点（210k★） |  | `npx n8n` | 开源 |
-| ⭐ [OpenAI Customer Service Agents Demo](https://github.com/openai/openai-cs-agents-demo) | 多 Agent 客服系统完整示例：Python（Agents SDK）后端做分流与 handoff，Next.js 前端实时显示每步 Agent、工具调用和 guardrail。做客服/分流类多 Agent 直接照它改 | Python, Next.js | `git clone https://github.com/openai/openai-cs-agents-demo` | 开源 |
-| ⭐ [Pydantic AI](https://pydantic.dev/docs/ai/overview/) | Pydantic 团队出品的类型安全 Python Agent 框架。Python 单 Agent / 结构化输出首选 | Python | `pip install pydantic-ai` | 开源 |
-| ⭐ [Vercel AI SDK](https://ai-sdk.dev) | TS 工具包：流式输出、工具调用、Agent、生成式 UI，跨模型厂商（v7） | TS | `npm i ai` | 开源 |
-| ⭐ [Vercel Chatbot](https://github.com/vercel/chatbot) | 完整 Next.js 聊天应用：AI SDK + AI Gateway + Neon + Blob + 认证（原 ai-chatbot） | Next.js | `git clone https://github.com/vercel/chatbot` | 开源 |
-| [Agno](https://github.com/agno-agi/agno) | Python 多 Agent 框架与运行时 | Python | `pip install agno` | 开源 |
-| [Claude Quickstarts](https://github.com/anthropics/claude-quickstarts) | Anthropic 官方示例应用（客服 Agent 是 Next.js/TS；computer use、浏览器工具有 Python 版） | TS, Python | `git clone https://github.com/anthropics/claude-quickstarts` | 开源 |
-| [CrewAI](https://docs.crewai.com) | Python 角色化多 Agent「团队」与 flows | Python | `pip install crewai && crewai create crew my_crew` | 开源 |
-| [E2B Fragments](https://github.com/e2b-dev/fragments) | 生成并在沙箱里运行代码的 Next.js 模板（类 v0/Artifacts） | Next.js |  | 开源 |
-| [Google ADK](https://github.com/google/adk-python) | 代码优先的 Agent 构建、评测、部署工具包 | Python | `pip install google-adk` | 开源 |
-| [LlamaIndex](https://github.com/run-llama/llama_index) | RAG 与文档 Agent（create-llama 脚手架已归档，别用） | Python | `pip install llama-index-core` | 开源 |
-| [OpenAI Agents SDK](https://openai.github.io/openai-agents-python/) | 轻量多 Agent：handoff（Agent 间转交）、guardrail、内置 tracing、语音。客服分流类场景顺手 | Python, TS | `pip install openai-agents`<br>`npm i @openai/agents` | 开源 |
-
-<a id="scaffold-mcp"></a>
-
-## MCP Server 开发模板
-
-| 名称 | 是什么 / 什么时候用 | 技术栈 | AI 接入（安装命令 / MCP / Skill） | 价格 |
-|---|---|---|---|---|
-| ⭐ [FastMCP](https://gofastmcp.com) | 最快的 Python MCP 服务端/客户端写法（v4，已迁到 PrefectHQ） | Python | `pip install fastmcp` | 开源 |
-| ⭐ [MCP TypeScript SDK](https://github.com/modelcontextprotocol/typescript-sdk) | 官方 MCP SDK（v2）：服务端装 server 包，客户端装 client 包。旧的 @modelcontextprotocol/sdk 是 v1，只做维护 | TS | `npm install @modelcontextprotocol/server`<br>`npm install @modelcontextprotocol/client` | 开源 |
-| [MCP Python SDK](https://github.com/modelcontextprotocol/python-sdk) | 官方 Python SDK（含 FastMCP 风格 API） | Python | `pip install "mcp[cli]"` | 开源 |
-| [MCP 官方参考服务器](https://github.com/modelcontextprotocol/servers) | 官方参考实现，照抄模式 |  |  | 开源 |
-
-===== FILE: scaffolds/03-architecture.md =====
-
-# 架构与系统设计参考
-
-> 本文件由 `scripts/build.py` 从 `data/resources/*.json` 自动生成，请勿手改；要增删条目请改 JSON 后重新运行脚本。⭐ = 同类首选。
-
-<a id="scaffold-arch"></a>
-
-## 架构 / 系统设计参考
-
-| 名称 | 是什么 / 什么时候用 | AI 接入（安装命令 / MCP / Skill） | 价格 |
-|---|---|---|---|
-| ⭐ [Martin Fowler 架构指南](https://martinfowler.com/architecture/) | 微服务、模式、重构的权威文章 |  | 免费 |
-| ⭐ [Mermaid](https://mermaid.js.org) | 用文本画流程图、时序图、架构图；GitHub README 原生渲染，AI 最容易生成 |  | 免费 |
-| ⭐ [patterns.dev](https://www.patterns.dev) | 现代 JS/React 设计模式、渲染模式、性能模式 |  | 免费 |
-| ⭐ [System Design Primer](https://github.com/donnemartin/system-design-primer) | 大规模系统设计经典指南（377k★） |  | 免费 |
-| [ADR（架构决策记录）](https://adr.github.io) | ADR 概念 + MADR 等模板与工具 |  | 免费 |
-| [architecture-decision-record](https://github.com/architecture-decision-record/architecture-decision-record) | 大量 ADR 模板与示例 |  | 免费 |
-| [awesome-scalability](https://github.com/binhnguyennus/awesome-scalability) | 大厂真实的可扩展性、可靠性、性能模式 |  | 免费 |
-| [awesome-software-architecture](https://github.com/mehdihadeli/awesome-software-architecture) | DDD、整洁架构、六边形、微服务、事件溯源大索引 |  | 免费 |
-| [awesome-system-design-resources](https://github.com/ashishps1/awesome-system-design-resources) | 持续更新的系统设计免费资源 |  | 免费 |
-| [ByteByteGo System Design 101](https://bytebytego.com) | 系统与协议的图解（GitHub 仓库 2025-04 后不更新，以网站为准） |  | 免费+付费 |
-| [C4 model](https://c4model.com) | Context/Container/Component/Code 四层架构图表示法 |  | 免费 |
-| [C4-PlantUML](https://github.com/plantuml-stdlib/C4-PlantUML) | 用代码画 C4 图 |  | 免费 |
-| [D2](https://d2lang.com) | 声明式图表语言，自动布局比 Mermaid 好看，适合大型架构图 | `brew install d2` | 免费 |
-| [Excalidraw](https://excalidraw.com) | 手绘风白板，画架构草图；文件是 JSON，AI 可以直接生成 |  | 免费 |
-| [Google SRE 书籍](https://sre.google/books/) | SRE Book、Workbook、Building Secure & Reliable Systems，免费在线 |  | 免费 |
-| [karanpratapsingh/system-design](https://github.com/karanpratapsingh/system-design) | 免费的完整系统设计课程 |  | 免费 |
-| [The Twelve-Factor App](https://12factor.net) | 云原生应用 12 条原则 |  | 免费 |
-
-===== FILE: scaffolds/04-awesome-lists.md =====
-
-# 元列表（Awesome Lists）
-
-> 本文件由 `scripts/build.py` 从 `data/resources/*.json` 自动生成，请勿手改；要增删条目请改 JSON 后重新运行脚本。⭐ = 同类首选。
-
-<a id="meta-lists"></a>
-
-## Awesome 元列表 / Prompt 合集
-
-这些列表本身就是巨型索引；本文件夹找不到时去这里。
-
-| 名称 | 是什么 / 什么时候用 | 价格 |
-|---|---|---|
-| ⭐ [awesome-claude-code](https://github.com/hesreallyhim/awesome-claude-code) | Claude Code 命令、hooks、工作流、CLAUDE.md 示例 | 免费 |
-| ⭐ [awesome-llm-apps](https://github.com/Shubhamsaboo/awesome-llm-apps) | 100+ 可运行的 Agent / RAG 应用示例，直接 fork | 免费 |
-| ⭐ [awesome-mcp-servers](https://github.com/punkpeye/awesome-mcp-servers) | 最大的 MCP 服务器目录 | 免费 |
-| ⭐ [prompts.chat（原 awesome-chatgpt-prompts）](https://prompts.chat) | 最大的开源 Prompt 库 | 免费 |
-| ⭐ [sindresorhus/awesome](https://github.com/sindresorhus/awesome) | 所有 awesome 列表的根索引 | 免费 |
-| [AGENTS.md](https://agents.md) | Agent 指令文件开放标准（本文件夹的入口就是它） | 免费 |
-| [awesome-ai-agents（e2b）](https://github.com/e2b-dev/awesome-ai-agents) | 自主 Agent 与框架目录 | 免费 |
-| [awesome-claude-code-subagents](https://github.com/VoltAgent/awesome-claude-code-subagents) | 现成的子 Agent 定义 | 免费 |
-| [awesome-cursorrules](https://github.com/PatrickJS/awesome-cursorrules) | 按技术栈分类的规则文件，可改写成 AGENTS.md | 免费 |
-| [awesome-saas-boilerplates](https://github.com/xcomptek/awesome-saas-boilerplates) | 按技术栈分类的 SaaS 模板 | 免费 |
-| [awesome-selfhosted](https://github.com/awesome-selfhosted/awesome-selfhosted) | 可自托管的开源服务 | 免费 |
-| [awesome-vibe-coding](https://github.com/filipecalegario/awesome-vibe-coding) | Vibe coding 工具与参考 | 免费 |
-| [BoilerplateList](https://boilerplatelist.com) | 可搜索的全技术栈模板目录 | 免费 |
-| [system-prompts-and-models-of-ai-tools](https://github.com/x1xhlol/system-prompts-and-models-of-ai-tools) | Cursor、Devin、Claude Code、v0、Lovable 等编码 Agent 的系统提示（非官方/泄露，仅作学习参考） | 免费 |
-| [system_prompts_leaks](https://github.com/asgeirtj/system_prompts_leaks) | ChatGPT/Claude/Gemini 系统提示（非官方） | 免费 |
+### [聚合站与目录（先从这里找）](ui/catalog/01-aggregators.md#ui-aggregators)
+
+- [21st.dev](https://21st.dev) — 最大的社区组件目录：12000+ React/Tailwind 组件、库、模板；含 424 个 shadcn registry 的目录和 AI 生成 `npx @21st-dev/cli@latest init --client claude`
+- [awesome-shadcn-ui](https://github.com/birobirobiro/awesome-shadcn-ui) — shadcn 生态主力 awesome 列表（20.8k★，每日更新）
+- [registry.directory](https://registry.directory) — 公开 shadcn registry 浏览器，可预览代码、复制安装命令；对 Agent 极友好（items.json、/api/markdown、OpenAPI、llms.txt）
+- [shadcn 官方 Registry Directory](https://ui.shadcn.com/docs/directory) — 官方社区 registry 清单（JSON 索引 548 个），CLI 和 MCP 原生支持 `npx shadcn@latest search @<ns>`
+
+### [基础 / 无头组件库](ui/catalog/02-component-libraries.md#ui-core)
+
+- [Base UI](https://base-ui.com) — MUI 团队的无头组件，shadcn 新底座选项之一
+- [shadcn/ui](https://ui.shadcn.com) — 复制进项目的组件（代码归你），AI 生态事实标准；registry + MCP + Skill 齐全 `npx shadcn@latest init`
+
+### [动画与稀有特效组件](ui/catalog/03-animated-components.md#ui-animated)
+
+- [Aceternity UI](https://ui.aceternity.com) — 200+ 酷炫暗色 Hero/落地页特效（Spotlight、Beams、3D Card）+ 区块模板 `npx shadcn@latest add @aceternity/<item>`
+- [Animate UI](https://animate-ui.com) — 给 Radix/Base UI/React Aria 加动画的原语：换个 import，shadcn 组件就会动 `npx shadcn@latest add @animate-ui/<item>`
+- [Magic UI](https://magicui.design) — 150+ 落地页动画组件与特效（Marquee、Globe、Bento…） `npx shadcn@latest add @magicui/<item>`
+- [React Bits](https://reactbits.dev) — 超大创意库：动画文字、背景、组件（1274 条目，51.6k★） `npx shadcn@latest add @react-bits/<Component>-TS-TW`
+
+### [风格化主题（手绘 / 复古 / 像素 / 新粗野 / 玻璃）](ui/catalog/04-stylized-themes.md#ui-stylized)
+
+- [Looseleaf](https://kevintngo.github.io/looseleaf/) — 「手绘版 shadcn/ui」：123 个可访问组件，纸张纹理 + 钢笔墨线 + 胶带贴纸印章；保留 shadcn 的 props 和 data-slot，直接替换不改 JSX `npx shadcn@latest add https://kevintngo.github.io/looseleaf/r/button.json`
+- [Neobrutalism components](https://www.neobrutalism.dev) — 新粗野主义 shadcn 组件 `npx shadcn@latest add https://neobrutalism.dev/r/<item>.json`
+- [Sketchbook UI](https://sarthakrawat-1.github.io/sketchbook-ui/) — 手绘笔记本风：20 个带抖动 SVG 边框和纸张纹理的组件，零运行时依赖，<70KB `npm i sketchbook-ui`
+
+### [移动端 / React Native](ui/catalog/05-mobile.md#ui-mobile)
+
+- [beUI](https://beui.dev) — 同时覆盖 Web 和 React Native 的动画组件（Motion/Tailwind/Reanimated），带 MCP 和 Skill `npx shadcn@latest add @beui/<item>`
+- [expo-glass-effect](https://docs.expo.dev/versions/latest/sdk/glass-effect/) — Expo 官方液态玻璃视图（iOS 26 Liquid Glass 原生效果）。React Native 里要真·液态玻璃用它 `npx expo install expo-glass-effect`
+- [ExpoKit](https://expokit.in) — Expo 复制粘贴组件库：73 组件（340+ 变体）、12 屏、44 图表、液态玻璃与 3D 效果；iOS/Android/Web/Expo Go `npx @expokit/cli@latest init`
+- [React Native Reusables](https://reactnativereusables.com) — shadcn/ui 的标准 RN 移植（NativeWind / Uniwind） `npx @react-native-reusables/cli@latest init`
+
+### [原生与跨端（Flutter / SwiftUI / Compose / 桌面）以及 RN 基础库](ui/catalog/05-mobile.md#ui-native)
+
+- **React Native 基础库**：[React Native Reanimated](https://docs.swmansion.com/react-native-reanimated/) — React Native 动画的事实标准：动画跑在 UI 线程，支持布局动画和 CSS 式动画；几乎所有 RN 动效库的依赖，必装 `npm install react-native-reanimated`
+- **Flutter**：[Forui](https://forui.dev) — 极简风的 Flutter UI 库，自带 CLI 可把样式源码生成进项目；不想要 Material 观感的 Flutter 应用首选
+- **Compose / Android**：[Compose Multiplatform](https://kotlinlang.org/compose-multiplatform/) — JetBrains 的声明式 UI 框架，一套 Kotlin 代码覆盖 Android / iOS / 桌面 / Web；Kotlin 团队做跨端时首选
+
+### [物理、液体、3D 与 Shader](ui/catalog/06-effects-3d-shaders.md#ui-effects)
+
+- [goopUI](https://goop.timmcmasters.work/docs/components) — 「会滴落的组件」：带小型物理引擎的黏液版 shadcn 目录（滴落、拉伸、融合），subtle/playful/wild 预设。⚠ 仅 Vue 3/Nuxt，pre-alpha，未发布 npm
+- [Paper Shaders](https://shaders.paper.design) — 零依赖高性能 canvas shader（网格渐变、颗粒…）
+
+### [AI 产品 UI（聊天 / Agent / 可观测性）](ui/catalog/07-ai-product-ui.md#ui-ai-product)
+
+- [affectUI](https://www.affectui.com) — 「给 AI 产品的 Agent-ready React UI」：173 个条目，Agent 可观测性做得很深（检查点、审批闸门、Agent 图、上下文窗口地图、成本与 trace 瀑布、权限页）；每个是零依赖单文件 .tsx `npx shadcn@latest add @affectui/<item>`
+- [AI Elements（Vercel）](https://elements.ai-sdk.dev) — 基于 shadcn 的 AI 原生组件（消息、工具调用、推理过程…） `npx shadcn@latest add @ai-elements/<item>`
+- [assistant-ui](https://www.assistant-ui.com) — AI 聊天 React 组件 + runtime：流式、工具、持久化；兼容 AI SDK/LangGraph/Mastra `npx assistant-ui@latest create`
+
+### [动画引擎 / 滚动 / 3D 底层库](ui/catalog/08-animation-engines.md#ui-animation-engines)
+
+- [GSAP](https://gsap.com) — 时间轴与滚动动画（ScrollTrigger）。2025-04-30 起完全免费（含 SplitText、MorphSVG） `npx skills add https://github.com/greensock/gsap-skills`
+- [Lenis](https://lenis.dev) — 平滑滚动，高级感网站标配
+- [Motion（原 Framer Motion）](https://motion.dev) — React/JS/Vue 动画首选。布局动画、手势、滚动 `npx motion-ai`
+- [Three.js](https://threejs.org) — WebGL/WebGPU 3D `npx skills add cloudai-x/threejs-skills`
+
+### [动效 / 特效词汇与可复制 Prompt](ui/catalog/09-design-vocabulary.md#ui-vocabulary)
+
+- [animations.dev Vocabulary](https://animations.dev/vocabulary) — Emil Kowalski 动画课程公开的动效术语表，按入场退场、编排时序、缓动、手势、布局过渡等分组解释常见动画模式的叫法，明确写着「用这些名字向 AI 描述你要的效果」，不知道某个动效该怎么称呼时先查这页；免费
+- [Emil Kowalski skills](https://github.com/emilkowalski/skills) — 含 animation-vocabulary（教 AI 用正确的动效术语）、animate、choreograph、apple-design、review-animations；作者是 Sonner/Vaul 作者 `npx skills add emilkowalski/skills`
+- [motion-prompt](https://github.com/showheyohtaki/motion-prompt) — 192 个带专业名称的效果（8 包×24：动态图形、镜头运动与转场、UI 组件名、落地页/网页特效、摄影风格灯光），每个都有实时演示 + Copy Prompt；可按编号引用（#012）。画廊：showheyohtaki.github.io/motion-prompt `npx skills add showheyohtaki/motion-prompt`
+
+### [设计风格 / 审美类 Skill 与 DESIGN.md](ui/catalog/09-design-vocabulary.md#ui-design-skills)
+
+- [Anthropic frontend-design](https://github.com/anthropics/skills/tree/main/skills/frontend-design) — Anthropic 官方「去 AI 味」前端审美 Skill，避免千篇一律的紫色渐变 + Inter 字体 `npx skills add anthropics/skills --skill frontend-design`
+- [awesome-design-md](https://github.com/VoltAgent/awesome-design-md) — 从 Claude、Stripe、Linear、Vercel 等名站提取的 DESIGN.md，丢进项目根目录即可让 AI 照着这个风格做（126k★）
+- [Impeccable](https://impeccable.style) — 「给编码 Agent 的设计词汇」：polish/bolder/critique/audit 等命令 + AI-slop 检测器（107k★） `npx impeccable install`
+- [Taste Skill](https://github.com/Leonxlnx/taste-skill) — 艺术指导、参考图、浏览器自检，避免通用 AI 外观（112k★） `npx skills add https://github.com/Leonxlnx/taste-skill --skill "design-taste-frontend"`
+- [UI UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) — 可检索的设计数据库：80 种 UI 风格、192 种产品类型、192 套配色、74 组字体搭配 + UX 规则，自动生成设计系统（147k★） `/plugin marketplace add nextlevelbuilder/ui-ux-pro-max-skill → /plugin install ui-ux-pro-max@ui-ux-pro-max-skill`
+
+### [官方 Prompt 指南（v0 / Lovable / Bolt / Stitch / Claude）](ui/catalog/09-design-vocabulary.md#ui-prompt-guides)
+
+- [Claude Cookbook: Prompting for frontend aesthetics](https://github.com/anthropics/claude-cookbooks/blob/main/coding/prompting_for_frontend_aesthetics.ipynb) — 排版、主题、动效的 Prompt 模块，可直接拼进系统提示
+
+### [镜头 / 摄影 / 灯光词汇（图像与视频生成）](ui/catalog/09-design-vocabulary.md#ui-camera-photo)
+
+- [Google Veo 视频提示指南](https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/video/video-gen-prompt-guide) — 官方镜头运动、景别、镜头焦段、风格术语
+
+### [灵感画廊（带 MCP 的优先）](ui/catalog/10-inspiration.md#ui-inspiration)
+
+- [Codrops](https://tympanus.net/codrops/) — 创意前端的标杆站点，持续发布带完整源码的实验性效果（WebGL 转场、滚动动画、文字特效、图片悬停）和案例拆解，想做获奖网站级别的交互时先来这里找可改的 Demo；免费，Demo 代码可自由用于个人和商业项目
+- [Dribbble](https://dribbble.com) — 最大的设计师作品社区，按关键词能搜到海量界面概念稿、图标和插画，找视觉风格与配色方向时用；浏览免费，⚠ 多为概念稿而非上线产品，交互合理性要自己判断，作品版权归作者
+- [Mobbin](https://mobbin.com) — 60 万+ 真实 App/Web 截图、流程、页面区块 `claude mcp add --transport http mobbin https://api.mobbin.com/mcp`
+- [Refero](https://refero.design) — 12.5 万+ Web/iOS 截图、8000+ 流程；配套 refero_skill 做「先调研再设计」 `claude mcp add --transport http refero https://api.refero.design/mcp`
+
+### [图标、字体、配色、主题生成](ui/catalog/11-assets.md#ui-assets)
+
+- [Fontshare](https://www.fontshare.com) — 免费高质量字体（Clash、General Sans、Satoshi…），比 Inter 更有个性
+- [Iconify](https://iconify.design) — 200+ 图标集、20 万+ 图标；公开免 key API `claude mcp add iconify -- npx -y iconify-mcp-server@latest`
+- [Lucide](https://lucide.dev) — shadcn 和多数 AI 工具的默认图标集
+- [Realtime Colors](https://www.realtimecolors.com) — 在真实页面上预览配色和字体，导出 CSS/Tailwind
+- [tweakcn](https://tweakcn.com) — shadcn/Tailwind 可视化主题编辑器，有预设和 AI 主题生成，导出后一行命令装入 `npx shadcn@latest add https://tweakcn.com/r/themes/<preset>.json`
+
+### [插画、3D、图片视频、样机、背景生成器、音效](ui/catalog/11-assets.md#ui-media-assets)
+
+- **插画**：[unDraw](https://undraw.co) — 可在线改主色的扁平风 SVG 插画库，空状态、引导页、落地页配图的默认选择；可商用免署名，⚠ 不得打包再分发、做同类站或用于机器学习训练
+- **3D 素材**：[Poly Haven](https://polyhaven.com) — 高质量 HDRI 环境贴图、PBR 材质和 3D 模型库，做 three.js/R3F 场景打光和材质时首选；全部 CC0，可商用免署名，并有免 key 公开 API
+- **背景与图案生成**：[Haikei](https://haikei.app) — 一站式 SVG 背景素材生成器：波浪、Blob、叠层波、渐变光斑、低多边形、分隔线等十几种，调参后导出 SVG/PNG，落地页需要装饰背景时首选；基础生成器免费、免注册，产物可商用
+- **头像与占位**：[DiceBear](https://www.dicebear.com) — 开源头像生成库与免 key HTTP API，60 多种风格（像素、首字母、卡通人物、几何图形…），同一 seed 永远得到同一张 SVG，给用户列表和评论区生成默认头像的首选；代码 MIT，⚠ 各风格美术许可不同（CC0、CC BY 等），商用前看风格页
+
+### [UI 相关 MCP 服务器](ui/catalog/12-mcp-registries-llms.md#ui-mcp)
+
+- [21st MCP（原 Magic MCP）](https://21st.dev/mcp) — 搜索并获取 21st.dev 上万个组件；AI 生成需付费。旧 Magic API key 已重置 `npx @21st-dev/cli@latest init --client claude`
+- [Context7](https://context7.com) — 几乎任何库的最新文档（Tailwind、Radix 这类没有 llms.txt/MCP 的库靠它兜底） `claude mcp add context7 -- npx -y @upstash/context7-mcp`
+- [Figma MCP（官方）](https://developers.figma.com/docs/figma-mcp-server/remote-server-installation) — 读取设计稿上下文、变量、截图、Code Connect，也能写回 Figma `claude mcp add --transport http figma https://mcp.figma.com/mcp`
+- [Motion AI Kit](https://motion.dev/docs/ai-kit) — Motion 官方 /motion Skill + 文档 MCP（免费）；Motion+ 版加示例和性能诊断 `npx motion-ai`
+- [shadcn MCP（官方）](https://ui.shadcn.com/docs/mcp) — 在任何已配置的 registry（含 @命名空间）里浏览、搜索、安装组件。装这一个就能接入几百个组件库 `npx shadcn@latest mcp init --client claude`
+
+### [其他框架组件库（Vue / Svelte / Angular / Solid / Web Components）](ui/catalog/13-other-frameworks.md#ui-frameworks-other)
+
+- **Vue / Nuxt**：[PrimeVue](https://primevue.org) — Vue 生态组件最全的套件之一（90+ 组件，Styled / Unstyled 双模式 + 主题预设），做后台、数据密集型应用时首选；官方提供 MCP `npm install primevue @primeuix/themes`
+- **Svelte**：[Bits UI](https://bits-ui.com) — Svelte 5 无样式无障碍原语库，shadcn-svelte 的底座；自建 Svelte 设计系统时首选 `npm install bits-ui`
+- **Angular**：[Angular Material + CDK](https://material.angular.dev) — Angular 官方 Material Design 组件库及底层 CDK，与框架同步发版；Angular 项目的默认选择
+
+### [CSS 框架与纯 HTML / Tailwind 组件](ui/catalog/13-other-frameworks.md#ui-css-kits)
+
+- **CSS 框架与引擎**：[Bootstrap](https://getbootstrap.com) — 最老牌的 CSS 组件框架，类名即组件、资料最多；服务端渲染模板或不想配构建工具时选 ⚠ 官网首页已展示 v6 alpha，生产用 5.3 `npm install bootstrap@5.3.8`
+
+### [国内生态（Ant Design / Element / TDesign / 小程序 / AntV…）](ui/catalog/14-china-ecosystem.md#ui-china)
+
+- **React 组件库**：[Ant Design](https://ant.design) — 蚂蚁出品的企业级 React 组件库（100k★，当前 v6），中后台项目默认首选；官方提供 llms.txt、CLI 和 MCP，国内镜像 ant-design.antgroup.com `npm install antd`
+- **Vue 组件库**：[Element Plus](https://element-plus.org) — 国内使用最广的 Vue 3 桌面端组件库（饿了么 Element 的继任者），Vue 中后台项目默认首选，官方提供 llms.txt `npm install element-plus --save`
+- **移动端 H5**：[Vant](https://vant-ui.github.io/vant/) — 有赞开源的 Vue 3 移动端组件库（24k★），国内 H5 电商 / 营销页事实标准，国内镜像 vant.pro `npm i vant`
+- **小程序与跨端**：[Taro](https://taro-docs.jd.com/docs/) — 京东开源的多端统一开发框架（37k★），用 React / Vue 写一套代码编译到微信等各家小程序、H5、RN 和鸿蒙，React 团队做小程序首选；⚠ 文档域名 docs.taro.zone 证书异常，用 taro-docs.jd.com `npm install -g @tarojs/cli`
+- **小程序与跨端**：[uni-app](https://uniapp.dcloud.net.cn) — DCloud 出品的 Vue 跨端框架（41k★），一套代码发 iOS / Android / 鸿蒙 / 各家小程序 / H5，国内 Vue 团队做小程序和 App 的最常见选择，官方提供 llms.txt `npx degit dcloudio/uni-preset-vue#vite-ts my-vue3-project`
+- **图表与可视化**：[Apache ECharts](https://echarts.apache.org) — 百度发起、Apache 孵化毕业的图表库（67k★，当前 v6），图表类型最全、中文文档和示例最多，国内项目做图表默认首选 `npm install echarts --save`
+
+### [大厂设计系统与官方实现](ui/catalog/15-design-systems.md#ui-design-systems)
+
+- [Apple Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines/) — 苹果全平台（iOS / iPadOS / macOS / watchOS / visionOS）官方界面设计规范，做苹果生态应用或想让 Web 界面有 iOS 质感时必读
+- [Carbon Design System](https://carbondesignsystem.com) — IBM 的开源设计系统，规范文档极完整、数据密集型企业界面范例多，React / Web Components 双实现，并提供 llms.txt 和官方 Carbon MCP `npm install @carbon/react`
+- [Material Design 3](https://m3.material.io) — Google 的开源设计系统规范（动态配色、形状、动效、组件指南），做 Android 应用或需要一套完整可引用的设计 token 体系时的权威参考
+- [React Aria](https://react-aria.adobe.com) — Adobe 的无样式 React 组件与 hooks，键盘、读屏、触屏交互和国际化处理业界标杆，自建设计系统需要最强无障碍底座时首选；提供 llms.txt、MCP 和 Agent Skills `claude mcp add react-aria npx @react-aria/mcp@latest`
+
+### [功能型组件](ui/catalog/16-functional-components.md#ui-functional)
+
+- **图表与可视化**：[Recharts](https://recharts.github.io) — React + D3 的声明式 SVG 图表库（v3），生态最大、shadcn Chart 的底层；React 项目做常规折线/柱状/饼图的默认选择 `npm install recharts react-is`
+- **编辑器（富文本 / 代码 / Markdown）**：[Tiptap](https://tiptap.dev) — 基于 ProseMirror 的无头富文本编辑器框架（v3，扩展丰富，React/Vue 皆可）；做 Notion 式或评论框式编辑器的默认选择（⚠ 核心 MIT，协同、AI、评论等为付费云服务） `npm install @tiptap/react @tiptap/pm @tiptap/starter-kit`
+- **日期与日历**：[React DayPicker](https://daypicker.dev) — 可访问、可定制的日期选择日历（v10 起包名为 @daypicker/react），shadcn Calendar 的底层；React 日期选择器的默认选择 `npm install @daypicker/react`
+- **拖拽与排序**：[dnd kit](https://dndkit.com) — 现代的拖拽工具包（可访问、支持触摸与键盘、可排序/看板/网格），新版为框架无关核心 + @dnd-kit/react；React 拖拽排序的默认选择 `npm install @dnd-kit/react`
+- **流程图 / 白板 / 节点编辑**：[React Flow（xyflow）](https://reactflow.dev) — 节点式流程图/工作流编辑器的事实标准（同仓库含 Svelte Flow），另有 shadcn 版 React Flow UI 组件；做工作流、Agent 编排、思维导图界面的默认选择（Pro 示例付费） `npm install @xyflow/react`
+- **地图**：[MapLibre GL JS](https://maplibre.org) — 开源的 WebGL 矢量瓦片地图引擎（Mapbox GL v1 的社区分支，无需 token）；自托管或想避开 Mapbox 计费时的默认选择，瓦片可配 OpenFreeMap `npm install maplibre-gl`
+- **轮播**：[Embla Carousel](https://www.embla-carousel.com) — 轻量无依赖的轮播引擎（拖拽手感好、插件化），shadcn Carousel 的底层；React 轮播的默认选择 `npm install embla-carousel-react --save`
+- **弹层 / 通知 / 命令面板**：[Sonner](https://sonner.emilkowal.ski) — Emil Kowalski 的堆叠式 Toast 组件（动效细腻、Promise 状态、API 极简），shadcn 默认 Toast；React 通知提示的默认选择 `npm install sonner`
+- **文件上传**：[react-dropzone](https://react-dropzone.js.org) — 拖拽选文件的无头 React hook（只管文件选择与校验，不管上传）；自己写上传逻辑时做拖拽区的默认选择 `npm install react-dropzone`
+- **媒体（视频 / 音频 / PDF）**：[Video.js 10](https://videojs.org) — Video.js、Vidstack、Plyr、Media Chrome 四个团队合并后的新一代播放器（可组合控件、React/HTML 两套、HLS/DASH）；现在做网页视频播放器的默认选择 `npm install @videojs/react`
+- **认证界面**：[Clerk Components](https://clerk.com/docs/reference/components/overview) — Clerk 的现成认证组件（SignIn、SignUp、UserButton、组织切换，另有 shadcn registry）；想最快得到完整登录注册与用户管理界面时选（⚠ 托管服务，超出免费用户数收费） `npm install @clerk/nextjs`
+- **其他**：[Driver.js](https://driverjs.com) — 轻量零依赖的产品导览与元素高亮库（框架无关）；做新手引导、功能聚光灯的默认选择 `npm install driver.js`
+- **其他**：[qrcode.react](https://github.com/zpao/qrcode.react) — 把字符串渲染成二维码的 React 组件（SVG/Canvas，可嵌 logo）；React 里生成二维码的默认选择 `npm install qrcode.react`
+- **其他**：[react-resizable-panels](https://react-resizable-panels.vercel.app) — 可拖拽调整大小的分栏面板（可折叠、布局持久化、键盘可用），shadcn Resizable 的底层；做 IDE 式分栏布局的默认选择 `npm install react-resizable-panels`
+- **其他**：[xterm.js](https://xtermjs.org) — 浏览器里的终端模拟器（VS Code 终端同款，WebGL 渲染、插件体系）；做 Web 终端、云 IDE、SSH 面板的默认选择 `npm install --save @xterm/xterm`
+
+### [模板、区块、UI Kit](ui/catalog/17-templates-blocks.md#ui-templates)
+
+- **Tailwind / shadcn 模板与区块**：[Tailwind Plus（原 Tailwind UI）](https://tailwindcss.com/plus) — Tailwind 官方的付费模板与 UI 区块合集（500+ 区块、十余套 Next.js 站点模板、Catalyst 应用 UI Kit）；想要官方品质的现成页面时买它（⚠ 一次性买断，代码不可再分发，完整内容需登录）
+- **仪表盘模板**：[shadcn-admin](https://github.com/satnaing/shadcn-admin) — 最受欢迎的开源 shadcn 后台模板（Vite + TanStack Router，10+ 页面、命令面板、RTL、明暗主题）；做管理后台的默认起点 `git clone https://github.com/satnaing/shadcn-admin.git`
+- **落地页与营销模板**：[Launch UI](https://www.launchuicomponents.com) — 开源的 shadcn 落地页组件与模板（Hero、特性、定价、插画，多套配色）；SaaS 产品做深色质感落地页的首选起点（基础版免费开源，Pro 一次买断） `npx shadcn@latest add @launchui/<item>`
+- **Figma UI Kit**：[Untitled UI Figma](https://www.untitledui.com/figma) — 规模最大的 Figma UI Kit 与设计系统之一（上万组件变体，与 Untitled UI React 对应）；从零搭设计系统或要设计与代码一一对应时选（免费精简版 + 付费完整版）
+
+## skills/
+
+### [Skill 目录站与 Awesome 列表](skills/catalog.md#skills-directories)
+
+- [skills.sh](https://skills.sh) — Agent Skills 事实标准目录与排行榜；搜索 API：skills.sh/api/search?q=关键词 `npx skills add <owner/repo>`
+
+### [全球累计安装量 Top（skills.sh All Time，2026-11-09 实时数据）](skills/catalog.md#skills-top)
+
+- [find-skills](https://github.com/vercel-labs/skills) — #1（约 430 万次安装）让 AI 自己去找需要的 Skill。建议第一个装 `npx skills add vercel-labs/skills --skill find-skills`
+- [grill-me](https://github.com/mattpocock/skills) — #2（约 150 万）不停追问，把需求彻底问清楚 `npx skills add mattpocock/skills --skill grill-me`
+- [agent-browser](https://github.com/vercel-labs/agent-browser) — #5（约 140 万）让 AI 自己打开、点击、操作网页 `npx skills add vercel-labs/agent-browser`
+- [setup-matt-pocock-skills](https://github.com/mattpocock/skills) — #13（约 110 万）一键配好 Matt Pocock 整套 Skills 工作流（grill/tdd/handoff/triage/prototype…）。装完后在 Agent 里运行 /setup-matt-pocock-skills `npx skills add mattpocock/skills --skill setup-matt-pocock-skills`
+
+### [工程 / 工作流类 Skill](skills/catalog.md#skills-engineering)
+
+- [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills) — Addy Osmani 的工程实践 Skill 集（code-review-and-quality 约 8.4 万安装），覆盖规格、评审、安全加固和性能，想要资深工程师流程时用 `npx skills add addyosmani/agent-skills`
+- [Supabase agent-skills（官方）](https://github.com/supabase/agent-skills) — Supabase 官方 Skill（supabase-postgres-best-practices 约 48 万安装），写 Postgres 表结构、RLS 和查询优化时用 `npx skills add supabase/agent-skills`
+- [vercel-labs/agent-skills](https://github.com/vercel-labs/agent-skills) — react-best-practices、web-design-guidelines、composition-patterns、react-view-transitions `npx skills add vercel-labs/agent-skills`
+
+### [其他领域 Skill（写作 / 调研 / 数据 / 文档 / 运维 / 安全 / 产品）](skills/catalog.md#skills-more)
+
+- **官方厂商 Skill**：[飞书 / Lark CLI skills（官方）](https://github.com/larksuite/cli) — 飞书官方 CLI 自带的 Skill 集（lark-doc 约 49 万安装），让 Agent 操作文档、多维表格、消息、日历和审批时用（⚠ 需飞书应用授权） `npx skills add larksuite/cli`
+- **写作与内容**：[baoyu-skills（宝玉）](https://github.com/JimLiu/baoyu-skills) — 宝玉的内容创作 Skill 集（baoyu-post-to-wechat 约 3.5 万安装），做公众号排版发布、小红书配图、翻译和发 X 时用 `npx skills add jimliu/baoyu-skills`
+- **产品与增长**：[marketingskills（Corey Haines）](https://github.com/coreyhaines31/marketingskills) — 最流行的营销 Skill 集（seo-audit 约 25 万安装），做 SEO 审计、文案、定价、转化优化和内容策略时用 `npx skills add coreyhaines31/marketingskills`
+- **插件市场**：[claude-plugins-official](https://github.com/anthropics/claude-plugins-official) — Anthropic 官方的 Claude Code 插件市场（默认已内置），找厂商认证的插件（Stripe、Sentry、Exa 等）时首选 `/plugin install {plugin-name}@claude-plugins-official`
+
+### [规则 / Prompt / 子 Agent / 规格驱动工作流](skills/02-rules-prompts.md#rules-prompts)
+
+- **规则与 AGENTS.md / CLAUDE.md**：[cursor.directory](https://cursor.directory) — 最大的 Cursor 规则社区站，按框架和语言找现成 rules 直接复制进项目时用
+- **子 Agent、命令与工作流框架**：[Superpowers（obra）](https://github.com/obra/superpowers) — Star 最多的 Agent 技能与工作流框架（头脑风暴→计划→TDD→评审），想让 Agent 按严格工程流程干活时用 `/plugin install superpowers@claude-plugins-official`
+- **规格驱动开发**：[GitHub Spec Kit](https://github.com/github/spec-kit) — GitHub 官方的规格驱动开发工具包（constitution→specify→plan→tasks→implement），新功能想先写规格再让 Agent 实现时用 `uv tool install specify-cli`
+- **官方 Prompt 指南**：[Claude Prompt 工程指南（官方）](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview) — Anthropic 官方 Prompt 工程文档（清晰指令、示例、XML 标签、思考、长上下文），给 Claude 写提示词前读
+- **中文 Prompt 资源**：[LangGPT](https://github.com/langgptai/LangGPT) — 国内最知名的结构化提示词方法论（Role / Rules / Workflow 模板），想用模板化方式写中文提示词时用
+
+## tools/
+
+### [数据采集 / 爬虫](tools/catalog.md#tools-crawl)
+
+- [MediaCrawler](https://github.com/NanmiCoder/MediaCrawler) — 小红书/抖音/快手/B站/微博/贴吧/知乎 的帖子、视频、评论（含二级评论）采集；Playwright 复用登录态免逆向；存 CSV/JSON/Excel/SQLite/MySQL；带 WebUI（约 70k★）。⚠ 仅供学习，禁止商用 `git clone https://github.com/NanmiCoder/MediaCrawler && cd MediaCrawler && uv sync`
+
+### [MCP 目录站](tools/02-mcp.md#mcp-directories)
+
+- [Claude Connectors 目录](https://claude.com/connectors) — Anthropic 官方审核的 Claude 连接器（远程 MCP）目录，给 Claude / Claude Code 找官方认可的集成时用
+- [Docker MCP Catalog](https://hub.docker.com/mcp) — Docker 官方审核、容器化运行的 MCP 服务器目录，想隔离运行第三方服务器时用（⚠ 需 Docker Desktop）
+- [PulseMCP](https://www.pulsemcp.com/servers) — 每日更新的 MCP 服务器与客户端目录，附下载量估算和周报，追踪生态动态时用
+- [官方 MCP Registry](https://registry.modelcontextprotocol.io) — MCP 官方维护的服务器注册表（带 API），想确认某个 MCP 服务器是否由厂商正式发布时先查这里
+
+### [常用 MCP 服务器](tools/02-mcp.md#mcp-servers)
+
+- **开发与代码托管**：[GitHub MCP（官方）](https://github.com/github/github-mcp-server) — GitHub 官方 MCP，让 Agent 读写仓库、Issue、PR 和 Actions 时用（⚠ 需 PAT 或 OAuth） `claude mcp add-json github '{"type":"http","url":"https://api.githubcopilot.com/mcp","headers":{"Authorization":"Bearer YOUR_GITHUB_PAT"}}'`
+- **开发与代码托管**：[Serena](https://github.com/oraios/serena) — 基于语言服务器的语义检索与符号级编辑 MCP，在大型代码库里省 token 地精确改代码时用 `uv tool install -p 3.13 serena-agent`
+- **数据库与后端服务**：[Supabase MCP（官方）](https://github.com/supabase/mcp) — Supabase 官方远程 MCP，让 Agent 建表、跑迁移、查日志和生成类型时用（⚠ 生产库建议加 read_only） `claude mcp add --scope project --transport http supabase "https://mcp.supabase.com/mcp"`
+- **搜索与网页抓取**：[Firecrawl MCP](https://github.com/firecrawl/firecrawl-mcp-server) — Firecrawl 官方 MCP，把网页抓成干净 Markdown、整站爬取和结构化提取时用（⚠ 需 API key）
+- **国内服务**：[高德地图 MCP（官方）](https://lbs.amap.com/api/mcp-server/summary) — 高德开放平台官方 MCP，做地理编码、路径规划、周边搜索和天气查询时用（⚠ 需申请高德 key） `npx -y @amap/amap-maps-mcp-server`
+
+### [AI 编码 Agent、IDE 与应用生成器](tools/03-ai-builders.md#tools-ai-builders)
+
+- **终端编码 Agent**：[Claude Code](https://claude.com/product/claude-code) — Anthropic 官方的终端编码 Agent（也有 IDE、桌面和网页版），支持子 Agent、Hook、Skill、MCP 和插件，做复杂多文件工程任务时首选（⚠ 需 Claude 订阅或 API） `curl -fsSL https://claude.ai/install.sh | bash`
+- **终端编码 Agent**：[Codex CLI](https://github.com/openai/codex) — OpenAI 开源的终端编码 Agent（Rust 实现，带沙箱），已有 ChatGPT 订阅或想用 GPT-5 系列写代码时用 `npm install -g @openai/codex`
+- **AI IDE 与编辑器插件**：[Cursor](https://cursor.com) — 最流行的 AI 原生 IDE（VS Code 分支），带 Tab 补全、Agent 和云端 Agent，日常主力 AI 编辑器首选（⚠ 高阶模型需订阅）
+- **应用 / 网站生成器**：[v0（Vercel）](https://v0.app) — Vercel 的 AI 应用生成器，产出 Next.js + shadcn/ui 代码并一键部署，做 React 界面和全栈原型首选
+- **国内工具**：[Trae（字节跳动）](https://www.trae.ai) — 字节出品的 AI IDE（国内版 trae.cn），提供 Builder / SOLO 模式和免费模型额度，国内网络环境下想要 Cursor 式体验时用
+
+## scaffolds/
+
+### [全栈 Web Starter](scaffolds/01-starters.md#scaffold-web)
+
+- [create-next-app](https://nextjs.org/docs/app/getting-started/installation) — 官方 Next.js 脚手架（v16），React 全栈默认选择 `npx create-next-app@latest`
+- [create-vite](https://vite.dev/guide/) — 轻量 SPA/库脚手架（React/Vue/Svelte/Solid…），不需要 SSR 时选 `npm create vite@latest`
+- [next-forge（Vercel）](https://www.next-forge.com) — 生产级 Turborepo SaaS 单仓：认证、支付、数据库、邮件、可观测性。认真做多应用 SaaS 时选 `npx next-forge@latest init`
+- [Open SaaS](https://opensaas.sh) — 免费全功能 SaaS 模板：Stripe/Polar/Lemon Squeezy 支付、后台、文档、AI demo `npm i -g @wasp.sh/wasp-cli && wasp new -t saas`
+- [shadcn/ui init + Blocks](https://ui.shadcn.com/blocks) — 初始化项目时直接带上 shadcn（next/vite/start/react-router/astro）；/create 是可视化构建器；Blocks 是可复制的整页区块 `npx shadcn@latest init -t next`
+
+### [移动端 / 桌面端 Starter](scaffolds/01-starters.md#scaffold-mobile)
+
+- [create-expo-app](https://docs.expo.dev/more/create-expo/) — 官方 React Native + Expo（Expo Router），RN 默认选择 `npx create-expo-app@latest`
+- [create-tauri-app](https://v2.tauri.app/start/create-project/) — Tauri 2：Rust 后端的轻量桌面/移动应用，前端任意 `npm create tauri-app@latest`
+
+### [后端 / API Starter](scaffolds/01-starters.md#scaffold-backend)
+
+- [Full Stack FastAPI Template](https://github.com/fastapi/full-stack-fastapi-template) — FastAPI + SQLModel + Postgres + React/Vite + Docker Compose + JWT，Python 全栈 `git clone https://github.com/fastapi/full-stack-fastapi-template`
+- [Hono](https://hono.dev/docs/getting-started/basic) — 超轻量 Web 标准 API 框架（Cloudflare Workers/Bun/Deno/Node/Vercel） `npm create hono@latest`
+
+### [AI 应用 Starter 与 Agent 框架](scaffolds/02-ai-agents.md#scaffold-ai)
+
+- [Claude Agent SDK](https://code.claude.com/docs/en/agent-sdk/overview) — 驱动 Claude Code 的 Agent 循环：工具、子 Agent、hooks、MCP `npm i @anthropic-ai/claude-agent-sdk / pip install claude-agent-sdk`
+- [Dify](https://github.com/langgenius/dify) — 可自托管的可视化 LLM 应用 / Agent 工作流 / RAG 构建平台（161k★） `git clone https://github.com/langgenius/dify && cd dify/docker && cp .env.example .env`
+- [LangGraph](https://langchain-ai.github.io/langgraph/) — 持久化、有状态的图式 Agent，支持人在环中。Python 多 Agent / 复杂控制流首选 `pip install -U langgraph`
+- [Mastra](https://mastra.ai/docs) — TS Agent 框架：Agent、workflow、RAG、记忆、评测、本地 playground `npm create mastra@latest`
+- [n8n](https://docs.n8n.io/deploy/host-n8n/install-options/install-with-npm) — 工作流自动化，内置 AI Agent 节点（210k★） `npx n8n`
+- [OpenAI Customer Service Agents Demo](https://github.com/openai/openai-cs-agents-demo) — 多 Agent 客服系统完整示例：Python（Agents SDK）后端做分流与 handoff，Next.js 前端实时显示每步 Agent、工具调用和 guardrail。做客服/分流类多 Agent 直接照它改 `git clone https://github.com/openai/openai-cs-agents-demo`
+- [Pydantic AI](https://pydantic.dev/docs/ai/overview/) — Pydantic 团队出品的类型安全 Python Agent 框架。Python 单 Agent / 结构化输出首选 `pip install pydantic-ai`
+- [Vercel AI SDK](https://ai-sdk.dev) — TS 工具包：流式输出、工具调用、Agent、生成式 UI，跨模型厂商（v7） `npm i ai`
+- [Vercel Chatbot](https://github.com/vercel/chatbot) — 完整 Next.js 聊天应用：AI SDK + AI Gateway + Neon + Blob + 认证（原 ai-chatbot） `git clone https://github.com/vercel/chatbot`
+
+### [MCP Server 开发模板](scaffolds/02-ai-agents.md#scaffold-mcp)
+
+- [FastMCP](https://gofastmcp.com) — 最快的 Python MCP 服务端/客户端写法（v4，已迁到 PrefectHQ） `pip install fastmcp`
+- [MCP TypeScript SDK](https://github.com/modelcontextprotocol/typescript-sdk) — 官方 MCP SDK（v2）：服务端装 server 包，客户端装 client 包。旧的 @modelcontextprotocol/sdk 是 v1，只做维护 `npm install @modelcontextprotocol/server`
+
+### [架构 / 系统设计参考](scaffolds/03-architecture.md#scaffold-arch)
+
+- [Martin Fowler 架构指南](https://martinfowler.com/architecture/) — 微服务、模式、重构的权威文章
+- [Mermaid](https://mermaid.js.org) — 用文本画流程图、时序图、架构图；GitHub README 原生渲染，AI 最容易生成
+- [patterns.dev](https://www.patterns.dev) — 现代 JS/React 设计模式、渲染模式、性能模式
+- [System Design Primer](https://github.com/donnemartin/system-design-primer) — 大规模系统设计经典指南（377k★）
+
+### [服务与基础设施（认证 / 数据库 / 支付 / 邮件 / 部署…）](scaffolds/05-services.md#stack-services)
+
+- **认证**：[Better Auth](https://better-auth.com) — TypeScript 开源认证框架，用户数据存自己的数据库，插件覆盖 2FA、组织、passkey、SSO；想免费自托管、不被厂商锁定时首选 `npm i better-auth`
+- **数据库与 ORM**：[Drizzle ORM](https://orm.drizzle.team) — 轻量、无运行时代码生成的 TypeScript ORM，写法贴近 SQL，在 Serverless/Edge 上冷启动快；新 TS 项目的默认 ORM，配 drizzle-kit 做迁移 `npm i drizzle-orm`
+- **数据库与 ORM**：[Supabase](https://supabase.com) — 开源 Firebase 替代品：托管 Postgres + 认证 + 存储 + 实时 + Edge Functions + 向量检索，一个平台包完后端；想用 SQL 且让 Agent 通过 MCP 直接管库时首选，⚠ 国内直连不稳定 `npm i @supabase/supabase-js`
+- **支付与订阅**：[Stripe](https://stripe.com) — 支付基础设施的事实标准：Checkout、订阅、按量计费、发票、Connect 分账，文档和 Agent 工具最全；主体在海外或香港的项目默认选，⚠ 不支持中国大陆主体开户，税务需自己处理或另开 Stripe Tax `npm i stripe`
+- **邮件与通知**：[Resend](https://resend.com) — 开发者优先的事务邮件 API，与 React Email 同团队，支持收信、广播和 webhook；新项目发验证码、通知邮件的默认选择 `npm i resend`
+- **文件存储与媒体**：[Cloudflare R2](https://developers.cloudflare.com/r2/) — 兼容 S3 API 的对象存储，出口流量免费；存用户上传、图片、视频、AI 生成文件的默认选择，⚠ 国内访问需绑自定义域名且速度一般
+- **部署与托管**：[Vercel](https://vercel.com) — Next.js 母公司的前端云：Git 推送即部署、预览环境、Fluid Compute、AI Gateway 等一体化；Next.js/React 项目的默认部署平台，⚠ 国内访问需绑自定义域名且仍不稳定 `npm i -g vercel`
+- **后台任务与队列**：[Inngest](https://www.inngest.com) — 事件驱动的持久化工作流平台：把函数拆成可重试的步骤，自带并发、限流、定时和 Agent 编排，无需自建队列；Serverless 应用里跑后台任务和 AI 工作流的默认选择 `npm i inngest`
+- **实时与协作**：[Liveblocks](https://liveblocks.io) — 协作功能的托管平台：在线状态、多人光标、评论、通知、协同文本编辑和 AI Copilot 组件；要给产品加 Figma/Notion 式多人协作时首选 `npm i @liveblocks/client @liveblocks/react`
+- **搜索**：[Meilisearch](https://www.meilisearch.com) — Rust 写的开源搜索引擎，开箱即有容错、分面和混合（关键词+向量）搜索，中文分词可用；站内搜索想自托管且几分钟跑起来时首选 `npm i meilisearch`
+- **分析 / 监控 / 特性开关**：[PostHog](https://posthog.com) — 开源的一体化产品平台：事件分析、会话回放、特性开关、A/B 实验、错误追踪、问卷和 LLM 可观测性，免费额度大；想用一个 SDK 覆盖产品数据全链路时首选 `npx -y @posthog/wizard@latest`
+- **分析 / 监控 / 特性开关**：[Sentry](https://sentry.io) — 错误监控与性能追踪的事实标准，带会话回放、日志和 AI 根因分析（Seer），各语言 SDK 齐全；任何要上线的项目都该接一个，默认选它 `npx @sentry/wizard@latest -i nextjs`
+- **国际化**：[next-intl](https://next-intl.dev) — Next.js App Router 的国际化库：ICU 消息、类型安全的 key、本地化路由，原生支持服务端组件；Next.js 项目的默认 i18n 方案 `npm i next-intl`
+- **安全与限流**：[Upstash Ratelimit](https://upstash.com/docs/redis/sdks/ratelimit-ts/overview) — 基于 Upstash Redis 的无连接限流库（固定窗口、滑动窗口、令牌桶），可在 Edge/Serverless 运行；给 API 路由和 AI 接口加限流的默认做法 `npm i @upstash/ratelimit`
+- **国内可用替代**：[腾讯云开发 CloudBase](https://tcb.cloud.tencent.com) — 腾讯云的一体化 Serverless 后端：云函数、云数据库（文档型 + MySQL）、云存储、静态托管、身份认证，原生支持微信小程序；做小程序或面向国内用户的全栈应用时首选，官方提供 MCP 让 Agent 直接部署 `npm i @cloudbase/js-sdk`
+
+### [文档站 / 博客 / CMS](scaffolds/05-services.md#stack-content)
+
+- **文档站**：[Fumadocs](https://fumadocs.dev) — 基于 Next.js App Router 的文档框架，UI 精致、内置搜索、OpenAPI 页面和 llms.txt 生成，也支持 TanStack Start/React Router；文档要和 Next.js 应用放同一仓库并深度定制时首选 `npm create fumadocs-app`
+- **API 文档**：[Scalar](https://scalar.com) — 开源的 OpenAPI 文档与 API 客户端，界面现代、可直接发请求，Hono/FastAPI/NestJS/.NET 等都有官方集成；给后端自动生成交互式 API 文档时首选 `npm i @scalar/api-reference`
+- **内容层与 MDX**：[Content Collections](https://www.content-collections.dev) — 把 Markdown/MDX 等本地内容转成带校验的类型安全数据集合，适配 Next.js、Vite、Remix 等；Contentlayer 停更后的首选替代 `npm i @content-collections/core @content-collections/next -D`
+- **Headless CMS**：[Sanity](https://www.sanity.io) — 结构化内容平台：schema 即代码、可定制的 Studio、实时协作、GROQ 查询和可视化编辑；内容模型复杂、需要编辑体验和开发灵活性兼得时首选 `npm create sanity@latest`
+
+### [AI 基础设施（模型网关 / 向量库 / 评测 / 沙箱 / 语音 / 生成 API）](scaffolds/06-ai-infra.md#stack-ai)
+
+- **模型网关与路由**：[OpenRouter](https://openrouter.ai) — 一个 API Key 调用数百个模型的聚合网关，OpenAI 兼容接口、自动故障转移、按量透传计费；想快速对比和切换各家模型时首选，⚠ 国内访问受限，需国际信用卡或加密货币充值 `npm i @openrouter/ai-sdk-provider`
+- **官方 SDK**：[Anthropic SDK（Claude API）](https://platform.claude.com/docs) — Claude 官方 TypeScript/Python SDK：Messages API、工具调用、提示词缓存、扩展思考、批处理和文件；直接调用 Claude 模型时用，⚠ 国内无法直接访问 `npm install @anthropic-ai/sdk`
+- **本地模型**：[Ollama](https://ollama.com) — 最易用的本地模型运行器：一条命令拉取并运行开源模型，提供 OpenAI 兼容接口；本地开发、离线或隐私场景跑 LLM 的默认选择 `curl -fsSL https://ollama.com/install.sh | sh`
+- **向量库与检索**：[pgvector](https://github.com/pgvector/pgvector) — Postgres 的向量相似度检索扩展（HNSW/IVFFlat），Supabase、Neon 等均内置；已经在用 Postgres 时的默认向量方案，不必再加一个数据库 `npm i pgvector`
+- **文档解析与抓取**：[Docling](https://docling-project.github.io/docling/) — IBM 开源（现属 LF AI）的文档解析库，把 PDF、DOCX、PPTX、图片等转成保留版面、表格和阅读顺序的 Markdown/JSON，可完全本地运行；RAG 入库前解析文档的开源首选 `pip install docling`
+- **文档解析与抓取**：[Firecrawl](https://www.firecrawl.dev) — 把任意网站抓取、爬取、搜索并转成干净 Markdown 或结构化数据的 API，处理 JS 渲染和反爬，核心开源；给 LLM 喂网页内容时首选 `npm i @mendable/firecrawl-js`
+- **记忆**：[Mem0](https://mem0.ai) — 给 AI 应用加长期记忆的开源层：自动从对话中抽取、更新和检索用户事实，有托管平台和自托管版；想让助手跨会话记住用户偏好时首选 `pip install mem0ai`
+- **评测与可观测性**：[promptfoo](https://www.promptfoo.dev) — 开源的提示词与模型评测 CLI：用 YAML 声明测试用例和断言，横向对比多模型并支持红队安全测试；想把提示词改动纳入 CI 回归测试时首选 `npx promptfoo@latest init`
+- **结构化输出与护栏**：[Instructor](https://python.useinstructor.com) — 最流行的结构化输出库：用 Pydantic 模型定义期望结果，自动校验并重试，支持十多家模型；Python 里从 LLM 拿可靠 JSON 的默认做法 `pip install instructor`
+- **Agent 沙箱与浏览器**：[E2B](https://e2b.dev) — 给 AI Agent 用的云端安全沙箱（Firecracker 微虚拟机），毫秒级启动，可运行代码、终端和桌面环境，SDK 开源；要执行模型生成的代码时首选 `npm i e2b`
+- **语音**：[LiveKit Agents](https://docs.livekit.io/agents/) — 开源的实时语音/视频 Agent 框架，基于 WebRTC，把语音识别、LLM、语音合成和打断处理串成低延迟管线，可接电话；做生产级实时语音助手时首选 `pip install livekit-agents`
+- **图像 / 视频 / 音乐生成**：[fal](https://fal.ai) — 生成式媒体推理平台，一个 API 调用数百个图像、视频、语音、3D 模型（FLUX、Kling、Veo、Seedance 等），速度快、按量计费；应用里要接图像或视频生成时首选 `npm install --save @fal-ai/client`
+- **推理与微调平台**：[Hugging Face](https://huggingface.co) — 开源模型、数据集和 Demo 的中心仓库，Inference Providers 用一个接口路由到多家推理服务，官方提供 MCP；找模型、下权重、托管 Demo 都从这里开始，⚠ 国内需镜像（hf-mirror.com） `pip install -U huggingface_hub`
+- **国内模型平台**：[DeepSeek 开放平台](https://platform.deepseek.com) — DeepSeek 官方 API，OpenAI 与 Anthropic 接口双兼容，价格低且有缓存命中折扣；国内项目的默认大模型接口，把 base_url 换成 https://api.deepseek.com 即可
+
+### [常用库（状态 / 请求 / 校验 / 测试 / 工具链 / Python）](scaffolds/07-common-libs.md#stack-libs)
+
+- **状态管理**：[Zustand](https://zustand.docs.pmnd.rs) — 极简的 React 全局状态库，一个 hook 即一个 store，无 Provider、无样板代码；客户端状态的默认选择 `npm i zustand`
+- **数据请求与 API 层**：[TanStack Query](https://tanstack.com/query/latest) — 异步服务端状态管理库：缓存、去重、后台刷新、乐观更新、无限滚动；React（及 Vue/Svelte/Solid）里请求数据的默认选择 `npm i @tanstack/react-query`
+- **校验与类型**：[React Hook Form](https://react-hook-form.com) — 基于非受控组件的高性能表单库，配 @hookform/resolvers 接 Zod 等校验，shadcn/ui 表单默认搭配；React 表单的默认选择 `npm install react-hook-form @hookform/resolvers`
+- **校验与类型**：[Zod](https://zod.dev) — TypeScript 优先的 schema 校验库，从 schema 推导静态类型，AI SDK、tRPC、表单库等几乎都以它为通用语言；校验的默认选择，对包体敏感可用 zod/mini `npm i zod`
+- **路由**：[TanStack Router](https://tanstack.com/router/latest) — 完全类型安全的 React 路由，路径参数、search params 和 loader 都有类型推导，支持文件路由与内置缓存；Vite 单页应用的默认路由 `npm i @tanstack/react-router`
+- **日期与工具函数**：[date-fns](https://date-fns.org) — 函数式、可 tree-shake 的日期工具库，操作原生 Date，带时区支持和大量本地化；处理日期的默认选择 `npm i date-fns`
+- **日期与工具函数**：[es-toolkit](https://es-toolkit.dev) — 现代的 Lodash 替代品，体积更小、速度更快、类型完善，并提供 es-toolkit/compat 平滑迁移；通用工具函数的默认选择 `npm i es-toolkit`
+- **样式工具**：[Class Variance Authority（cva）](https://cva.style/docs) — 用声明式配置定义组件样式变体（variant、size 等）并得到类型安全的 props，shadcn/ui 组件的变体方案；给组件写多种外观时的默认选择 `npm i class-variance-authority`
+- **测试**：[Playwright](https://playwright.dev) — 微软的端到端测试框架，一套 API 驱动 Chromium/Firefox/WebKit，自动等待、Trace 回放、并行和代码生成；E2E 测试的默认选择，也是多数浏览器 Agent 的底座 `npm init playwright@latest`
+- **测试**：[Vitest](https://vitest.dev) — 基于 Vite 的测试框架，Jest 兼容 API、原生 ESM/TypeScript、极快的监听模式，并支持真实浏览器模式；JS/TS 单元与组件测试的默认选择 `npm install -D vitest`
+- **构建与工具链**：[Biome](https://biomejs.dev) — Rust 写的一体化格式化器 + Linter，一个配置文件替代 ESLint 和 Prettier，速度快一个数量级；新项目想要最省心、最快的代码规范工具时首选 `npm i -D -E @biomejs/biome`
+- **构建与工具链**：[pnpm](https://pnpm.io) — 基于内容寻址存储和硬链接的包管理器，安装快、省磁盘、依赖严格，原生支持 workspace 与 catalog；Node 项目和 monorepo 的默认包管理器 `npm install -g pnpm@latest`
+- **环境与配置**：[T3 Env](https://env.t3.gg) — 用 Zod 等 schema 在构建期和运行时校验环境变量，并区分服务端与客户端变量防止泄露；Next.js/Nuxt 等全栈项目管理 env 的默认做法 `npm install @t3-oss/env-nextjs zod`
+- **命令行工具**：[Commander.js](https://github.com/tj/commander.js) — Node.js 最普及的命令行参数解析库，子命令、选项和帮助信息齐全；写 Node CLI 的默认选择 `npm i commander`
+- **Python 基础**：[Pydantic](https://docs.pydantic.dev) — 基于类型注解的数据校验与序列化库（Rust 内核），FastAPI、各家 LLM SDK 和结构化输出的共同基础；Python 里定义数据模型的默认选择 `pip install pydantic`
+- **Python 基础**：[pytest](https://docs.pytest.org) — Python 测试的事实标准：普通 assert、fixture 依赖注入、参数化和庞大的插件生态；Python 测试的默认选择 `pip install pytest`
+- **Python 基础**：[Ruff](https://docs.astral.sh/ruff/) — Rust 写的 Python Linter + 格式化器，一个工具替代 Flake8、isort、Black 等，速度极快；Python 代码规范的默认选择 `uv add --dev ruff`
+- **Python 基础**：[uv](https://docs.astral.sh/uv/) — Astral 用 Rust 写的 Python 包与项目管理器，一个工具替代 pip、venv、pipx、pyenv 和 poetry，速度快 10–100 倍；Python 项目的默认工具链入口，uvx 可直接运行 MCP 等命令行工具 `curl -LsSf https://astral.sh/uv/install.sh | sh`
+- **Python 数据与界面**：[Polars](https://pola.rs) — Rust 写的多线程 DataFrame 库，惰性执行与查询优化，处理大数据比 pandas 快且省内存；新写的数据处理代码默认选它 `pip install polars`
+- **Python 数据与界面**：[Streamlit](https://streamlit.io) — 用纯 Python 脚本几分钟做出数据应用和 AI Demo 的框架，脚本自上而下重跑；内部工具、数据看板和模型演示的最快路径 `pip install streamlit`
+
+### [Awesome 元列表 / Prompt 合集](scaffolds/04-awesome-lists.md#meta-lists)
+
+- [awesome-claude-code](https://github.com/hesreallyhim/awesome-claude-code) — Claude Code 命令、hooks、工作流、CLAUDE.md 示例
+- [awesome-llm-apps](https://github.com/Shubhamsaboo/awesome-llm-apps) — 100+ 可运行的 Agent / RAG 应用示例，直接 fork
+- [awesome-mcp-servers](https://github.com/punkpeye/awesome-mcp-servers) — 最大的 MCP 服务器目录
+- [prompts.chat（原 awesome-chatgpt-prompts）](https://prompts.chat) — 最大的开源 Prompt 库
+- [sindresorhus/awesome](https://github.com/sindresorhus/awesome) — 所有 awesome 列表的根索引
 

@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" width="1200" height="560" role="img" aria-label="AI Master Prompt: 384 verified resources for AI agents">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" width="1200" height="560" role="img" aria-label="AI Master Prompt: 2528 verified resources for AI agents">
 <defs>
 <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1.1" fill="#3A342D"/></pattern>
 <radialGradient id="fade" cx="78%" cy="38%" r="70%"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
@@ -11,14 +11,14 @@
 <rect width="1200" height="560" rx="18" fill="#0C0B0A"/>
 <rect width="1200" height="560" fill="url(#dots)" mask="url(#dotMask)"/>
 <ellipse cx="930" cy="230" rx="380" ry="260" fill="url(#glow)"/>
-<text x="64" y="92" font-family="'SF Mono',Menlo,Consolas,'Liberation Mono','PingFang SC','Noto Sans Mono CJK SC',monospace" font-size="13" font-weight="600" fill="#F5A524" xml:space="preserve" letter-spacing="2.2">384 RESOURCES · 32 CATEGORIES · VERIFIED 2026-11</text>
+<text x="64" y="92" font-family="'SF Mono',Menlo,Consolas,'Liberation Mono','PingFang SC','Noto Sans Mono CJK SC',monospace" font-size="13" font-weight="600" fill="#F5A524" xml:space="preserve" letter-spacing="2.2">2528 RESOURCES · 49 CATEGORIES · VERIFIED 2026-11</text>
 <text x="60" y="178" font-family="'Iowan Old Style','Palatino Linotype',Palatino,Georgia,'Songti SC','Noto Serif SC',serif" font-size="86" font-weight="400" fill="#EDE6D6" xml:space="preserve" letter-spacing="-2">AI Master</text>
 <text x="60" y="268" font-family="'Iowan Old Style','Palatino Linotype',Palatino,Georgia,'Songti SC','Noto Serif SC',serif" font-size="86" font-weight="400" fill="#EDE6D6" xml:space="preserve" font-style="italic" letter-spacing="-2">Prompt</text>
 <rect x="64" y="300" width="56" height="3" fill="#F5A524"/>
 <text x="64" y="346" font-family="-apple-system,'Segoe UI',Helvetica,Arial,'PingFang SC','Noto Sans SC',sans-serif" font-size="23" font-weight="500" fill="#EDE6D6" xml:space="preserve" >把这个文件夹交给任何 AI，</text>
 <text x="64" y="380" font-family="-apple-system,'Segoe UI',Helvetica,Arial,'PingFang SC','Noto Sans SC',sans-serif" font-size="23" font-weight="500" fill="#EDE6D6" xml:space="preserve" >它立刻知道该用什么。</text>
 <text x="64" y="424" font-family="-apple-system,'Segoe UI',Helvetica,Arial,'PingFang SC','Noto Sans SC',sans-serif" font-size="15" font-weight="400" fill="#8C857A" xml:space="preserve" >UI 组件 · 动效词汇 · Skills · MCP · 脚手架 · 架构</text>
-<text x="64" y="448" font-family="-apple-system,'Segoe UI',Helvetica,Arial,'PingFang SC','Noto Sans SC',sans-serif" font-size="15" font-weight="400" fill="#8C857A" xml:space="preserve" font-style="italic">Give this folder to any AI agent. 83 ⭐ picks inside.</text>
+<text x="64" y="448" font-family="-apple-system,'Segoe UI',Helvetica,Arial,'PingFang SC','Noto Sans SC',sans-serif" font-size="15" font-weight="400" fill="#8C857A" xml:space="preserve" font-style="italic">Give this folder to any AI agent. 204 ⭐ picks inside.</text>
 <g transform="translate(620,84)">
 <rect width="520" height="330" rx="14" fill="#151311" stroke="#2A2622"/>
 <rect width="520" height="38" rx="14" fill="#1C1916"/>

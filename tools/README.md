@@ -1,6 +1,12 @@
 # 开源工具
 
-完整清单见 [catalog.md](catalog.md)。
+| 文件 | 内容 |
+|---|---|
+| [catalog.md](catalog.md) | 数据采集、浏览器自动化 |
+| [02-mcp.md](02-mcp.md) | MCP 目录站；120 多个常用 MCP 服务器（GitHub、数据库、搜索、Notion、Sentry、云厂商、高德 / 飞书等国内服务），带安装命令 |
+| [03-ai-builders.md](03-ai-builders.md) | AI 编码 Agent、AI IDE、应用生成器、云端 Agent、国内工具 |
+
+找某个服务的 MCP：`python3 scripts/find.py mcp <服务名>`。UI 相关的 MCP 在 [ui/catalog/12](../ui/catalog/12-mcp-registries-llms.md)。
 
 ## MediaCrawler：中文社交平台数据采集
 

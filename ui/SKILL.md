@@ -42,13 +42,19 @@ AI 做的 UI 难看，通常不是因为能力不够，而是因为 ① 没用�
 | 仪表盘 / 后台 | shadcn + Tremor 或 shadcn charts | Kibo UI 补高级组件 |
 | AI 聊天 / Agent 产品 | shadcn + AI Elements 或 assistant-ui | affectUI 做 Agent 可观测性面板；数据来自 Langfuse / Phoenix；Python 后端用 AG-UI 协议接前端 |
 | React Native / Expo | `npx create-expo-app@latest` + React Native Reusables 或 ExpoKit | 液态玻璃用 `expo-glass-effect`，毛玻璃用 `expo-blur`；beUI 做动画 |
-| Vue / Nuxt | Nuxt UI 或 shadcn-vue | Inspira UI 做特效；goopUI（液体效果，pre-alpha） |
+| Vue / Nuxt | Nuxt UI 或 shadcn-vue | Inspira UI 做特效；goopUI（液体效果，pre-alpha）；更多见 [catalog/13](catalog/13-other-frameworks.md) |
+| Svelte / Angular / Solid / Web Components | 见 [catalog/13](catalog/13-other-frameworks.md) | |
+| 国内项目 / 中后台 / 小程序 | Ant Design、Element Plus、TDesign、Vant、Taro、uni-app | 见 [catalog/14](catalog/14-china-ecosystem.md)，图表用 ECharts / AntV |
+| Flutter / SwiftUI / Compose | 见 [catalog/05](catalog/05-mobile.md) 的「原生与跨端」 | |
 | 纯 HTML / 无框架 | daisyUI 或 Tailwind + 原生 CSS | Animate.css、Hover.css、GSAP |
 
 完整候选清单：
 
 - 组件库：[catalog/02 基础](catalog/02-component-libraries.md)、[03 动画](catalog/03-animated-components.md)、[04 风格化](catalog/04-stylized-themes.md)、[05 移动端](catalog/05-mobile.md)、[06 特效/3D](catalog/06-effects-3d-shaders.md)、[07 AI 产品](catalog/07-ai-product-ui.md)
-- 找不到时去聚合站：[catalog/01](catalog/01-aggregators.md)（21st.dev、shadcn 官方目录、registry.directory）
+- 要某个具体功能（图表、表格、富文本编辑器、日历、拖拽、流程图、地图、上传、播放器）：[catalog/16](catalog/16-functional-components.md)，每个子类有一个 ⭐ 默认选择，不要自己造
+- 模板与整页区块：[catalog/17](catalog/17-templates-blocks.md)；对齐平台规范：[catalog/15 大厂设计系统](catalog/15-design-systems.md)
+- 插画、3D、样机、背景生成器等素材：[catalog/11](catalog/11-assets.md)
+- 还找不到：[catalog/18](catalog/18-shadcn-registries.md) 是 shadcn 官方索引的全部 548 个 registry（文件很大，用 grep 搜关键词）；再不行去聚合站 [catalog/01](catalog/01-aggregators.md)
 
 ### 3. 安装组件：shadcn 命名空间用法
 

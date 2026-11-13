@@ -4,13 +4,16 @@
 Usage:
   python3 scripts/check_links.py            # check all, print failures
   python3 scripts/check_links.py --all      # also print OK results
-Exit code 1 if any link is dead (4xx except 403/429, 5xx, or network error).
-Note: some sites block bots (403/429/Cloudflare); those are reported as WARN, not failures.
+Exit code 1 if any link is dead (404/410 and other hard errors, after retries).
+Sites that block bots or rate-limit (401/403/429, redirect loops) are reported as WARN, not failures.
+With a few thousand URLs this takes several minutes. A DEAD "URLError" can be a TLS quirk of
+Python's urllib rather than a dead site; confirm those with `curl -IL <url>` before removing.
 """
 from __future__ import annotations
 
 import json
 import sys
+import time
 import urllib.error
 import urllib.request
 from concurrent.futures import ThreadPoolExecutor
@@ -23,28 +26,35 @@ UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_0) AppleWebKit/537.36 (KHTML, li
 
 
 def probe(url: str) -> tuple[str, str]:
-    for method in ("HEAD", "GET"):
-        req = urllib.request.Request(url, method=method, headers={"User-Agent": UA})
-        try:
-            with urllib.request.urlopen(req, timeout=15) as r:
-                return "OK", str(r.status)
-        except urllib.error.HTTPError as e:
-            if method == "HEAD" and e.code in (400, 403, 404, 405, 429, 501):
-                continue  # many servers reject HEAD; retry with GET
-            if e.code in (401, 403, 429, 503):
-                return "WARN", str(e.code)
-            return "DEAD", str(e.code)
-        except Exception as e:  # noqa: BLE001
-            if method == "HEAD":
-                continue
-            return "DEAD", type(e).__name__
-    return "DEAD", "?"
+    """OK / WARN (blocked, rate-limited, odd redirect: probably alive) / DEAD."""
+    last = "?"
+    for attempt in range(3):
+        for method in ("HEAD", "GET"):
+            req = urllib.request.Request(url, method=method, headers={"User-Agent": UA})
+            try:
+                with urllib.request.urlopen(req, timeout=20) as r:
+                    return "OK", str(r.status)
+            except urllib.error.HTTPError as e:
+                last = str(e.code)
+                if method == "HEAD":
+                    continue  # many servers reject HEAD; retry with GET
+            except Exception as e:  # noqa: BLE001
+                last = type(e).__name__
+                if method == "HEAD":
+                    continue
+        if last == "429" or not last.isdigit() or last.startswith("5"):
+            time.sleep(4 * (attempt + 1))  # rate limit or transient error: back off and retry
+            continue
+        break
+    if last in ("401", "402", "403", "429", "451", "454") or last.startswith("3"):
+        return "WARN", last
+    return "DEAD", last
 
 
 def main() -> int:
     res = load_resources()
     urls = sorted({r["url"] for r in res if r["url"].startswith("http")})
-    with ThreadPoolExecutor(max_workers=16) as ex:
+    with ThreadPoolExecutor(max_workers=8) as ex:
         results = list(ex.map(probe, urls))
     dead = 0
     for url, (status, code) in zip(urls, results):

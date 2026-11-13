@@ -6,6 +6,11 @@
 | [02-ai-agents.md](02-ai-agents.md) | AI 应用模板、Agent 框架、MCP Server 开发 SDK |
 | [03-architecture.md](03-architecture.md) | 系统设计、架构模式、画图工具（Mermaid / D2 / Excalidraw）、C4、ADR、SRE |
 | [04-awesome-lists.md](04-awesome-lists.md) | 巨型 awesome 列表、Prompt 合集、系统提示词合集 |
+| [05-services.md](05-services.md) | 认证、数据库与 ORM、支付、邮件、存储、部署、队列、实时、搜索、监控、国际化、国内可用替代；文档站与 CMS |
+| [06-ai-infra.md](06-ai-infra.md) | 模型网关、官方 SDK、本地模型、向量库、文档解析、记忆、评测、沙箱、语音、图像视频生成、国内模型平台 |
+| [07-common-libs.md](07-common-libs.md) | 状态管理、数据请求、校验、测试、构建工具链、CLI、Python 常用库 |
+
+05–07 每个文件都有上百条，按 `### 小标题` 分组。只想要默认选择就看仓库根目录的 [PICKS.md](../PICKS.md)。
 
 ## 快速选型
 

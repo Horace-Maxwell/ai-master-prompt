@@ -33,6 +33,7 @@
 | `ai` | | 安装命令 / MCP / Skill / llms.txt，写法见下文 |
 | `price` | | `free` \| `freemium` \| `paid` \| `oss` |
 | `tags` | | 搜索关键词，中英文都加 |
+| `group` | | 分类内的子组，必须是 `data/categories.json` 里该分类 `groups` 列出的名字之一；目录按它拆成小表 |
 | `order` | | 数字，分类内按它排序（排行榜用）；不写则 ⭐ 优先再按字母 |
 | `alias_of` | | 另一个条目的 id。表示这是同一资源在第二个分类里的重复展示，不计入总数、不出现在搜索结果 |
 
@@ -56,6 +57,23 @@ python3 scripts/check_links.py     # 可选：检查链接
 | `data/categories.json` | 分类定义 |
 
 `ai` 字段的写法：能直接运行的命令照原样写；多条用 `；` 分隔；补充说明放在末尾的中文括号里，例如 `npx -y flowbite-mcp（需 FIGMA_ACCESS_TOKEN）`。生成目录时命令会变成可复制的代码块，说明保持普通文字。
+
+## 批量添加
+
+把一批条目写成一个 JSON 数组文件（字段同上），然后：
+
+```bash
+python3 scripts/import_batch.py batch.json --dry-run   # 先看会加多少、重复多少、有什么问题
+python3 scripts/import_batch.py batch.json             # 去重、校验后写入
+python3 scripts/build.py --fmt && python3 scripts/build.py
+python3 scripts/check_commands.py                      # 确认命令里的包和仓库都存在
+```
+
+按 URL 和名称去重，所以可以放心把整份调研结果丢进去。
+
+## shadcn 官方索引
+
+`data/registries.json` 是 <https://ui.shadcn.com/r/registries.json> 的快照，生成 `ui/catalog/18-shadcn-registries.md` 并参与搜索。刷新：`python3 scripts/sync_registries.py && python3 scripts/build.py`。条目里用到的 `@命名空间` 必须在这份快照里；没进官方索引的写进 `data/meta.json` 的 `extra_namespaces`。
 
 ## 新增分类
 
